@@ -38,7 +38,7 @@ namespace GXPEngine
             _player = new Player(this);
             AddChild(_player);
             _player.spawnX = 20;
-            _player.spawnY = 483;
+            _player.spawnY = 460;
             _player.SetXY(_player.spawnX, _player.spawnY);
         }
         private void drawSolidObjects()

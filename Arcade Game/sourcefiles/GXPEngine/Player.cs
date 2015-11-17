@@ -29,6 +29,12 @@ namespace GXPEngine
         private float maxVelocityY = 20.0f;
         private float _pushBackSpeed = 5.0f;
         private float _gravity = 0.5f;
+        private float _bounce = -0.5f;
+
+        //Animationstate
+        private string _currentAnimState = "idle";
+        private float _lastFrame;
+        private float _firstFrame;
 
         //Air check
         private bool _inAir;
@@ -37,26 +43,23 @@ namespace GXPEngine
         private int _maxBullets = 2;
         private int _bulletCounter = 2;
 
-        public Player(Level001 pLevel) : base("colors.png", 2, 2)
+        public Player(Level001 pLevel) : base("player.png", 4, 4)
         {
             SetOrigin(width / 2, height);
             _level = pLevel;
         }
         void Update()
         {
-            //animation();
+            animation();
             checkMovement();
             movePlayer();
         }
-        private void animation()
+        private void respawn()
         {
-            _curFrame += 0.5f;
-            SetFrame((int)_curFrame);
-            if (_curFrame >= frameCount)
-            {
-                _curFrame = 0.0f;
-            }
+            x = spawnX;
+            y = spawnY;
         }
+        //-------------MOVEMENT-----------------
         private void checkMovement()
         {
             setAimDirection();
@@ -146,8 +149,13 @@ namespace GXPEngine
             //No horizontal movement
             if (!Input.GetKey(LEFT) && !Input.GetKey(RIGHT))
             {
-                _velocityX = 0.0f;
+                if (!_inAir)
+                {
+                    _velocityX = 0.0f;
+                }
             }
+
+            if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
         }
         private void movePlayer()
         {
@@ -173,8 +181,10 @@ namespace GXPEngine
                     else if (_velocityY < 0) { y += 1.0f; }
                 }
 
-                if (_velocityY > 0) { _velocityY = 0.0f; }
-                else if (_velocityY < 0) { _velocityY *= -1; }
+                //If falling down
+                if (_velocityY > 0) { _velocityY = 0.0f; _inAir = false; }
+                //If jumping up
+                else if (_velocityY < 0) { _velocityY *= _bounce; }
             }
 
         }
@@ -200,10 +210,57 @@ namespace GXPEngine
             }
             return false;
         }
-        private void respawn()
+        //------------ANIMATION-----------------
+        private void animation()
         {
-            x = spawnX;
-            y = spawnY;
+            _curFrame += 0.2f;
+
+            if (_curFrame >= _lastFrame)
+                _curFrame = _firstFrame;
+            if (_curFrame < _firstFrame)
+                _curFrame = _lastFrame;
+            SetFrame((int)_curFrame);
+        }
+        private void setAnimationRange(float pFirstFrame, float pLastFrame)
+        {
+            _firstFrame = pFirstFrame;
+            _lastFrame = pLastFrame;
+        }
+        private void animationState()
+        {
+            switch (_currentAnimState)
+            {
+                //No weapon
+                case "nwidle":
+                    {
+                        setAnimationRange(0, 2);
+                        break;
+                    }
+                case "nwwalk":
+                    {
+                        setAnimationRange(3, 7);
+                        break;
+                    }
+                //Weapon
+                case "idle":
+                    {
+                        setAnimationRange(8, 10);
+                        break;
+                    }
+                case "walk":
+                    {
+                        setAnimationRange(11, 15);
+                        break;
+                    }
+                case "jump":
+                    {
+                        break;
+                    }
+                case "shoot":
+                    {
+                        break;
+                    }
+            }
         }
     }
 }
