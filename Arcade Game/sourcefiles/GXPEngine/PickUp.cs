@@ -11,5 +11,9 @@ namespace GXPEngine
         {
 
         }
+        virtual public void Use()
+        {
+
+        }
     }
 }

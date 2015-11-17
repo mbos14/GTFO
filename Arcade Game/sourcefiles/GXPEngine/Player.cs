@@ -13,7 +13,7 @@ namespace GXPEngine
         private string _aimDirection = "right";
         public float spawnX;
         public float spawnY;
-        private bool _hasWeapon = true;
+        private bool _hasWeapon = false;
 
         //Keys
         const int LEFT = Key.LEFT;
@@ -77,7 +77,7 @@ namespace GXPEngine
                 case "left":
                     {
                         //TODO Animation => left
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet("left");
                             _bulletCounter -= 1.0f;
@@ -96,7 +96,7 @@ namespace GXPEngine
                 case "right":
                     {
                         //TODO Animation => aim right
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet("right");
                             _bulletCounter -= 1.0f;
@@ -114,7 +114,7 @@ namespace GXPEngine
                 case "up":
                     {
                         //TODO Animation => aim up
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet("up");                            
                             _bulletCounter -= 1.0f;
@@ -129,7 +129,7 @@ namespace GXPEngine
                 case "down":
                     {
                         //TODO Animation => aim down
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             _inAir = true;
 
@@ -180,6 +180,7 @@ namespace GXPEngine
 
             if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
             if (_velocityX == 0.0f) { _currentAnimState = IDLING; }
+            if (_inAir == true) { _currentAnimState = JUMPING; }
         }
         private void movePlayer()
         {
@@ -230,6 +231,10 @@ namespace GXPEngine
                     {
                         return true;
                     }
+                    //else if (other is Weapon)
+                    //{
+                    //    _hasWeapon = true;
+                    //}
                 }
             }
             return false;
@@ -281,6 +286,14 @@ namespace GXPEngine
                     }
                 case JUMPING:
                     {
+                        if (!_hasWeapon)
+                        {
+                            //Set anim range
+                        }
+                        else if (_hasWeapon)
+                        {
+                            //Set anim range
+                        }
                         break;
                     }
             }
