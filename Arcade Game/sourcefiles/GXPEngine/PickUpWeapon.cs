@@ -5,9 +5,9 @@ using System.Text;
 
 namespace GXPEngine
 {
-    public class PickUp : AnimationSprite
+    public class PickUpWeapon : PickUp
     {
-        public PickUp(string pFileName, int pColumns, int pRows) : base(pFileName, pColumns, pRows)
+        public PickUpWeapon() : base("weaponset.png", 4, 1)
         {
 
         }

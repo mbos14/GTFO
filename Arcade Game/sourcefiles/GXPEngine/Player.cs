@@ -219,25 +219,47 @@ namespace GXPEngine
             {
                 if (this.HitTest(other))
                 {
+                    //Blocks
                     if (other is DamageBlock)
                     {
                         respawn();
-                    }
-                    else if (other is PickUp)
-                    {
-                        other.Destroy();
                     }
                     else if (other is SolidObject)
                     {
                         return true;
                     }
-                    //else if (other is Weapon)
-                    //{
-                    //    _hasWeapon = true;
-                    //}
+                    //Pickups
+                    else if (other is PickUpWeapon)
+                    {
+                        _hasWeapon = true;
+                    }
+                    else if (other is PickUpCoin)
+                    {
+                        other.Destroy();
+                        addPoints();
+                    }
+                    else if (other is PickUpLife)
+                    {
+                        other.Destroy();
+                        addLife();
+                    }
+                    else if (other is PickUpReload)
+                    {
+                        other.Destroy();
+                        _bulletCounter += 1;
+                    }
                 }
             }
             return false;
+        }
+        //------------PICKUPS-------------------
+        private void addLife()
+        {
+
+        }
+        private void addPoints()
+        {
+
         }
         //------------ANIMATION-----------------
         private void animation()

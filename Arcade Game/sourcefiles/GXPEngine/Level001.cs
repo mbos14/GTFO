@@ -105,7 +105,7 @@ namespace GXPEngine
                 {
                     if (levelData[i, j] != 0)
                     {
-                        PickUp pickup = new PickUp();
+                        PickUpCoin pickup = new PickUpCoin();
                         AddChild(pickup);
                         pickup.SetXY(j * TILESIZE, i * TILESIZE);
                         pickup.SetFrame(levelData[i, j] - 1);
