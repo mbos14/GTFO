@@ -13,6 +13,7 @@ namespace GXPEngine
         private string _aimDirection = "right";
         public float spawnX;
         public float spawnY;
+        private bool _hasWeapon = false;
 
         //Keys
         const int LEFT = Key.LEFT;
@@ -27,21 +28,26 @@ namespace GXPEngine
         private float _walkSpeed = 5.0f;
         private float _jumpSpeed = -15.0f;
         private float maxVelocityY = 20.0f;
-        private float _pushBackSpeed = 5.0f;
+        private float _pushBackSpeed = 4.0f;
         private float _gravity = 0.5f;
         private float _bounce = -0.5f;
 
         //Animationstate
-        private string _currentAnimState = "idle";
+        private int _currentAnimState = 0;
         private float _lastFrame;
         private float _firstFrame;
+
+        const int WALKING = 0;
+        const int IDLING = 1;
+        const int JUMPING = 2;
 
         //Air check
         private bool _inAir;
 
         //Weapon
-        private int _maxBullets = 2;
-        private int _bulletCounter = 2;
+        private float _maxBullets = 2;
+        private float _bulletCounter = 2;
+        private float _bulletCharge = 0.02f;
 
         public Player(Level001 pLevel) : base("player.png", 4, 4)
         {
@@ -53,6 +59,8 @@ namespace GXPEngine
             animation();
             checkMovement();
             movePlayer();
+            chargeWeapon();
+            Console.WriteLine(_currentAnimState);
         }
         private void respawn()
         {
@@ -70,9 +78,10 @@ namespace GXPEngine
                 case "left":
                     {
                         //TODO Animation => left
-                        if (Input.GetKeyDown(SHOOT))
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
                             //TODO Create bullet
+                            _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
                                 _velocityX = _pushBackSpeed * 3;
@@ -88,9 +97,10 @@ namespace GXPEngine
                 case "right":
                     {
                         //TODO Animation => aim right
-                        if (Input.GetKeyDown(SHOOT))
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
                             //TODO Create bullet
+                            _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
                                 _velocityX = -_pushBackSpeed * 3;
@@ -105,9 +115,10 @@ namespace GXPEngine
                 case "up":
                     {
                         //TODO Animation => aim up
-                        if (Input.GetKeyDown(SHOOT))
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
                             //TODO Create bullet 
+                            _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
                                 _velocityY = -_jumpSpeed;
@@ -119,10 +130,11 @@ namespace GXPEngine
                 case "down":
                     {
                         //TODO Animation => aim down
-                        if (Input.GetKeyDown(SHOOT))
+                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
                             _inAir = true;
                             //TODO create bullet
+                            _bulletCounter -= 1.0f;
                             _velocityY = _jumpSpeed;
                         }
                         break;
@@ -134,12 +146,24 @@ namespace GXPEngine
             //Horizontal aiming/movement
             if (Input.GetKey(LEFT))
             {
-                if (!_inAir) { _velocityX = -_walkSpeed; }
+                if (!_inAir)
+                {
+                    _velocityX = -_walkSpeed;
+                    _currentAnimState = WALKING;
+                    Mirror(true, false);
+                }
+
                 _aimDirection = "left";
             }
             else if (Input.GetKey(RIGHT))
             {
-                if (!_inAir) { _velocityX = _walkSpeed; }
+                if (!_inAir)
+                {
+                    _velocityX = _walkSpeed;
+                    _currentAnimState = WALKING;
+                    Mirror(false, false);
+                }
+
                 _aimDirection = "right";
             }
             //Vertical aiming
@@ -156,11 +180,12 @@ namespace GXPEngine
             }
 
             if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
+            if (_velocityX == 0.0f) { _currentAnimState = IDLING; }
         }
         private void movePlayer()
         {
+            //Horizontal movement
             x += _velocityX;
-
             //Move outside the block if collision
             while (checkCollisions())
             {
@@ -168,9 +193,9 @@ namespace GXPEngine
                 else if (_velocityX < 0) { x += 1.0f; }
             }
 
+            //Vertical Movement
             _velocityY += _gravity;
             y += _velocityY;
-
             //If collision
             if (checkCollisions())
             {
@@ -213,13 +238,14 @@ namespace GXPEngine
         //------------ANIMATION-----------------
         private void animation()
         {
+            animationState();
+
             _curFrame += 0.2f;
 
-            if (_curFrame >= _lastFrame)
-                _curFrame = _firstFrame;
-            if (_curFrame < _firstFrame)
-                _curFrame = _lastFrame;
-            SetFrame((int)_curFrame);
+            if (_curFrame > _lastFrame) { _curFrame = _firstFrame; }
+            else if (_curFrame < _firstFrame) { _curFrame = _lastFrame; }
+
+            this.SetFrame((int)_curFrame);
         }
         private void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
@@ -230,36 +256,42 @@ namespace GXPEngine
         {
             switch (_currentAnimState)
             {
-                //No weapon
-                case "nwidle":
+                case IDLING:
                     {
-                        setAnimationRange(0, 2);
+                        if (!_hasWeapon)
+                        {
+                            setAnimationRange(0, 2);
+                        }
+                        else if (_hasWeapon)
+                        {
+                            setAnimationRange(8, 10);
+                        }
                         break;
                     }
-                case "nwwalk":
+                case WALKING:
                     {
-                        setAnimationRange(3, 7);
+                        if (!_hasWeapon)
+                        {
+                            setAnimationRange(3, 7);
+                        }
+                        else if (_hasWeapon)
+                        {
+                            setAnimationRange(11, 15);
+                        }
                         break;
                     }
-                //Weapon
-                case "idle":
-                    {
-                        setAnimationRange(8, 10);
-                        break;
-                    }
-                case "walk":
-                    {
-                        setAnimationRange(11, 15);
-                        break;
-                    }
-                case "jump":
-                    {
-                        break;
-                    }
-                case "shoot":
+                case JUMPING:
                     {
                         break;
                     }
+            }
+        }
+        //------------WEAPON--------------------
+        private void chargeWeapon()
+        {
+            if (_bulletCounter < _maxBullets)
+            {
+                _bulletCounter += _bulletCharge;
             }
         }
     }
