@@ -1,0 +1,209 @@
+﻿using System;
+using GXPEngine.Core;
+
+namespace GXPEngine
+{
+    public class Player : AnimationSprite
+    {
+        //Game data
+        private Level001 _level;
+
+        //Player
+        private float _curFrame = 0.0f;
+        private string _aimDirection = "right";
+        public float spawnX;
+        public float spawnY;
+
+        //Keys
+        const int LEFT = Key.LEFT;
+        const int RIGHT = Key.RIGHT;
+        const int UP = Key.UP;
+        const int DOWN = Key.DOWN;
+        const int SHOOT = Key.LEFT_CTRL;
+
+        //Speed
+        private float _velocityX = 0.0f;
+        private float _velocityY = 0.0f;
+        private float _walkSpeed = 5.0f;
+        private float _jumpSpeed = -15.0f;
+        private float maxVelocityY = 20.0f;
+        private float _pushBackSpeed = 5.0f;
+        private float _gravity = 0.5f;
+
+        //Air check
+        private bool _inAir;
+
+        //Weapon
+        private int _maxBullets = 2;
+        private int _bulletCounter = 2;
+
+        public Player(Level001 pLevel) : base("colors.png", 2, 2)
+        {
+            SetOrigin(width / 2, height);
+            _level = pLevel;
+        }
+        void Update()
+        {
+            //animation();
+            checkMovement();
+            movePlayer();
+        }
+        private void animation()
+        {
+            _curFrame += 0.5f;
+            SetFrame((int)_curFrame);
+            if (_curFrame >= frameCount)
+            {
+                _curFrame = 0.0f;
+            }
+        }
+        private void checkMovement()
+        {
+            setAimDirection();
+
+            //Apply aimdirection
+            switch (_aimDirection)
+            {
+                case "left":
+                    {
+                        //TODO Animation => left
+                        if (Input.GetKeyDown(SHOOT))
+                        {
+                            //TODO Create bullet
+                            if (_inAir)
+                            {
+                                _velocityX = _pushBackSpeed * 3;
+                            }
+                            else if (!_inAir)
+                            {
+                                _velocityX = _pushBackSpeed;
+                            }
+                        }
+
+                        break;
+                    }
+                case "right":
+                    {
+                        //TODO Animation => aim right
+                        if (Input.GetKeyDown(SHOOT))
+                        {
+                            //TODO Create bullet
+                            if (_inAir)
+                            {
+                                _velocityX = -_pushBackSpeed * 3;
+                            }
+                            else if (!_inAir)
+                            {
+                                _velocityX = -_pushBackSpeed;
+                            }
+                        }
+                        break;
+                    }
+                case "up":
+                    {
+                        //TODO Animation => aim up
+                        if (Input.GetKeyDown(SHOOT))
+                        {
+                            //TODO Create bullet 
+                            if (_inAir)
+                            {
+                                _velocityY = -_jumpSpeed;
+
+                            }
+                        }
+                        break;
+                    }
+                case "down":
+                    {
+                        //TODO Animation => aim down
+                        if (Input.GetKeyDown(SHOOT))
+                        {
+                            _inAir = true;
+                            //TODO create bullet
+                            _velocityY = _jumpSpeed;
+                        }
+                        break;
+                    }
+            }
+        }
+        private void setAimDirection()
+        {
+            //Horizontal aiming/movement
+            if (Input.GetKey(LEFT))
+            {
+                if (!_inAir) { _velocityX = -_walkSpeed; }
+                _aimDirection = "left";
+            }
+            else if (Input.GetKey(RIGHT))
+            {
+                if (!_inAir) { _velocityX = _walkSpeed; }
+                _aimDirection = "right";
+            }
+            //Vertical aiming
+            else if (Input.GetKey(UP)) { _aimDirection = "up"; }
+            else if (Input.GetKey(DOWN)) { _aimDirection = "down"; }
+
+            //No horizontal movement
+            if (!Input.GetKey(LEFT) && !Input.GetKey(RIGHT))
+            {
+                _velocityX = 0.0f;
+            }
+        }
+        private void movePlayer()
+        {
+            x += _velocityX;
+
+            //Move outside the block if collision
+            while (checkCollisions())
+            {
+                if (_velocityX > 0) { x -= 1.0f; }
+                else if (_velocityX < 0) { x += 1.0f; }
+            }
+
+            _velocityY += _gravity;
+            y += _velocityY;
+
+            //If collision
+            if (checkCollisions())
+            {
+                //Move outside the block
+                while (checkCollisions())
+                {
+                    if (_velocityY > 0) { y -= 1.0f; }
+                    else if (_velocityY < 0) { y += 1.0f; }
+                }
+
+                if (_velocityY > 0) { _velocityY = 0.0f; }
+                else if (_velocityY < 0) { _velocityY *= -1; }
+            }
+
+        }
+        private bool checkCollisions()
+        {
+            foreach (Sprite other in _level.objectList)
+            {
+                if (this.HitTest(other))
+                {
+                    if (other is DamageBlock)
+                    {
+                        respawn();
+                    }
+                    else if (other is PickUp)
+                    {
+                        other.Destroy();
+                    }
+                    else if (other is SolidObject)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private void respawn()
+        {
+            x = spawnX;
+            y = spawnY;
+        }
+    }
+}
