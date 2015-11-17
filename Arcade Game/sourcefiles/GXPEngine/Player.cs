@@ -13,7 +13,7 @@ namespace GXPEngine
         private string _aimDirection = "right";
         public float spawnX;
         public float spawnY;
-        private bool _hasWeapon = false;
+        private bool _hasWeapon = true;
 
         //Keys
         const int LEFT = Key.LEFT;
@@ -47,7 +47,7 @@ namespace GXPEngine
         //Weapon
         private float _maxBullets = 2;
         private float _bulletCounter = 2;
-        private float _bulletCharge = 0.02f;
+        private float _bulletCharge = 0.015f;
 
         public Player(Level001 pLevel) : base("player.png", 4, 4)
         {
@@ -57,10 +57,9 @@ namespace GXPEngine
         void Update()
         {
             animation();
-            checkMovement();
+            checkShooting();
             movePlayer();
             chargeWeapon();
-            Console.WriteLine(_currentAnimState);
         }
         private void respawn()
         {
@@ -68,9 +67,9 @@ namespace GXPEngine
             y = spawnY;
         }
         //-------------MOVEMENT-----------------
-        private void checkMovement()
+        private void checkShooting()
         {
-            setAimDirection();
+            getInput();
 
             //Apply aimdirection
             switch (_aimDirection)
@@ -80,7 +79,7 @@ namespace GXPEngine
                         //TODO Animation => left
                         if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
-                            //TODO Create bullet
+                            createBullet("left");
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -99,7 +98,7 @@ namespace GXPEngine
                         //TODO Animation => aim right
                         if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
-                            //TODO Create bullet
+                            createBullet("right");
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -117,7 +116,7 @@ namespace GXPEngine
                         //TODO Animation => aim up
                         if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
-                            //TODO Create bullet 
+                            createBullet("up");                            
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -133,7 +132,8 @@ namespace GXPEngine
                         if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1)
                         {
                             _inAir = true;
-                            //TODO create bullet
+
+                            createBullet("down");
                             _bulletCounter -= 1.0f;
                             _velocityY = _jumpSpeed;
                         }
@@ -141,29 +141,28 @@ namespace GXPEngine
                     }
             }
         }
-        private void setAimDirection()
+        private void getInput()
         {
             //Horizontal aiming/movement
             if (Input.GetKey(LEFT))
             {
+                Mirror(true, false);
                 if (!_inAir)
                 {
                     _velocityX = -_walkSpeed;
                     _currentAnimState = WALKING;
-                    Mirror(true, false);
                 }
 
                 _aimDirection = "left";
             }
             else if (Input.GetKey(RIGHT))
             {
+                Mirror(false, false);
                 if (!_inAir)
                 {
                     _velocityX = _walkSpeed;
                     _currentAnimState = WALKING;
-                    Mirror(false, false);
                 }
-
                 _aimDirection = "right";
             }
             //Vertical aiming
@@ -293,6 +292,16 @@ namespace GXPEngine
             {
                 _bulletCounter += _bulletCharge;
             }
+            else if (_bulletCounter > _maxBullets)
+            {
+                _bulletCounter = _maxBullets;
+            }
+        }
+        private void createBullet(string pDirection)
+        {
+            PlayerBullet bullet = new PlayerBullet(pDirection);
+            _level.AddChild(bullet);
+            bullet.SetXY(x, y - (height / 2));
         }
     }
 }

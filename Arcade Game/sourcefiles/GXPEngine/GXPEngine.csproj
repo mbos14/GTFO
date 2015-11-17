@@ -69,6 +69,7 @@
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="PickUp.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerBullet.cs" />
     <Compile Include="SolidObject.cs" />
   </ItemGroup>
 </Project>
