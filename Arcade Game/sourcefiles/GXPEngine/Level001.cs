@@ -38,7 +38,7 @@ namespace GXPEngine
             _player = new Player(this);
             AddChild(_player);
             _player.spawnX = 20;
-            _player.spawnY = 483;
+            _player.spawnY = 460;
             _player.SetXY(_player.spawnX, _player.spawnY);
         }
         private void drawSolidObjects()
@@ -105,7 +105,7 @@ namespace GXPEngine
                 {
                     if (levelData[i, j] != 0)
                     {
-                        PickUp pickup = new PickUp();
+                        PickUpCoin pickup = new PickUpCoin();
                         AddChild(pickup);
                         pickup.SetXY(j * TILESIZE, i * TILESIZE);
                         pickup.SetFrame(levelData[i, j] - 1);

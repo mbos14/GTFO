@@ -68,7 +68,12 @@
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
     <Compile Include="PickUp.cs" />
+    <Compile Include="PickUpCoin.cs" />
+    <Compile Include="PickUpLife.cs" />
+    <Compile Include="PickUpReload.cs" />
+    <Compile Include="PickUpWeapon.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerBullet.cs" />
     <Compile Include="SolidObject.cs" />
   </ItemGroup>
 </Project>
