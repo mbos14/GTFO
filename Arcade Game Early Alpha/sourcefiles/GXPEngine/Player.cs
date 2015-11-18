@@ -26,11 +26,11 @@ namespace GXPEngine
         private float _velocityX = 0.0f;
         private float _velocityY = 0.0f;
         private float _walkSpeed = 5.0f;
-        private float _jumpSpeed = -15.0f;
+        private float _jumpSpeed = -10.0f;
         private float maxVelocityY = 20.0f;
-        private float _pushBackSpeed = 4.0f;
+        private float _pushBackSpeed = 3.0f;
         private float _gravity = 0.5f;
-        private float _bounce = -0.5f;
+        private float _bounce = -0.3f;
 
         //Animationstate
         private int _currentAnimState = 0;
@@ -48,7 +48,7 @@ namespace GXPEngine
         //Weapon
         private float _maxBullets = 2;
         private float _bulletCounter = 2;
-        private float _bulletCharge = 0.015f;
+        private float _bulletCharge = 0.025f;
 
         public Player(Level001 pLevel) : base("player.png", 4, 9)
         {
