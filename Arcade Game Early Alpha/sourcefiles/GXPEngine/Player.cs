@@ -26,11 +26,11 @@ namespace GXPEngine
         private float _velocityX = 0.0f;
         private float _velocityY = 0.0f;
         private float _walkSpeed = 5.0f;
-        private float _jumpSpeed = -10.0f;
+        private float _jumpSpeed = -15.0f;
         private float maxVelocityY = 20.0f;
         private float _pushBackSpeed = 3.0f;
-        private float _gravity = 0.5f;
-        private float _bounce = -0.3f;
+        private float _gravity = 0.65f;
+        private float _bounce = -0.35f;
 
         //Animationstate
         private int _currentAnimState = 0;

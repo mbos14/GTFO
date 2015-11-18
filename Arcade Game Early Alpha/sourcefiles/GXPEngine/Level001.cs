@@ -12,7 +12,7 @@ namespace GXPEngine
         private Player _player;
 
         const int HEIGHT = 26;
-        const int WIDTH = 41;
+        const int WIDTH = 60;
         private string _fileName;
 
         private MyGame _game;
