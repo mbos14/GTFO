@@ -28,6 +28,12 @@ namespace GXPEngine
 
             Camera cam1 = new Camera(_player, this);
             AddChild(cam1);
+
+
+            PickUpWeapon weapon = new PickUpWeapon();
+            AddChild(weapon);
+            weapon.SetXY(_player.x + 200, _player.y - 50);
+            objectList.Add(weapon);
         }
         void Update()
         {

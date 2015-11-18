@@ -231,6 +231,7 @@ namespace GXPEngine
                     //Pickups
                     else if (other is PickUpWeapon)
                     {
+                        other.Destroy();
                         _hasWeapon = true;
                     }
                     else if (other is PickUpCoin)
@@ -245,8 +246,11 @@ namespace GXPEngine
                     }
                     else if (other is PickUpReload)
                     {
-                        other.Destroy();
-                        _bulletCounter += 1;
+                        if (!(_bulletCounter >= _maxBullets))
+                        {
+                            other.Destroy();
+                            _bulletCounter = _maxBullets;
+                        }
                     }
                 }
             }

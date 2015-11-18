@@ -19,7 +19,7 @@ namespace GXPEngine
         private void animation()
         {
             _frame += 0.3f;
-            if (_frame == frameCount) { _frame = 0.0f; }
+            if (_frame >= frameCount) { _frame = 0.0f; }
             SetFrame((int)_frame);
         }
     }
