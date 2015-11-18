@@ -34,6 +34,11 @@ namespace GXPEngine
             AddChild(weapon);
             weapon.SetXY(_player.x + 200, _player.y - 50);
             objectList.Add(weapon);
+
+            EnemySpider spider = new EnemySpider(this);
+            AddChild(spider);
+            spider.SetXY(_player.x + 300, _player.y);
+            objectList.Add(spider);
         }
         void Update()
         {

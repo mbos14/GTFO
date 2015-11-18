@@ -34,6 +34,7 @@ namespace GXPEngine
 
         //Animationstate
         private int _currentAnimState = 0;
+        private float _animSpeed = 0.1f;
         private float _lastFrame;
         private float _firstFrame;
 
@@ -252,6 +253,11 @@ namespace GXPEngine
                             _bulletCounter = _maxBullets;
                         }
                     }
+                    //Enemys
+                    else if (other is Enemy)
+                    {
+                        respawn();
+                    }
                 }
             }
             return false;
@@ -270,7 +276,7 @@ namespace GXPEngine
         {
             animationState();
 
-            _curFrame += 0.2f;
+            _curFrame += _animSpeed;
 
             if (_curFrame > _lastFrame) { _curFrame = _firstFrame; }
             else if (_curFrame < _firstFrame) { _curFrame = _lastFrame; }
