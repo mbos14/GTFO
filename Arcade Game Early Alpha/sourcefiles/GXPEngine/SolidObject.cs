@@ -7,7 +7,7 @@ namespace GXPEngine
 {
     public class SolidObject : AnimationSprite
     {
-        public SolidObject() : base("tileset.png", 5, 2)
+        public SolidObject() : base("tileset.png", 14, 19)
         {
 
         }

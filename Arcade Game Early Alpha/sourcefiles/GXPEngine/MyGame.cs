@@ -41,7 +41,7 @@ public class MyGame : Game
                 }
             case 1:
                 {
-                    _level1 = new Level001(this, "level1.txt");
+                    _level1 = new Level001(this, "level1prototype.txt");
                     AddChild(_level1);
                     break;
                 }
