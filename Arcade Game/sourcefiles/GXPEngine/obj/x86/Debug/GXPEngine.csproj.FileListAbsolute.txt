@@ -27,3 +27,8 @@ C:\Users\Leon\Documents\School\Year 1\Q2\Projects\Project 1 Arcade Game\Arcade G
 C:\Users\Leon\Documents\School\Year 1\Q2\Projects\Project 1 Arcade Game\Arcade Game\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
 C:\Users\Leon\Documents\School\Year 1\Q2\Projects\Project 1 Arcade Game\Arcade Game\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
 C:\Users\Leon\Documents\School\Year 1\Q2\Projects\Project 1 Arcade Game\Arcade Game\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
+C:\Users\XInfernoX-Laptop\Documents\GTFO\Arcade Game\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\XInfernoX-Laptop\Documents\GTFO\Arcade Game\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\XInfernoX-Laptop\Documents\GTFO\Arcade Game\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\XInfernoX-Laptop\Documents\GTFO\Arcade Game\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\XInfernoX-Laptop\Documents\GTFO\Arcade Game\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
