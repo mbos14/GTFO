@@ -9,18 +9,21 @@ namespace GXPEngine
     {
         private string _direction;
         private float _distanceTraveled = 0.0f;
-        private float _maxTravel = 50.0f;
-        public float damage = 50.0f;
+        private float _maxTravel = 100.0f;
+        public float damage = 100.0f;
+        private Level001 _level;
 
         private float _travelSpeed = 5.0f;
-        public PlayerBullet(string pDirection) : base("playerbullet.png")
+        public PlayerBullet(string pDirection, Level001 pLevel) : base("playerbullet.png")
         {
+            _level = pLevel;
             SetOrigin(width / 2, height / 2);
             _direction = pDirection;
         }
         void Update()
         {
             moveDirection();
+            getCollisions();
         }
         private void moveDirection()
         {
@@ -57,6 +60,37 @@ namespace GXPEngine
             else if (_distanceTraveled < -_maxTravel)
             {
                 Destroy();
+            }
+        }
+        private void getCollisions()
+        {
+            foreach (Sprite other in _level.objectList)
+            {
+                if (HitTest(other))
+                {
+                    if (other is DamageBlock)
+                    {
+                        Destroy();
+                    }
+                    else if (other is SolidObject)
+                    {
+                        Destroy();
+                    }
+                    //else if (other is BreakableBlock)
+                    //{
+                    //    other.Destroy();
+                    //    Destroy();
+                    //}
+                    //else if (other is Enemy)
+                    //{
+                    //    Destroy();
+                    //}
+                    //else if (other is EnemyBullet)
+                    //{
+                    //    Destroy();
+                    //    other.velocityX *= -1;
+                    //}
+                }
             }
         }
     }

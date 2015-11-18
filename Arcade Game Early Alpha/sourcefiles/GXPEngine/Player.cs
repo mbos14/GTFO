@@ -49,7 +49,7 @@ namespace GXPEngine
         private float _bulletCounter = 2;
         private float _bulletCharge = 0.015f;
 
-        public Player(Level001 pLevel) : base("player.png", 4, 4)
+        public Player(Level001 pLevel) : base("player.png", 4, 9)
         {
             SetOrigin(width / 2, height);
             _level = pLevel;
@@ -116,7 +116,7 @@ namespace GXPEngine
                         //TODO Animation => aim up
                         if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
                         {
-                            createBullet("up");                            
+                            createBullet("up");
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -294,7 +294,10 @@ namespace GXPEngine
                         }
                         else if (_hasWeapon)
                         {
-                            setAnimationRange(8, 10);
+                            if (_aimDirection == "left") { setAnimationRange(8, 10); }
+                            else if (_aimDirection == "right") { setAnimationRange(8, 10); }
+                            else if (_aimDirection == "up") { setAnimationRange(16, 18); }
+                            else if (_aimDirection == "down") { setAnimationRange(24, 26); }
                         }
                         break;
                     }
@@ -306,20 +309,19 @@ namespace GXPEngine
                         }
                         else if (_hasWeapon)
                         {
-                            setAnimationRange(11, 15);
+                            if (_aimDirection == "left") { setAnimationRange(11, 15); }
+                            else if (_aimDirection == "right") { setAnimationRange(11, 15); }
+                            else if (_aimDirection == "up") { setAnimationRange(19, 23); }
+                            else if (_aimDirection == "down") { setAnimationRange(27, 31); }
                         }
                         break;
                     }
                 case JUMPING:
                     {
-                        if (!_hasWeapon)
-                        {
-                            //Set anim range
-                        }
-                        else if (_hasWeapon)
-                        {
-                            //Set anim range
-                        }
+                        if (_aimDirection == "left") { setAnimationRange(32, 32); }
+                        else if (_aimDirection == "right") { setAnimationRange(32, 32); }
+                        else if (_aimDirection == "up") { setAnimationRange(34, 34); }
+                        else if (_aimDirection == "down") { setAnimationRange(33, 33); }
                         break;
                     }
             }
@@ -338,7 +340,7 @@ namespace GXPEngine
         }
         private void createBullet(string pDirection)
         {
-            PlayerBullet bullet = new PlayerBullet(pDirection);
+            PlayerBullet bullet = new PlayerBullet(pDirection, _level);
             _level.AddChild(bullet);
             bullet.SetXY(x, y - (height / 2));
         }

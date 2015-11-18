@@ -13,7 +13,6 @@ public class MyGame : Game
     Level001 _level1;
     Level001 _level2;
 
-
     const int MENU = 0;
     const int LEVEL1 = 1;
     const int LEVEL2 = 2;
@@ -22,7 +21,6 @@ public class MyGame : Game
     {
         setGameState(LEVEL1);
     }
-
     public void setGameState(int pNumber)
     {
         if (pNumber == _gameState) return;
@@ -65,6 +63,7 @@ public class MyGame : Game
         {
             case 0:
                 {
+                    
                     if (_menu != null) { _menu.Destroy(); }
                     break;
                 }
