@@ -12,10 +12,10 @@ namespace GXPEngine
 
         //Animation
         private float _frame = 0.0f;
-        private float _firstFrame;
-        private float _lastFrame;
+        //private float _firstFrame;
+        //private float _lastFrame;
 
-        private int _animState;
+        //private int _animState;
 
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
@@ -25,9 +25,9 @@ namespace GXPEngine
         void Update()
         {
             animation();
-            moveSpider();
+            move();
         }
-        private void moveSpider()
+        private void move()
         {
             if (_moveCounter >= 100)
             {
