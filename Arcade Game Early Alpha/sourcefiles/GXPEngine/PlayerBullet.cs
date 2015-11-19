@@ -28,10 +28,25 @@ namespace GXPEngine
         private void moveDirection()
         {
             //Move in given direction
-            if (_direction == "up") { doMove(0, -_travelSpeed); }
-            else if (_direction == "down") { doMove(0, _travelSpeed); }
-            else if (_direction == "left") { doMove(-_travelSpeed, 0); }
-            else if (_direction == "right") { doMove(_travelSpeed, 0); }
+            if (_direction == "up")
+            {
+                doMove(0, -_travelSpeed);
+                rotation = -90;
+            }
+            else if (_direction == "down")
+            {
+                doMove(0, _travelSpeed);
+                rotation = 90;
+            }
+            else if (_direction == "left")
+            {
+                doMove(-_travelSpeed, 0);
+                Mirror(true, false);
+            }
+            else if (_direction == "right")
+            {
+                doMove(_travelSpeed, 0);
+            }
         }
         private void doMove(float pX, float pY)
         {
