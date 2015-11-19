@@ -7,7 +7,8 @@ namespace GXPEngine
 {
     public class Enemy : AnimationSprite
     {
-        private Level _level;
+        protected Level _level;
+
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel) : base(pFileName, pColumns, pRows)
         {
             _level = pLevel;
