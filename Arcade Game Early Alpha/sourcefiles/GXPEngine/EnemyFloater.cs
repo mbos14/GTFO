@@ -21,12 +21,12 @@ namespace GXPEngine
         {
             
         }
-
+        //the movement pattern
         private void Move()
         {
-
+            //if (!Level.positionIsFree(x + direction * TILE, y) || (level.positionIsFree(x + direction * TILE, y + TILE)) turnAround();
         }
-
+        //the animation
         private void Animation()
         {
 
