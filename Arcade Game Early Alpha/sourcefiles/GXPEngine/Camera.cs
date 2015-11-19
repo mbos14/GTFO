@@ -32,7 +32,10 @@ namespace GXPEngine
             }
             if (_map.x + _objectToFollow.x < LEFTBORDER)
             {
-                _map.x = LEFTBORDER - _objectToFollow.x;
+                if (_map.x < 0)
+                {
+                    _map.x = LEFTBORDER - _objectToFollow.x;
+                }
             }
             //Vertical
             if (_map.y + _objectToFollow.y > BOTTOMBORDER)
@@ -43,6 +46,7 @@ namespace GXPEngine
             {
                 _map.y = TOPBORDER - _objectToFollow.y;
             }
+
         }
     }
 }

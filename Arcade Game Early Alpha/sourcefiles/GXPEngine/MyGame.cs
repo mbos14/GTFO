@@ -6,79 +6,67 @@ using System.Text;
 
 public class MyGame : Game
 {
-    private int _gameState = -1;
-    public int oldGameState;
+    private GameStates _state;
+    public GameStates oldGameState;
+    public static bool playerHasWeapon = false;
 
     Menu _menu;
-    Level _level1;
-    Level _level2;
+    Level _level;
+    //private EndScreen _endscreen;
 
-    const int MENU = 0;
-    const int LEVEL1 = 1;
-    const int LEVEL2 = 2;
-    const int LEVEL3 = 3;
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(LEVEL1);
+        setGameState(GameStates.level1);
     }
-    public void setGameState(int pNumber)
+    public void setGameState(GameStates pState)
     {
-        if (pNumber == _gameState) return;
-        destroyGameState(_gameState);
-        oldGameState = _gameState;
-        _gameState = pNumber;
-        newGameState(pNumber);
+        if (pState == _state) return;
+        destroyGameState(_state);
+        oldGameState = _state;
+        _state = pState;
+        newGameState(pState);
     }
-    private void newGameState(int pNumber)
+    private void newGameState(GameStates pState)
     {
-        switch (pNumber)
+        switch (pState)
         {
-            case 0:
+            case GameStates.menu:
                 {
                     _menu = new Menu();
                     AddChild(_menu);
                     break;
                 }
-            case 1:
+            case GameStates.level1:
                 {
-                    _level1 = new Level(this, "level1prototype.txt");
-                    AddChild(_level1);
+                    _level = new Level(this, "level1prototype.txt");
+                    AddChild(_level);
                     break;
                 }
-            case 2:
+            case GameStates.endscreen:
                 {
-                    _level2 = new Level(this, "level2.txt");
-                    AddChild(_level2);
-                    break;
-                }
-            case 3:
-                {
+                    //_endscreen = new EndScreen();
+                    //AddChild(_endscreen);
                     break;
                 }
         }
     }
-    private void destroyGameState(int pNumber)
+    private void destroyGameState(GameStates pState)
     {
-        switch (pNumber)
+        switch (pState)
         {
-            case 0:
+            case GameStates.menu:
                 {
-                    
                     if (_menu != null) { _menu.Destroy(); }
                     break;
                 }
-            case 1:
+            case GameStates.level1:
                 {
-                    if (_level1 != null) { _level1.Destroy(); }
+                    if (_level != null) { _level.Destroy(); }
                     break;
                 }
-            case 2:
+            case GameStates.endscreen:
                 {
-                    if (_level2 != null) { _level2.Destroy(); }
-                    break;
-                }
-            case 3:
-                {
+                    //if (_endscreen != null) { _endscreen.Destroy(); }
                     break;
                 }
         }
@@ -88,4 +76,3 @@ public class MyGame : Game
         new MyGame().Start();
     }
 }
-

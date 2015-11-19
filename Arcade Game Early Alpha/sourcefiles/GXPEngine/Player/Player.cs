@@ -9,14 +9,11 @@ namespace GXPEngine
         private Level _level;
 
         //Player
-        private float _curFrame = 0.0f;
+        private float _frame = 0.0f;
         private PlayerDirection _aimDirection = PlayerDirection.right;
         public float spawnX;
         public float spawnY;
-        private bool _hasWeapon = false;
-
-        //Keys
-
+        private bool _hasWeapon;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -31,7 +28,7 @@ namespace GXPEngine
         private int _recoilFrames = 0;
         private int _maxrecoilFrames = 150;
 
-        //Animationstate
+        //Animation
         private AnimationStatePlayer _currentAnimState = 0;
         private float _animSpeed = 0.1f;
         private float _lastFrame;
@@ -47,6 +44,8 @@ namespace GXPEngine
 
         public Player(Level pLevel) : base("player.png", 4, 9)
         {
+            if (MyGame.playerHasWeapon) { _hasWeapon = true; }
+
             SetOrigin(width / 2, height);
             _level = pLevel;
         }
@@ -73,7 +72,6 @@ namespace GXPEngine
             {
                 case PlayerDirection.left:
                     {
-                        //TODO Animation => left
                         if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet(PlayerDirection.left);
@@ -93,7 +91,6 @@ namespace GXPEngine
                     }
                 case PlayerDirection.right:
                     {
-                        //TODO Animation => aim right
                         if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet(PlayerDirection.right);
@@ -112,7 +109,6 @@ namespace GXPEngine
                     }
                 case PlayerDirection.up:
                     {
-                        //TODO Animation => aim up
                         if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             createBullet(PlayerDirection.up);
@@ -127,7 +123,6 @@ namespace GXPEngine
                     }
                 case PlayerDirection.down:
                     {
-                        //TODO Animation => aim down
                         if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             _inAir = true;
@@ -145,10 +140,11 @@ namespace GXPEngine
             //Horizontal aiming/movement
             if (Input.GetKey((int)PlayerButtons.left))
             {
+                //Check if the player is not in the air
                 Mirror(true, false);
                 if (!_inAir)
                 {
-                    _velocityX = -_walkSpeed;
+                    if (!_recoil) { _velocityX = -_walkSpeed; }
                     _currentAnimState = AnimationStatePlayer.walk;
                 }
 
@@ -159,13 +155,14 @@ namespace GXPEngine
                 Mirror(false, false);
                 if (!_inAir)
                 {
-                    _velocityX = _walkSpeed;
+                    if (!_recoil) { _velocityX = _walkSpeed; }
                     _currentAnimState = AnimationStatePlayer.walk;
                 }
                 _aimDirection = PlayerDirection.right;
             }
+
             //Vertical aiming
-            else if (Input.GetKey((int)PlayerButtons.up)) { _aimDirection = PlayerDirection.up; }
+            if (Input.GetKey((int)PlayerButtons.up)) { _aimDirection = PlayerDirection.up; }
             else if (Input.GetKey((int)PlayerButtons.down)) { _aimDirection = PlayerDirection.down; }
 
             //No horizontal movement
@@ -241,6 +238,7 @@ namespace GXPEngine
             else if (_recoil)
             {
                 _recoilFrames++;
+                if (_velocityX == 0) { _recoil = false; }
             }
 
             if (_recoilFrames > _maxrecoilFrames)
@@ -268,6 +266,7 @@ namespace GXPEngine
                     else if (other is PickUpWeapon)
                     {
                         other.Destroy();
+                        MyGame.playerHasWeapon = true;
                         _hasWeapon = true;
                     }
                     else if (other is PickUpCoin)
@@ -311,12 +310,12 @@ namespace GXPEngine
         {
             animationState();
 
-            _curFrame += _animSpeed;
+            _frame += _animSpeed;
 
-            if (_curFrame > _lastFrame) { _curFrame = _firstFrame; }
-            else if (_curFrame < _firstFrame) { _curFrame = _lastFrame; }
+            if (_frame > _lastFrame) { _frame = _firstFrame; }
+            else if (_frame < _firstFrame) { _frame = _lastFrame; }
 
-            this.SetFrame((int)_curFrame);
+            this.SetFrame((int)_frame);
         }
         private void setAnimationRange(float pFirstFrame, float pLastFrame)
         {

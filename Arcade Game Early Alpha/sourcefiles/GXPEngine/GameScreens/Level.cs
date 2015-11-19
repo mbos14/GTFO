@@ -8,41 +8,49 @@ namespace GXPEngine
 {
     public class Level : GameObject
     {
+        //Data
         public List<GameObject> objectList = new List<GameObject>();
         private Player _player;
-
+        private MyGame _game;
+        private string _fileName;
+        
+        //Variables for tile- and levelsize
         const int HEIGHT = 26;
         const int WIDTH = 60;
-        private string _fileName;
-
-        private MyGame _game;
         const int TILESIZE = 32;
 
+        //Pivots
         private Pivot _backgroundLayer = new Pivot();
         private Pivot _midgroundLayer = new Pivot();
         private Pivot _foregroundLayer = new Pivot();
         public Level(MyGame pGame, string pFileName)
         {
-            AddChild(_backgroundLayer);
-            AddChild(_midgroundLayer);
-            AddChild(_foregroundLayer);
-
             _fileName = pFileName;
             _game = pGame;
 
+            addPivots();
+            drawAll();
+
+            Camera cam1 = new Camera(_player, this);
+            AddChild(cam1);
+        }
+        //Drawfunctions
+        private void drawAll()
+        {
             drawBackGroundLayer();
-            drawBackGroundLayer2();
             drawbackGroundObjectLayer();
             drawSolidLayer();
             drawDamageLayer();
             drawPickUpLayer();
             drawForeGroundLayer();
             drawPlayer();
-
-            Camera cam1 = new Camera(_player, this);
-            AddChild(cam1);
         }
-        //Draw all
+        private void addPivots()
+        {
+            AddChild(_backgroundLayer);
+            AddChild(_midgroundLayer);
+            AddChild(_foregroundLayer);
+        }
         private void drawPlayer()
         {
             _player = new Player(this);
@@ -51,6 +59,7 @@ namespace GXPEngine
             _player.spawnY = 530;
             _player.SetXY(_player.spawnX, _player.spawnY);
         }
+        //Layers
         private void drawBackGroundLayer()
         {
             int[,] levelData = new int[HEIGHT, WIDTH];
@@ -81,41 +90,6 @@ namespace GXPEngine
                         BackgroundObject thisobject = new BackgroundObject();
                         _backgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                        thisobject.SetFrame(levelData[i, j] - 1);
-                    }
-                }
-            }
-        }
-        private void drawBackGroundLayer2()
-        {
-            int[,] levelData = new int[HEIGHT, WIDTH];
-            //------------------------------------------READ FILE----------------------------------------------
-            StreamReader reader1 = new StreamReader(_fileName);
-            string fileData = reader1.ReadToEnd();
-            reader1.Close();
-            //--------------------------------------SPLIT AND CONVERT------------------------------------------
-            string[] lines = fileData.Split('\n');
-            for (int j = 14; j < 40; j++)
-            {
-                string[] columns = lines[j].Split(',');
-
-                for (int i = 0; i < WIDTH; i++)
-                {
-                    string column = columns[i];
-                    levelData[j - 14, i] = int.Parse(column);
-                }
-            }
-
-            //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
-            {
-                for (int j = 0; j < WIDTH; j++)
-                {
-                    if (levelData[i, j] != 0)
-                    {
-                        BackgroundObject thisobject = new BackgroundObject();
-                        _backgroundLayer.AddChild(thisobject);
-                        thisobject.SetXY(j * TILESIZE * -1, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
                     }
                 }

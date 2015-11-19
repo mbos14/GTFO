@@ -24,6 +24,7 @@ namespace GXPEngine
         {
             moveDirection();
             getCollisions();
+            shrinkBullet();
         }
         private void moveDirection()
         {
@@ -105,6 +106,18 @@ namespace GXPEngine
                     //    Destroy();
                     //    other.velocityX *= -1;
                     //}
+                }
+            }
+        }
+        private void shrinkBullet()
+        {
+            if (_distanceTraveled != 0)
+            {
+                float shrinkvalue = damage / 100;
+                //float shrinkvalue = _distanceTraveled / _maxTravel;
+                if (shrinkvalue <= 1)
+                {
+                    SetScaleXY(shrinkvalue, shrinkvalue);
                 }
             }
         }

@@ -37,14 +37,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerator.cs" />
-    <Compile Include="BackgroundObject.cs" />
+    <Compile Include="Blocks\BackgroundObject.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="DamageBlock.cs" />
-    <Compile Include="Enemy.cs" />
-    <Compile Include="EnemyFloater.cs" />
-    <Compile Include="EnemySpider.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="Menu.cs" />
+    <Compile Include="Blocks\DamageBlock.cs" />
+    <Compile Include="Enemy\Enemy.cs" />
+    <Compile Include="Enemy\EnemyFloater.cs" />
+    <Compile Include="Enemy\EnemySpider.cs" />
+    <Compile Include="GameScreens\Level.cs" />
+    <Compile Include="GameScreens\Menu.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -72,13 +72,13 @@
     <Compile Include="GXPEngine\Utils\MouseHandler.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
-    <Compile Include="PickUp.cs" />
-    <Compile Include="PickUpCoin.cs" />
-    <Compile Include="PickUpLife.cs" />
-    <Compile Include="PickUpReload.cs" />
-    <Compile Include="PickUpWeapon.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayerBullet.cs" />
-    <Compile Include="SolidObject.cs" />
+    <Compile Include="Pickups\PickUp.cs" />
+    <Compile Include="Pickups\PickUpCoin.cs" />
+    <Compile Include="Pickups\PickUpLife.cs" />
+    <Compile Include="Pickups\PickUpReload.cs" />
+    <Compile Include="Pickups\PickUpWeapon.cs" />
+    <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\PlayerBullet.cs" />
+    <Compile Include="Blocks\SolidObject.cs" />
   </ItemGroup>
 </Project>

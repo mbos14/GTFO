@@ -7,9 +7,16 @@ namespace GXPEngine
 {
     public class PickUp : AnimationSprite
     {
+        protected float _frame = 0.0f;
         public PickUp(string pFileName, int pColumns, int pRows) : base(pFileName, pColumns, pRows)
         {
 
+        }
+        virtual public void animation()
+        {
+            _frame += 0.2f;
+            if (_frame >= frameCount) { _frame = 0.0f; }
+            SetFrame((int)_frame);
         }
     }
 }
