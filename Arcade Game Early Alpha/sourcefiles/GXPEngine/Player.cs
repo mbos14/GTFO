@@ -30,7 +30,10 @@ namespace GXPEngine
         private float maxVelocityY = 20.0f;
         private float _pushBackSpeed = 3.0f;
         private float _gravity = 0.65f;
-        private float _bounce = -0.35f;
+        private float _bounce = -0.25f;
+        private bool _recoil = false;
+        private int _recoilFrames = 0;
+        private int _maxrecoilFrames = 100;
 
         //Animationstate
         private int _currentAnimState = 0;
@@ -48,7 +51,7 @@ namespace GXPEngine
         //Weapon
         private float _maxBullets = 2;
         private float _bulletCounter = 2;
-        private float _bulletCharge = 0.025f;
+        private float _bulletCharge = 0.03f;
 
         public Player(Level pLevel) : base("player.png", 4, 9)
         {
@@ -61,6 +64,7 @@ namespace GXPEngine
             checkShooting();
             movePlayer();
             chargeWeapon();
+            recoilCounter();
         }
         private void respawn()
         {
@@ -88,7 +92,8 @@ namespace GXPEngine
                             }
                             else if (!_inAir)
                             {
-                                _velocityX = _pushBackSpeed;
+                                _recoil = true;
+                                _velocityX = _pushBackSpeed * 3;
                             }
                         }
 
@@ -107,7 +112,8 @@ namespace GXPEngine
                             }
                             else if (!_inAir)
                             {
-                                _velocityX = -_pushBackSpeed;
+                                _recoil = true;
+                                _velocityX = -_pushBackSpeed * 3;
                             }
                         }
                         break;
@@ -171,7 +177,18 @@ namespace GXPEngine
             else if (Input.GetKey(DOWN)) { _aimDirection = "down"; }
 
             //No horizontal movement
-            if (!Input.GetKey(LEFT) && !Input.GetKey(RIGHT))
+            if (_recoil)
+            {
+                if (_velocityX > 0)
+                {
+                    _velocityX--;
+                }
+                else if (_velocityX < 0)
+                {
+                    _velocityX++;
+                }
+            }
+            else if (!Input.GetKey(LEFT) && !Input.GetKey(RIGHT))
             {
                 if (!_inAir)
                 {
@@ -188,10 +205,22 @@ namespace GXPEngine
             //Horizontal movement
             x += _velocityX;
             //Move outside the block if collision
-            while (checkCollisions())
+
+            if (checkCollisions())
             {
-                if (_velocityX > 0) { x -= 1.0f; }
-                else if (_velocityX < 0) { x += 1.0f; }
+                while (checkCollisions())
+                {
+                    if (_velocityX > 0) { x -= 1.0f; }
+                    else if (_velocityX < 0) { x += 1.0f; }
+                }
+                if (_velocityX > 3.0f || _velocityX < -3.0f)
+                {
+                    _velocityX *= _bounce;
+                }
+                else
+                {
+                    _velocityX = 0.0f;
+                }
             }
 
             //Vertical Movement
@@ -213,6 +242,20 @@ namespace GXPEngine
                 else if (_velocityY < 0) { _velocityY *= _bounce; }
             }
 
+        }
+        private void recoilCounter()
+        {
+            if (!_recoil) { _recoilFrames = 0; }
+            else if (_recoil)
+            {
+                _recoilFrames++;
+            }
+
+            if (_recoilFrames > _maxrecoilFrames)
+            {
+                _recoil = false;
+                _recoilFrames = 0;
+            }
         }
         private bool checkCollisions()
         {
