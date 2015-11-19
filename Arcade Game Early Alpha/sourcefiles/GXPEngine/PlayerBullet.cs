@@ -9,11 +9,11 @@ namespace GXPEngine
     {
         private string _direction;
         private float _distanceTraveled = 0.0f;
-        private float _maxTravel = 100.0f;
-        public float damage = 100.0f;
+        private float _maxTravel = 200.0f;
+        public float damage = 200.0f;
         private Level001 _level;
 
-        private float _travelSpeed = 5.0f;
+        private float _travelSpeed = 15.0f;
         public PlayerBullet(string pDirection, Level001 pLevel) : base("playerbullet.png")
         {
             _level = pLevel;

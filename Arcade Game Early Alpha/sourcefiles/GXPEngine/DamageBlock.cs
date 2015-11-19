@@ -7,7 +7,7 @@ namespace GXPEngine
 {
     public class DamageBlock : AnimationSprite
     {
-        public DamageBlock() : base("tileset.png", 5, 2)
+        public DamageBlock() : base("tileset.png", 14, 19)
         {
 
         }
