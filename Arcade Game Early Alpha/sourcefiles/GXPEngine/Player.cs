@@ -6,7 +6,7 @@ namespace GXPEngine
     public class Player : AnimationSprite
     {
         //Game data
-        private Level001 _level;
+        private Level _level;
 
         //Player
         private float _curFrame = 0.0f;
@@ -50,7 +50,7 @@ namespace GXPEngine
         private float _bulletCounter = 2;
         private float _bulletCharge = 0.025f;
 
-        public Player(Level001 pLevel) : base("player.png", 4, 9)
+        public Player(Level pLevel) : base("player.png", 4, 9)
         {
             SetOrigin(width / 2, height);
             _level = pLevel;

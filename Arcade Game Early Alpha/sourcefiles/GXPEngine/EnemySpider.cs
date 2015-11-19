@@ -7,7 +7,7 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-        private Level001 _level;
+        private Level _level;
         private int _moveCounter = 0;
         private float _velocityX = 1.0f;
 
@@ -22,7 +22,7 @@ namespace GXPEngine
         const int WALK = 1;
         const int BLOWED = 2;
         const int DEAD = 3;
-        public EnemySpider(Level001 pLevel) : base("robospider.png", 4, 3, pLevel)
+        public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
             SetOrigin(width / 2, height / 2);
             _level = pLevel;

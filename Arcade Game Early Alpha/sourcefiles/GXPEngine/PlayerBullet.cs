@@ -11,10 +11,10 @@ namespace GXPEngine
         private float _distanceTraveled = 0.0f;
         private float _maxTravel = 200.0f;
         public float damage = 200.0f;
-        private Level001 _level;
+        private Level _level;
 
         private float _travelSpeed = 15.0f;
-        public PlayerBullet(string pDirection, Level001 pLevel) : base("playerbullet.png")
+        public PlayerBullet(string pDirection, Level pLevel) : base("playerbullet.png")
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace GXPEngine
 {
-    public class Level001 : GameObject
+    public class Level : GameObject
     {
         public List<GameObject> objectList = new List<GameObject>();
         private Player _player;
@@ -21,7 +21,7 @@ namespace GXPEngine
         private Pivot _backgroundLayer = new Pivot();
         private Pivot _midgroundLayer = new Pivot();
         private Pivot _foregroundLayer = new Pivot();
-        public Level001(MyGame pGame, string pFileName)
+        public Level(MyGame pGame, string pFileName)
         {
             AddChild(_backgroundLayer);
             AddChild(_midgroundLayer);

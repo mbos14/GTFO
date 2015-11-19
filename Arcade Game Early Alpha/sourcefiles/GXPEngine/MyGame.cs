@@ -10,8 +10,8 @@ public class MyGame : Game
     public int oldGameState;
 
     Menu _menu;
-    Level001 _level1;
-    Level001 _level2;
+    Level _level1;
+    Level _level2;
 
     const int MENU = 0;
     const int LEVEL1 = 1;
@@ -41,13 +41,13 @@ public class MyGame : Game
                 }
             case 1:
                 {
-                    _level1 = new Level001(this, "level1prototype.txt");
+                    _level1 = new Level(this, "level1prototype.txt");
                     AddChild(_level1);
                     break;
                 }
             case 2:
                 {
-                    _level2 = new Level001(this, "level2.txt");
+                    _level2 = new Level(this, "level2.txt");
                     AddChild(_level2);
                     break;
                 }
