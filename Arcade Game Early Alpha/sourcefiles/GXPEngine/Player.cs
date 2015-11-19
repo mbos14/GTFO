@@ -10,17 +10,13 @@ namespace GXPEngine
 
         //Player
         private float _curFrame = 0.0f;
-        private string _aimDirection = "right";
+        private PlayerDirection _aimDirection = PlayerDirection.right;
         public float spawnX;
         public float spawnY;
         private bool _hasWeapon = false;
 
         //Keys
-        const int LEFT = Key.LEFT;
-        const int RIGHT = Key.RIGHT;
-        const int UP = Key.UP;
-        const int DOWN = Key.DOWN;
-        const int SHOOT = Key.LEFT_CTRL;
+
 
         //Speed
         private float _velocityX = 0.0f;
@@ -33,17 +29,13 @@ namespace GXPEngine
         private float _bounce = -0.25f;
         private bool _recoil = false;
         private int _recoilFrames = 0;
-        private int _maxrecoilFrames = 100;
+        private int _maxrecoilFrames = 150;
 
         //Animationstate
-        private int _currentAnimState = 0;
+        private AnimationStatePlayer _currentAnimState = 0;
         private float _animSpeed = 0.1f;
         private float _lastFrame;
         private float _firstFrame;
-
-        const int WALKING = 0;
-        const int IDLING = 1;
-        const int JUMPING = 2;
 
         //Air check
         private bool _inAir;
@@ -79,12 +71,12 @@ namespace GXPEngine
             //Apply aimdirection
             switch (_aimDirection)
             {
-                case "left":
+                case PlayerDirection.left:
                     {
                         //TODO Animation => left
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
+                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
-                            createBullet("left");
+                            createBullet(PlayerDirection.left);
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -99,12 +91,12 @@ namespace GXPEngine
 
                         break;
                     }
-                case "right":
+                case PlayerDirection.right:
                     {
                         //TODO Animation => aim right
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
+                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
-                            createBullet("right");
+                            createBullet(PlayerDirection.right);
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -118,12 +110,12 @@ namespace GXPEngine
                         }
                         break;
                     }
-                case "up":
+                case PlayerDirection.up:
                     {
                         //TODO Animation => aim up
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
+                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
-                            createBullet("up");
+                            createBullet(PlayerDirection.up);
                             _bulletCounter -= 1.0f;
                             if (_inAir)
                             {
@@ -133,14 +125,14 @@ namespace GXPEngine
                         }
                         break;
                     }
-                case "down":
+                case PlayerDirection.down:
                     {
                         //TODO Animation => aim down
-                        if (Input.GetKeyDown(SHOOT) && _bulletCounter >= 1 && _hasWeapon)
+                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
                         {
                             _inAir = true;
 
-                            createBullet("down");
+                            createBullet(PlayerDirection.down);
                             _bulletCounter -= 1.0f;
                             _velocityY = _jumpSpeed;
                         }
@@ -151,44 +143,44 @@ namespace GXPEngine
         private void getInput()
         {
             //Horizontal aiming/movement
-            if (Input.GetKey(LEFT))
+            if (Input.GetKey((int)PlayerButtons.left))
             {
                 Mirror(true, false);
                 if (!_inAir)
                 {
                     _velocityX = -_walkSpeed;
-                    _currentAnimState = WALKING;
+                    _currentAnimState = AnimationStatePlayer.walk;
                 }
 
-                _aimDirection = "left";
+                _aimDirection = PlayerDirection.left;
             }
-            else if (Input.GetKey(RIGHT))
+            else if (Input.GetKey((int)PlayerButtons.right))
             {
                 Mirror(false, false);
                 if (!_inAir)
                 {
                     _velocityX = _walkSpeed;
-                    _currentAnimState = WALKING;
+                    _currentAnimState = AnimationStatePlayer.walk;
                 }
-                _aimDirection = "right";
+                _aimDirection = PlayerDirection.right;
             }
             //Vertical aiming
-            else if (Input.GetKey(UP)) { _aimDirection = "up"; }
-            else if (Input.GetKey(DOWN)) { _aimDirection = "down"; }
+            else if (Input.GetKey((int)PlayerButtons.up)) { _aimDirection = PlayerDirection.up; }
+            else if (Input.GetKey((int)PlayerButtons.down)) { _aimDirection = PlayerDirection.down; }
 
             //No horizontal movement
             if (_recoil)
             {
                 if (_velocityX > 0)
                 {
-                    _velocityX--;
+                    _velocityX -= 0.5f;
                 }
                 else if (_velocityX < 0)
                 {
-                    _velocityX++;
+                    _velocityX += 0.5f;
                 }
             }
-            else if (!Input.GetKey(LEFT) && !Input.GetKey(RIGHT))
+            else if (!Input.GetKey((int)PlayerButtons.left) && !Input.GetKey((int)PlayerButtons.right))
             {
                 if (!_inAir)
                 {
@@ -197,8 +189,8 @@ namespace GXPEngine
             }
 
             if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
-            if (_velocityX == 0.0f) { _currentAnimState = IDLING; }
-            if (_inAir == true) { _currentAnimState = JUMPING; }
+            if (_velocityX == 0.0f) { _currentAnimState = AnimationStatePlayer.idle; }
+            if (_inAir == true) { _currentAnimState = AnimationStatePlayer.jump; }
         }
         private void movePlayer()
         {
@@ -281,12 +273,12 @@ namespace GXPEngine
                     else if (other is PickUpCoin)
                     {
                         other.Destroy();
-                        addPoints();
+                        //addPoints();
                     }
                     else if (other is PickUpLife)
                     {
                         other.Destroy();
-                        addLife();
+                        //addLife();
                     }
                     else if (other is PickUpReload)
                     {
@@ -305,15 +297,15 @@ namespace GXPEngine
             }
             return false;
         }
-        //------------PICKUPS-------------------
-        private void addLife()
-        {
+        ////------------PICKUPS-------------------
+        //private void addLife()
+        //{
 
-        }
-        private void addPoints()
-        {
+        //}
+        //private void addPoints()
+        //{
 
-        }
+        //}
         //------------ANIMATION-----------------
         private void animation()
         {
@@ -335,7 +327,7 @@ namespace GXPEngine
         {
             switch (_currentAnimState)
             {
-                case IDLING:
+                case AnimationStatePlayer.idle:
                     {
                         if (!_hasWeapon)
                         {
@@ -343,14 +335,14 @@ namespace GXPEngine
                         }
                         else if (_hasWeapon)
                         {
-                            if (_aimDirection == "left") { setAnimationRange(8, 10); }
-                            else if (_aimDirection == "right") { setAnimationRange(8, 10); }
-                            else if (_aimDirection == "up") { setAnimationRange(16, 18); }
-                            else if (_aimDirection == "down") { setAnimationRange(24, 26); }
+                            if (_aimDirection == PlayerDirection.left) { setAnimationRange(8, 10); }
+                            else if (_aimDirection == PlayerDirection.right) { setAnimationRange(8, 10); }
+                            else if (_aimDirection == PlayerDirection.up) { setAnimationRange(16, 18); }
+                            else if (_aimDirection == PlayerDirection.down) { setAnimationRange(24, 26); }
                         }
                         break;
                     }
-                case WALKING:
+                case AnimationStatePlayer.walk:
                     {
                         if (!_hasWeapon)
                         {
@@ -358,19 +350,19 @@ namespace GXPEngine
                         }
                         else if (_hasWeapon)
                         {
-                            if (_aimDirection == "left") { setAnimationRange(11, 15); }
-                            else if (_aimDirection == "right") { setAnimationRange(11, 15); }
-                            else if (_aimDirection == "up") { setAnimationRange(19, 23); }
-                            else if (_aimDirection == "down") { setAnimationRange(27, 31); }
+                            if (_aimDirection == PlayerDirection.left) { setAnimationRange(11, 15); }
+                            else if (_aimDirection == PlayerDirection.right) { setAnimationRange(11, 15); }
+                            else if (_aimDirection == PlayerDirection.up) { setAnimationRange(19, 23); }
+                            else if (_aimDirection == PlayerDirection.down) { setAnimationRange(27, 31); }
                         }
                         break;
                     }
-                case JUMPING:
+                case AnimationStatePlayer.jump:
                     {
-                        if (_aimDirection == "left") { setAnimationRange(32, 32); }
-                        else if (_aimDirection == "right") { setAnimationRange(32, 32); }
-                        else if (_aimDirection == "up") { setAnimationRange(34, 34); }
-                        else if (_aimDirection == "down") { setAnimationRange(33, 33); }
+                        if (_aimDirection == PlayerDirection.left) { setAnimationRange(32, 32); }
+                        else if (_aimDirection == PlayerDirection.right) { setAnimationRange(32, 32); }
+                        else if (_aimDirection == PlayerDirection.up) { setAnimationRange(34, 34); }
+                        else if (_aimDirection == PlayerDirection.down) { setAnimationRange(33, 33); }
                         break;
                     }
             }
@@ -387,7 +379,7 @@ namespace GXPEngine
                 _bulletCounter = _maxBullets;
             }
         }
-        private void createBullet(string pDirection)
+        private void createBullet(PlayerDirection pDirection)
         {
             PlayerBullet bullet = new PlayerBullet(pDirection, _level);
             _level.AddChild(bullet);

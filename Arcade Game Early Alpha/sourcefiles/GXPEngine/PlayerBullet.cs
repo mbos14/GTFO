@@ -7,14 +7,14 @@ namespace GXPEngine
 {
     public class PlayerBullet : Sprite
     {
-        private string _direction;
+        private PlayerDirection _direction;
         private float _distanceTraveled = 0.0f;
         private float _maxTravel = 200.0f;
         public float damage = 200.0f;
         private Level _level;
 
         private float _travelSpeed = 15.0f;
-        public PlayerBullet(string pDirection, Level pLevel) : base("playerbullet.png")
+        public PlayerBullet(PlayerDirection pDirection, Level pLevel) : base("playerbullet.png")
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
@@ -28,22 +28,22 @@ namespace GXPEngine
         private void moveDirection()
         {
             //Move in given direction
-            if (_direction == "up")
+            if (_direction == PlayerDirection.up)
             {
                 doMove(0, -_travelSpeed);
                 rotation = -90;
             }
-            else if (_direction == "down")
+            else if (_direction == PlayerDirection.down)
             {
                 doMove(0, _travelSpeed);
                 rotation = 90;
             }
-            else if (_direction == "left")
+            else if (_direction == PlayerDirection.left)
             {
                 doMove(-_travelSpeed, 0);
                 Mirror(true, false);
             }
-            else if (_direction == "right")
+            else if (_direction == PlayerDirection.right)
             {
                 doMove(_travelSpeed, 0);
             }
