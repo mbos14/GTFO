@@ -8,3 +8,5 @@ C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\Arcade G
 C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\Arcade Game\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
 C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\Arcade Game\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
 C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\Arcade Game\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
+C:\Users\maikel\Documents\Projects\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\maikel\Documents\Projects\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.pdb
