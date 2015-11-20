@@ -123,18 +123,9 @@ namespace GXPEngine
                 }
                 _player.Mirror(false, false);
             }
-            //----------------NO BUTTONS--------------
-            if (_recoil)
-            {
-                if (_velocityX > 0) { _velocityX -= 0.5f; }
-                else if (_velocityX < 0) { _velocityX += 0.5f; }
-            }
-            else if (!Input.GetKey((int)PlayerButtons.left) && !Input.GetKey((int)PlayerButtons.right))
-            {
-                if (!_inAir) { _velocityX = 0.0f; }
-            }
+
             //-------------------UP-------------------
-            if (Input.GetKey((int)PlayerButtons.up) && !_recoil)
+            else if (Input.GetKey((int)PlayerButtons.up) && !_recoil)
             {
                 //Set directions
                 _aimDirection = PlayerDirection.up;
@@ -144,6 +135,16 @@ namespace GXPEngine
             {
                 //Set directions
                 _aimDirection = PlayerDirection.down;
+            }
+            //----------------NO BUTTONS--------------
+            if (_recoil)
+            {
+                if (_velocityX > 0) { _velocityX -= 0.5f; }
+                else if (_velocityX < 0) { _velocityX += 0.5f; }
+            }
+            else if (!Input.GetKey((int)PlayerButtons.left) && !Input.GetKey((int)PlayerButtons.right))
+            {
+                if (!_inAir) { _velocityX = 0.0f; }
             }
             //------------------SHOOT-----------------
             if (Input.GetKeyDown((int)PlayerButtons.shoot) && hasWeapon && bulletCounter >= 1)

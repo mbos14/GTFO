@@ -14,7 +14,7 @@ public class MyGame : Game
     Level _level;
     //private EndScreen _endscreen;
 
-    public MyGame() : base(1024, 768, false)
+    public MyGame() : base(1024, 768, true)
     {
         setGameState(GameStates.level1);
     }

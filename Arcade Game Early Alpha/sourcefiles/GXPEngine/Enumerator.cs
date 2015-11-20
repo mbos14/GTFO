@@ -33,13 +33,7 @@ namespace GXPEngine
 
 
     //PLAYER
-<<<<<<< HEAD
     public enum PlayerDirection { left, right, up, down};
     public enum AnimationStatePlayer { idle, walk, jump};
     public enum PlayerButtons { left = Key.A, right = Key.D, up = Key.W, down = Key.S, shoot = Key.F };
-=======
-        public enum PlayerDirection { left, right, up, down};
-        public enum AnimationStatePlayer { idle, walk, jump};
-        public enum PlayerButtons { left = Key.LEFT, right = Key.RIGHT, up = Key.UP, down = Key.DOWN, shoot = Key.LEFT_CTRL};
->>>>>>> 4cb44cd47c1ce718381ce5aa87954145482397c1
 }

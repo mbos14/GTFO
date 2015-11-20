@@ -47,8 +47,8 @@ namespace GXPEngine
             drawSolidLayer();
             drawDamageLayer();
             drawPickUpLayer();
-            drawForeGroundLayer();
             drawPlayer();
+            drawForeGroundLayer();
         }
         private void addPivots()
         {

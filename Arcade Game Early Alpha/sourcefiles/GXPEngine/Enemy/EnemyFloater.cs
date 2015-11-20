@@ -35,7 +35,7 @@ namespace GXPEngine
             switch(_animState)
             {
                 case AnimationStateEnemy.idle:
-                    setAnimationRange((float)SpiderIdle);
+                    //setAnimationRange((float)SpiderIdle);
                     break;
                 case AnimationStateEnemy.walk:
 
