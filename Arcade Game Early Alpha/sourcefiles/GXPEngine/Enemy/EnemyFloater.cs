@@ -24,7 +24,7 @@ namespace GXPEngine
             
         }
         //the movement pattern
-        private override void Move()
+        protected override void Move()
         {
             //if (!Level.positionIsFree(x + direction * TILE, y) || (level.positionIsFree(x + direction * TILE, y + TILE)) turnAround();
 
@@ -35,7 +35,7 @@ namespace GXPEngine
             switch(_animState)
             {
                 case AnimationStateEnemy.idle:
-
+                    setAnimationRange((float)SpiderIdle);
                     break;
                 case AnimationStateEnemy.walk:
 
