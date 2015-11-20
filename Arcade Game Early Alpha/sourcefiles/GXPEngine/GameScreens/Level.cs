@@ -27,7 +27,7 @@ namespace GXPEngine
         //Pivots
         private Pivot _backgroundLayer = new Pivot();
         private Pivot _midgroundLayer = new Pivot();
-        private Pivot _foregroundLayer = new Pivot();
+        public Pivot hudLayer = new Pivot();
         public Level(MyGame pGame, string pFileName)
         {
             _fileName = pFileName;
@@ -54,7 +54,7 @@ namespace GXPEngine
         {
             AddChild(_backgroundLayer);
             AddChild(_midgroundLayer);
-            AddChild(_foregroundLayer);
+            AddChild(hudLayer);
         }
         private void drawPlayer()
         {
@@ -294,7 +294,7 @@ namespace GXPEngine
                     if (levelData[i, j] != 0)
                     {
                         BackgroundObject thisobject = new BackgroundObject();
-                        _foregroundLayer.AddChild(thisobject);
+                        _midgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
                     }

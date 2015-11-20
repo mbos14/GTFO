@@ -82,14 +82,12 @@ namespace GXPEngine
         {
             if (_distanceTraveled == 0) return;
             float shrinkvalue;
-
+            //Set shrinkvalue
             if (_distanceTraveled >= 0) { shrinkvalue = (_maxTravel - _distanceTraveled) / 100.0f; }
             else { shrinkvalue = (_maxTravel + _distanceTraveled) / 100.0f; }
-            //float shrinkvalue = _distanceTraveled / _maxTravel;
-            if (shrinkvalue <= 1)
-            {
-                SetScaleXY(shrinkvalue, shrinkvalue);
-            }
+            //Scale
+            if (shrinkvalue <= 1) { SetScaleXY(shrinkvalue, shrinkvalue); }
+
         }
         private void getCollisions()
         {

@@ -3,10 +3,11 @@ using GXPEngine.Core;
 
 namespace GXPEngine
 {
-    public class Player : AnimationSprite
+    public class Player : Sprite
     {
         //Game data
         private Level _level;
+        private AnimationSprite _player = new AnimationSprite("player.png", 4, 9);
 
         //Player
         private float _frame = 0.0f;
@@ -42,9 +43,14 @@ namespace GXPEngine
         public float bulletCounter = 2;
         private float _bulletCharge = 0.03f;
 
-        public Player(Level pLevel) : base("player.png", 4, 9)
+        private bool _button1, _button2, _button3;
+
+        public Player(Level pLevel) : base("hitboxplayer.png")
         {
             if (MyGame.playerHasWeapon) { hasWeapon = true; }
+
+            _player.SetOrigin(width / 2, height);
+            AddChild(_player);
 
             SetOrigin(width / 2, height);
             _level = pLevel;
@@ -55,11 +61,37 @@ namespace GXPEngine
             movePlayer();
             chargeWeapon();
             recoilCounter();
+            secretCheat();
         }
         public void Respawn()
         {
             x = spawnX;
             y = spawnY;
+        }
+        private void secretCheat()
+        {
+            //Button 1
+            if (Input.GetKeyDown(Key.V))
+            {
+                _button1 = true;
+            }
+
+            //Button 2
+            if (_button1 && Input.GetKeyDown(Key.B))
+            {
+                _button2 = true;
+            }
+
+            //Button 3
+            if (_button2 && Input.GetKeyDown(Key.H))
+            {
+                _button3 = true;
+            }
+
+            if (_button1 && _button2 && _button3)
+            {
+                _bulletCharge = 100;
+            }
         }
         //-------------MOVEMENT-----------------
         private void getInput()
@@ -75,7 +107,7 @@ namespace GXPEngine
                     //Move
                     _velocityX = -_walkSpeed;
                 }
-                Mirror(true, false);
+                _player.Mirror(true, false);
 
             }
             //------------------RIGHT-----------------
@@ -89,7 +121,7 @@ namespace GXPEngine
                     //Move
                     _velocityX = _walkSpeed;
                 }
-                Mirror(false, false);
+                _player.Mirror(false, false);
             }
             //----------------NO BUTTONS--------------
             if (_recoil)
@@ -204,7 +236,7 @@ namespace GXPEngine
             if (_frame > _lastFrame) { _frame = _firstFrame; }
             else if (_frame < _firstFrame) { _frame = _lastFrame; }
 
-            this.SetFrame((int)_frame);
+            _player.SetFrame((int)_frame);
         }
         private void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
