@@ -36,6 +36,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enemy\EnemyBug.cs" />
     <Compile Include="Enumerator.cs" />
     <Compile Include="Blocks\BackgroundObject.cs" />
     <Compile Include="Camera.cs" />

@@ -10,6 +10,8 @@ namespace GXPEngine
         //speed at wich the frames change
         //private float _frameSpeed = 0.2f;
         
+        
+        
 
         public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel)
         {
@@ -22,14 +24,32 @@ namespace GXPEngine
             
         }
         //the movement pattern
-        private void Move()
+        private override void Move()
         {
             //if (!Level.positionIsFree(x + direction * TILE, y) || (level.positionIsFree(x + direction * TILE, y + TILE)) turnAround();
+
         }
         //the animation
         private void Animation()
         {
+            switch(_animState)
+            {
+                case AnimationStateEnemy.idle:
 
+                    break;
+                case AnimationStateEnemy.walk:
+
+                    break;
+                case AnimationStateEnemy.hit:
+
+                    break;
+                case AnimationStateEnemy.death:
+
+                    break;
+                case AnimationStateEnemy.jump:
+
+                    break;
+            }
         }
     }
 }
