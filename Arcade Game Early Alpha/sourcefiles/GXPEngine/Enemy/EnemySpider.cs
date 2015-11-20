@@ -25,9 +25,9 @@ namespace GXPEngine
         void Update()
         {
             animation();
-            move();
+            Move();
         }
-        private void move()
+        protected override void Move()
         {
             if (_moveCounter >= 100)
             {
