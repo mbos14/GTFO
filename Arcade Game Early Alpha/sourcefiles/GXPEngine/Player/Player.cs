@@ -3,11 +3,10 @@ using GXPEngine.Core;
 
 namespace GXPEngine
 {
-    public class Player : Sprite
+    public class Player : AnimationSprite
     {
         //Game data
         private Level _level;
-        private AnimationSprite _player = new AnimationSprite("player.png", 4, 9);
 
         //Player
         private float _frame = 0.0f;
@@ -45,12 +44,9 @@ namespace GXPEngine
 
         private bool _button1, _button2, _button3;
 
-        public Player(Level pLevel) : base("hitboxplayer.png")
+        public Player(Level pLevel) : base("player.png", 4, 10)
         {
             if (MyGame.playerHasWeapon) { hasWeapon = true; }
-
-            _player.SetOrigin(width / 2, height);
-            AddChild(_player);
 
             SetOrigin(width / 2, height);
             _level = pLevel;
@@ -107,7 +103,7 @@ namespace GXPEngine
                     //Move
                     _velocityX = -_walkSpeed;
                 }
-                _player.Mirror(true, false);
+                Mirror(true, false);
 
             }
             //------------------RIGHT-----------------
@@ -121,7 +117,7 @@ namespace GXPEngine
                     //Move
                     _velocityX = _walkSpeed;
                 }
-                _player.Mirror(false, false);
+                Mirror(false, false);
             }
 
             //-------------------UP-------------------
@@ -139,6 +135,7 @@ namespace GXPEngine
             //----------------NO BUTTONS--------------
             if (_recoil)
             {
+                _currentAnimState = AnimationStatePlayer.recoil;
                 if (_velocityX > 0) { _velocityX -= 0.5f; }
                 else if (_velocityX < 0) { _velocityX += 0.5f; }
             }
@@ -237,7 +234,7 @@ namespace GXPEngine
             if (_frame > _lastFrame) { _frame = _firstFrame; }
             else if (_frame < _firstFrame) { _frame = _lastFrame; }
 
-            _player.SetFrame((int)_frame);
+            SetFrame((int)_frame);
         }
         private void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
@@ -284,6 +281,11 @@ namespace GXPEngine
                         else if (_aimDirection == PlayerDirection.right) { setAnimationRange(32, 32); }
                         else if (_aimDirection == PlayerDirection.up) { setAnimationRange(34, 34); }
                         else if (_aimDirection == PlayerDirection.down) { setAnimationRange(33, 33); }
+                        break;
+                    }
+                case AnimationStatePlayer.recoil:
+                    {
+                        setAnimationRange(36, 36);
                         break;
                     }
             }

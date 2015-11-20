@@ -61,7 +61,7 @@ namespace GXPEngine
             _player = new Player(this);
             _midgroundLayer.AddChild(_player);
             _player.spawnX = 100;
-            _player.spawnY = 530;
+            _player.spawnY = 540;
             _player.SetXY(_player.spawnX, _player.spawnY);
         }
         //Layers

@@ -91,13 +91,14 @@ namespace GXPEngine
             if (_distanceTraveled >= 0) { shrinkvalue = (_maxTravel - _distanceTraveled) / 100.0f; }
             else { shrinkvalue = (_maxTravel + _distanceTraveled) / 100.0f; }
             //Scale
-            if (shrinkvalue <= 1)
-            {
-                SetScaleXY(shrinkvalue, shrinkvalue);
-                _overlaySprite.SetScaleXY(scaleX, scaleY);
-            }
+            //if (shrinkvalue <= 1)
+            //{
+            //    //SetScaleXY(shrinkvalue, shrinkvalue);
+            //    //_overlaySprite.SetScaleXY(scaleX, scaleY);
+            //}
             //Change opacity of the black overlaysprite
             _overlaySprite.alpha = shrinkvalue * 100;
+
         }
         private void drawOverlaySprite()
         {
