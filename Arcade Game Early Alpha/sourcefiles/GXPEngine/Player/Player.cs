@@ -13,7 +13,7 @@ namespace GXPEngine
         private PlayerDirection _aimDirection = PlayerDirection.right;
         public float spawnX;
         public float spawnY;
-        private bool _hasWeapon;
+        public bool hasWeapon;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -38,13 +38,13 @@ namespace GXPEngine
         private bool _inAir;
 
         //Weapon
-        private float _maxBullets = 2;
-        private float _bulletCounter = 2;
+        public float maxBullets = 2;
+        public float bulletCounter = 2;
         private float _bulletCharge = 0.03f;
 
         public Player(Level pLevel) : base("player.png", 4, 9)
         {
-            if (MyGame.playerHasWeapon) { _hasWeapon = true; }
+            if (MyGame.playerHasWeapon) { hasWeapon = true; }
 
             SetOrigin(width / 2, height);
             _level = pLevel;
@@ -52,152 +52,91 @@ namespace GXPEngine
         void Update()
         {
             animation();
-            checkShooting();
             movePlayer();
             chargeWeapon();
             recoilCounter();
         }
-        private void respawn()
+        public void Respawn()
         {
             x = spawnX;
             y = spawnY;
         }
         //-------------MOVEMENT-----------------
-        private void checkShooting()
-        {
-            getInput();
-
-            //Apply aimdirection
-            switch (_aimDirection)
-            {
-                case PlayerDirection.left:
-                    {
-                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
-                        {
-                            createBullet(PlayerDirection.left);
-                            _bulletCounter -= 1.0f;
-                            if (_inAir)
-                            {
-                                _velocityX = _pushBackSpeed * 3;
-                            }
-                            else if (!_inAir)
-                            {
-                                _recoil = true;
-                                _velocityX = _pushBackSpeed * 3;
-                            }
-                        }
-
-                        break;
-                    }
-                case PlayerDirection.right:
-                    {
-                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
-                        {
-                            createBullet(PlayerDirection.right);
-                            _bulletCounter -= 1.0f;
-                            if (_inAir)
-                            {
-                                _velocityX = -_pushBackSpeed * 3;
-                            }
-                            else if (!_inAir)
-                            {
-                                _recoil = true;
-                                _velocityX = -_pushBackSpeed * 3;
-                            }
-                        }
-                        break;
-                    }
-                case PlayerDirection.up:
-                    {
-                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
-                        {
-                            createBullet(PlayerDirection.up);
-                            _bulletCounter -= 1.0f;
-                            if (_inAir)
-                            {
-                                _velocityY = -_jumpSpeed;
-
-                            }
-                        }
-                        break;
-                    }
-                case PlayerDirection.down:
-                    {
-                        if (Input.GetKeyDown((int)PlayerButtons.shoot) && _bulletCounter >= 1 && _hasWeapon)
-                        {
-                            _inAir = true;
-
-                            createBullet(PlayerDirection.down);
-                            _bulletCounter -= 1.0f;
-                            _velocityY = _jumpSpeed;
-                        }
-                        break;
-                    }
-            }
-        }
         private void getInput()
         {
-            //Horizontal aiming/movement
+            //------------------LEFT------------------
             if (Input.GetKey((int)PlayerButtons.left))
             {
-                //Check if the player is not in the air
-                Mirror(true, false);
-                if (!_inAir)
-                {
-                    if (!_recoil) { _velocityX = -_walkSpeed; }
-                    _currentAnimState = AnimationStatePlayer.walk;
-                }
-
                 _aimDirection = PlayerDirection.left;
+                if (!_inAir && !_recoil)
+                {
+                    //Set directions
+                    _currentAnimState = AnimationStatePlayer.walk;
+                    //Move
+                    _velocityX = -_walkSpeed;
+                }
+                Mirror(true, false);
+
             }
+            //------------------RIGHT-----------------
             else if (Input.GetKey((int)PlayerButtons.right))
             {
-                Mirror(false, false);
-                if (!_inAir)
-                {
-                    if (!_recoil) { _velocityX = _walkSpeed; }
-                    _currentAnimState = AnimationStatePlayer.walk;
-                }
                 _aimDirection = PlayerDirection.right;
+                if (!_inAir && !_recoil)
+                {
+                    //Set directions
+                    _currentAnimState = AnimationStatePlayer.walk;
+                    //Move
+                    _velocityX = _walkSpeed;
+                }
+                Mirror(false, false);
             }
-
-            //Vertical aiming
-            if (Input.GetKey((int)PlayerButtons.up)) { _aimDirection = PlayerDirection.up; }
-            else if (Input.GetKey((int)PlayerButtons.down)) { _aimDirection = PlayerDirection.down; }
-
-            //No horizontal movement
+            //----------------NO BUTTONS--------------
             if (_recoil)
             {
-                if (_velocityX > 0)
-                {
-                    _velocityX -= 0.5f;
-                }
-                else if (_velocityX < 0)
-                {
-                    _velocityX += 0.5f;
-                }
+                if (_velocityX > 0) { _velocityX -= 0.5f; }
+                else if (_velocityX < 0) { _velocityX += 0.5f; }
             }
             else if (!Input.GetKey((int)PlayerButtons.left) && !Input.GetKey((int)PlayerButtons.right))
             {
-                if (!_inAir)
-                {
-                    _velocityX = 0.0f;
-                }
+                if (!_inAir) { _velocityX = 0.0f; }
+            }
+            //-------------------UP-------------------
+            if (Input.GetKey((int)PlayerButtons.up) && !_recoil)
+            {
+                //Set directions
+                _aimDirection = PlayerDirection.up;
+            }
+            //------------------DOWN------------------
+            else if (Input.GetKey((int)PlayerButtons.down) && !_recoil)
+            {
+                //Set directions
+                _aimDirection = PlayerDirection.down;
+            }
+            //------------------SHOOT-----------------
+            if (Input.GetKeyDown((int)PlayerButtons.shoot) && hasWeapon && bulletCounter >= 1)
+            {
+                shootBullet();
+                bulletCounter -= 1.0f;
             }
 
+            //Keep velocity at his max
             if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
+            //Update animstate
             if (_velocityX == 0.0f) { _currentAnimState = AnimationStatePlayer.idle; }
             if (_inAir == true) { _currentAnimState = AnimationStatePlayer.jump; }
         }
         private void movePlayer()
         {
+            //Update input
+            getInput();
             //Horizontal movement
             x += _velocityX;
             //Move outside the block if collision
-
-            if (checkCollisions())
+            if (_level.CheckCollision(this))
             {
-                while (checkCollisions())
+                _recoil = false;
+                while (_level.CheckCollision(this))
                 {
                     if (_velocityX > 0) { x -= 1.0f; }
                     else if (_velocityX < 0) { x += 1.0f; }
@@ -211,15 +150,14 @@ namespace GXPEngine
                     _velocityX = 0.0f;
                 }
             }
-
             //Vertical Movement
             _velocityY += _gravity;
             y += _velocityY;
             //If collision
-            if (checkCollisions())
+            if (_level.CheckCollision(this))
             {
                 //Move outside the block
-                while (checkCollisions())
+                while (_level.CheckCollision(this))
                 {
                     if (_velocityY > 0) { y -= 1.0f; }
                     else if (_velocityY < 0) { y += 1.0f; }
@@ -246,55 +184,6 @@ namespace GXPEngine
                 _recoil = false;
                 _recoilFrames = 0;
             }
-        }
-        private bool checkCollisions()
-        {
-            foreach (Sprite other in _level.objectList)
-            {
-                if (this.HitTest(other))
-                {
-                    //Blocks
-                    if (other is DamageBlock)
-                    {
-                        respawn();
-                    }
-                    else if (other is SolidObject)
-                    {
-                        return true;
-                    }
-                    //Pickups
-                    else if (other is PickUpWeapon)
-                    {
-                        other.Destroy();
-                        MyGame.playerHasWeapon = true;
-                        _hasWeapon = true;
-                    }
-                    else if (other is PickUpCoin)
-                    {
-                        other.Destroy();
-                        //addPoints();
-                    }
-                    else if (other is PickUpLife)
-                    {
-                        other.Destroy();
-                        //addLife();
-                    }
-                    else if (other is PickUpReload)
-                    {
-                        if (!(_bulletCounter >= _maxBullets))
-                        {
-                            other.Destroy();
-                            _bulletCounter = _maxBullets;
-                        }
-                    }
-                    //Enemys
-                    else if (other is Enemy)
-                    {
-                        respawn();
-                    }
-                }
-            }
-            return false;
         }
         ////------------PICKUPS-------------------
         //private void addLife()
@@ -328,11 +217,11 @@ namespace GXPEngine
             {
                 case AnimationStatePlayer.idle:
                     {
-                        if (!_hasWeapon)
+                        if (!hasWeapon)
                         {
                             setAnimationRange(0, 2);
                         }
-                        else if (_hasWeapon)
+                        else if (hasWeapon)
                         {
                             if (_aimDirection == PlayerDirection.left) { setAnimationRange(8, 10); }
                             else if (_aimDirection == PlayerDirection.right) { setAnimationRange(8, 10); }
@@ -343,11 +232,11 @@ namespace GXPEngine
                     }
                 case AnimationStatePlayer.walk:
                     {
-                        if (!_hasWeapon)
+                        if (!hasWeapon)
                         {
                             setAnimationRange(3, 7);
                         }
-                        else if (_hasWeapon)
+                        else if (hasWeapon)
                         {
                             if (_aimDirection == PlayerDirection.left) { setAnimationRange(11, 15); }
                             else if (_aimDirection == PlayerDirection.right) { setAnimationRange(11, 15); }
@@ -369,20 +258,60 @@ namespace GXPEngine
         //------------WEAPON--------------------
         private void chargeWeapon()
         {
-            if (_bulletCounter < _maxBullets)
+            if (bulletCounter < maxBullets)
             {
-                _bulletCounter += _bulletCharge;
+                bulletCounter += _bulletCharge;
             }
-            else if (_bulletCounter > _maxBullets)
+            else if (bulletCounter > maxBullets)
             {
-                _bulletCounter = _maxBullets;
+                bulletCounter = maxBullets;
             }
         }
-        private void createBullet(PlayerDirection pDirection)
+        private void shootBullet()
         {
-            PlayerBullet bullet = new PlayerBullet(pDirection, _level);
+            if (_aimDirection == PlayerDirection.up)
+            {
+                recoil(_aimDirection);
+            }
+            else if (_aimDirection == PlayerDirection.down)
+            {
+                recoil(_aimDirection);
+            }
+            else if (_aimDirection == PlayerDirection.left)
+            {
+                recoil(_aimDirection);
+            }
+            else if (_aimDirection == PlayerDirection.right)
+            {
+                recoil(_aimDirection);
+            }
+
+            PlayerBullet bullet = new PlayerBullet(_aimDirection, _level);
             _level.AddChild(bullet);
             bullet.SetXY(x, y - (height / 2));
+        }
+        private void recoil(PlayerDirection pDirection)
+        {
+            //Jump
+            if (pDirection == PlayerDirection.down)
+            {
+                _velocityY = _jumpSpeed;
+                _inAir = true;
+            }
+
+            //Recoil
+            if (_inAir)
+            {
+                if (pDirection == PlayerDirection.left) { _velocityX = _pushBackSpeed * 3; }
+                else if (pDirection == PlayerDirection.right) { _velocityX = -_pushBackSpeed * 3; }
+                else if (pDirection == PlayerDirection.up) { _velocityY = -_jumpSpeed; }
+            }
+            else if (!_inAir)
+            {
+                _recoil = true;
+                if (pDirection == PlayerDirection.left) { _velocityX = _pushBackSpeed * 3; }
+                else if (pDirection == PlayerDirection.right) { _velocityX = -_pushBackSpeed * 3; }
+            }
         }
     }
 }

@@ -8,8 +8,13 @@ namespace GXPEngine
 {
     public class Level : GameObject
     {
-        //Data
+        //Lists
         public List<GameObject> objectList = new List<GameObject>();
+        public List<DamageBlock> damageList = new List<DamageBlock>();
+        public List<PickUp> pickUpList = new List<PickUp>();
+        public List<Enemy> enemyList = new List<Enemy>();
+
+        //Data
         private Player _player;
         private MyGame _game;
         private string _fileName;
@@ -163,7 +168,7 @@ namespace GXPEngine
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                                 thisobject.SetFrame(levelData[i, j] - 1);
-                                objectList.Add(thisobject);
+                                pickUpList.Add(thisobject);
                                 break;
                             }
                         case 269: //Reload
@@ -172,7 +177,7 @@ namespace GXPEngine
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                                 thisobject.SetFrame(levelData[i, j] - 1);
-                                objectList.Add(thisobject);
+                                pickUpList.Add(thisobject);
                                 break;
                             }
                         case 267: //Weapon
@@ -181,7 +186,7 @@ namespace GXPEngine
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                                 thisobject.SetFrame(levelData[i, j] - 1);
-                                objectList.Add(thisobject);
+                                pickUpList.Add(thisobject);
                                 break;
                             }
                     }
@@ -256,7 +261,7 @@ namespace GXPEngine
                         _midgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
-                        objectList.Add(thisobject);
+                        damageList.Add(thisobject);
                     }
                 }
             }
@@ -296,6 +301,80 @@ namespace GXPEngine
                 }
             }
         }
-
+        //Collisions
+        public bool CheckCollision(Sprite pSprite)
+        {
+            //Player collisions
+            if (pSprite is Player)
+            {
+                Player thisplayer = (Player)pSprite;
+                PlayerPickUps(thisplayer);
+            }
+            //Solid objects            
+            foreach (Sprite other in objectList)
+            {
+                if (pSprite.HitTest(other))
+                {
+                    if (other is SolidObject)
+                    {
+                        return true;
+                    }
+                }
+            }
+            //Damage blocks
+            foreach (Sprite other in damageList)
+            {
+                if (pSprite.HitTest(other))
+                {
+                    if (other is DamageBlock)
+                    {
+                        if (pSprite is Player)
+                        {
+                            Player thisplayer = (Player)pSprite;
+                            thisplayer.Respawn();
+                        }
+                        else if (pSprite is PlayerBullet)
+                        {
+                            pSprite.Destroy();
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        private void PlayerPickUps(Player pPlayer)
+        {
+            foreach (Sprite other in pickUpList)
+            {
+                if (pPlayer.HitTest(other))
+                {
+                    if (other is PickUpCoin)
+                    {
+                        //Pickupcoin
+                        other.Destroy();
+                    }
+                    else if (other is PickUpLife)
+                    {
+                        //Pickuplife
+                        other.Destroy();
+                    }
+                    else if (other is PickUpReload)
+                    {
+                        if (pPlayer.bulletCounter < 2)
+                        {
+                            pPlayer.bulletCounter = 2;
+                            other.Destroy();
+                        }
+                        //Pickupreload
+                    }
+                    else if (other is PickUpWeapon)
+                    {
+                        MyGame.playerHasWeapon = true;
+                        _player.hasWeapon = true;
+                        other.Destroy();
+                    }
+                }
+            }
+        }
     }
 }

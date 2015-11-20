@@ -60,7 +60,7 @@ namespace GXPEngine
 
             if (_distanceTraveled >= 0)
             {
-            damage = _maxTravel - _distanceTraveled;
+                damage = _maxTravel - _distanceTraveled;
             }
             else
             {
@@ -78,47 +78,24 @@ namespace GXPEngine
                 Destroy();
             }
         }
-        private void getCollisions()
-        {
-            foreach (Sprite other in _level.objectList)
-            {
-                if (HitTest(other))
-                {
-                    if (other is DamageBlock)
-                    {
-                        Destroy();
-                    }
-                    else if (other is SolidObject)
-                    {
-                        Destroy();
-                    }
-                    //else if (other is BreakableBlock)
-                    //{
-                    //    other.Destroy();
-                    //    Destroy();
-                    //}
-                    //else if (other is Enemy)
-                    //{
-                    //    Destroy();
-                    //}
-                    //else if (other is EnemyBullet)
-                    //{
-                    //    Destroy();
-                    //    other.velocityX *= -1;
-                    //}
-                }
-            }
-        }
         private void shrinkBullet()
         {
-            if (_distanceTraveled != 0)
+            if (_distanceTraveled == 0) return;
+            float shrinkvalue;
+
+            if (_distanceTraveled >= 0) { shrinkvalue = (_maxTravel - _distanceTraveled) / 100.0f; }
+            else { shrinkvalue = (_maxTravel + _distanceTraveled) / 100.0f; }
+            //float shrinkvalue = _distanceTraveled / _maxTravel;
+            if (shrinkvalue <= 1)
             {
-                float shrinkvalue = damage / 100;
-                //float shrinkvalue = _distanceTraveled / _maxTravel;
-                if (shrinkvalue <= 1)
-                {
-                    SetScaleXY(shrinkvalue, shrinkvalue);
-                }
+                SetScaleXY(shrinkvalue, shrinkvalue);
+            }
+        }
+        private void getCollisions()
+        {
+            if (_level.CheckCollision(this))
+            {
+                Destroy();
             }
         }
     }
