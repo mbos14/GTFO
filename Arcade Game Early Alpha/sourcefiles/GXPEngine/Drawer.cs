@@ -18,9 +18,12 @@ namespace GXPEngine
             brush = new SolidBrush(Color.LimeGreen);
             pos = new PointF(0, 0);
         }
-        public void DrawText(string pMessage, PointF pPos)
+        void Update()
         {
             graphics.Clear(Color.Empty);
+        }
+        public void DrawText(string pMessage, PointF pPos)
+        {
             graphics.DrawString(pMessage, font, brush, pPos);
         }
         public void DrawSprite(Sprite pSprite, PointF pPos)

@@ -74,16 +74,13 @@ namespace GXPEngine
         {
             string message = "Score: " + thisgame.playerScore;
             string message2 = "Lives: " + _player.lives;
-            AnimationSprite animsprite = new AnimationSprite("chargebar.png", 3, 1);
             
             hudLayer.AddChild(drawer);
             PointF pos1 = new PointF(0, 20);
             PointF pos2 = new PointF(thisgame.width - 150, 20);
-            PointF pos3 = new PointF(thisgame.width / 2, 20);
 
             drawer.DrawText(message, pos1);
             drawer.DrawText(message2, pos2);
-            drawer.DrawSprite(animsprite, pos3);
         }
         //Layers
         private void drawBackGroundLayer()
