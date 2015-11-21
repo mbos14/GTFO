@@ -14,6 +14,7 @@ namespace GXPEngine
         public float spawnX;
         public float spawnY;
         public bool hasWeapon;
+        public int lives = 3;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -59,11 +60,7 @@ namespace GXPEngine
             recoilCounter();
             secretCheat();
         }
-        public void Respawn()
-        {
-            x = spawnX;
-            y = spawnY;
-        }
+
         private void secretCheat()
         {
             //Button 1
@@ -220,10 +217,7 @@ namespace GXPEngine
         //{
 
         //}
-        //private void addPoints()
-        //{
 
-        //}
         //------------ANIMATION-----------------
         private void animation()
         {
@@ -347,6 +341,24 @@ namespace GXPEngine
                 if (pDirection == PlayerDirection.left) { _velocityX = _pushBackSpeed * 3; }
                 else if (pDirection == PlayerDirection.right) { _velocityX = -_pushBackSpeed * 3; }
             }
+        }
+        //-----------LIVES AND SCORE------------
+        public void playerDIE()
+        {
+            if (lives > 0)
+            {
+                lives -= 1;
+                x = spawnX;
+                y = spawnY;
+            }
+            else
+            {
+                _level.thisgame.setGameState(GameStates.endscreen);
+            }
+        }
+        public void addPoints(int pPoints)
+        {
+            _level.thisgame.playerScore += pPoints;
         }
     }
 }

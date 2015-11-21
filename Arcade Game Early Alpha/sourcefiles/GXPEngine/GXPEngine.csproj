@@ -36,6 +36,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameScreens\Endscreen.cs" />
     <Compile Include="Enemy\EnemyBug.cs" />
     <Compile Include="Enumerator.cs" />
     <Compile Include="Blocks\BackgroundObject.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Enemy\EnemySpider.cs" />
     <Compile Include="GameScreens\Level.cs" />
     <Compile Include="GameScreens\Menu.cs" />
+    <Compile Include="Drawer.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />

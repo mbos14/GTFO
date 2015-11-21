@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Drawing;
 
 namespace GXPEngine
 {
@@ -16,8 +17,9 @@ namespace GXPEngine
 
         //Data
         private Player _player;
-        private MyGame _game;
+        public MyGame thisgame;
         private string _fileName;
+        private Drawer drawer = new Drawer();
         
         //Variables for tile- and levelsize
         const int HEIGHT = 26;
@@ -31,13 +33,17 @@ namespace GXPEngine
         public Level(MyGame pGame, string pFileName)
         {
             _fileName = pFileName;
-            _game = pGame;
+            thisgame = pGame;
 
             addPivots();
             drawAll();
 
             Camera cam1 = new Camera(_player, this);
             AddChild(cam1);
+        }
+        void Update()
+        {
+            drawHUD();
         }
         //Drawfunctions
         private void drawAll()
@@ -63,6 +69,21 @@ namespace GXPEngine
             _player.spawnX = 100;
             _player.spawnY = 540;
             _player.SetXY(_player.spawnX, _player.spawnY);
+        }
+        private void drawHUD()
+        {
+            string message = "Score: " + thisgame.playerScore;
+            string message2 = "Lives: " + _player.lives;
+            AnimationSprite animsprite = new AnimationSprite("chargebar.png", 3, 1);
+            
+            hudLayer.AddChild(drawer);
+            PointF pos1 = new PointF(0, 20);
+            PointF pos2 = new PointF(thisgame.width - 150, 20);
+            PointF pos3 = new PointF(thisgame.width / 2, 20);
+
+            drawer.DrawText(message, pos1);
+            drawer.DrawText(message2, pos2);
+            drawer.DrawSprite(animsprite, pos3);
         }
         //Layers
         private void drawBackGroundLayer()
@@ -331,7 +352,7 @@ namespace GXPEngine
                         if (pSprite is Player)
                         {
                             Player thisplayer = (Player)pSprite;
-                            thisplayer.Respawn();
+                            thisplayer.playerDIE();
                         }
                         else if (pSprite is PlayerBullet)
                         {
@@ -350,7 +371,8 @@ namespace GXPEngine
                 {
                     if (other is PickUpCoin)
                     {
-                        //Pickupcoin
+                        other.x = -100;
+                        _player.addPoints(10);
                         other.Destroy();
                     }
                     else if (other is PickUpLife)

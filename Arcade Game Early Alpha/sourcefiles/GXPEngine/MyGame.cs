@@ -6,13 +6,15 @@ using System.Text;
 
 public class MyGame : Game
 {
-    private GameStates _state;
+    private GameStates _state = GameStates.@default;
     public GameStates oldGameState;
     public static bool playerHasWeapon = false;
 
     Menu _menu;
     Level _level;
-    //private EndScreen _endscreen;
+    private Endscreen _endscreen;
+
+    public int playerScore = 0;
     public MyGame() : base(1024, 768, false)
     {
         setGameState(GameStates.level1);
@@ -43,8 +45,8 @@ public class MyGame : Game
                 }
             case GameStates.endscreen:
                 {
-                    //_endscreen = new EndScreen();
-                    //AddChild(_endscreen);
+                    _endscreen = new Endscreen();
+                    AddChild(_endscreen);
                     break;
                 }
         }
@@ -65,7 +67,7 @@ public class MyGame : Game
                 }
             case GameStates.endscreen:
                 {
-                    //if (_endscreen != null) { _endscreen.Destroy(); }
+                    if (_endscreen != null) { _endscreen.Destroy(); }
                     break;
                 }
         }
