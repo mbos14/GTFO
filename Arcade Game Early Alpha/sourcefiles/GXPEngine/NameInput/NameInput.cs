@@ -60,7 +60,7 @@ namespace GXPEngine
                     if (Input.GetKeyDown(Key.ENTER))
                     {
                         int buttonNumber = button.GetButtonNumber();
-                        if (buttonNumber < 38 && stringposition <3)
+                        if (buttonNumber < 38 && stringposition < 3)
                         {
                             _name[stringposition] = button.GetButtonValue();
                             stringposition++;
@@ -68,8 +68,11 @@ namespace GXPEngine
                         else if (buttonNumber == 38)
                         {
                             stringposition--;
+
+                            if (stringposition >= 2) { stringposition = 2; }
+                            if (stringposition <= 0) { stringposition = 0; }
+
                             _name[stringposition] = null;
-                            
                         }
                         else if (buttonNumber == 39)
                         {
