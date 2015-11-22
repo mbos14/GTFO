@@ -25,7 +25,7 @@ namespace GXPEngine
             {
                 _game.setGameState(GameStates.level);
             }
-            if (Input.GetKeyDown((int)PlayerButtons.shoot))
+            if (Input.GetKeyDown((int)PlayerButtons.insert))
             {
                 _coinInserted = true;
             }

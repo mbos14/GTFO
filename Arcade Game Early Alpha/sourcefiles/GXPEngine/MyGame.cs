@@ -19,7 +19,7 @@ public class MyGame : Game
 
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(GameStates.menu);
+        setGameState(GameStates.endscreen);
     }
     public void setGameState(GameStates pState)
     {

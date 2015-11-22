@@ -16,7 +16,7 @@ namespace GXPEngine
         //public List<Enemy> enemyList = new List<Enemy>();
 
         //Data
-        public Player _player;
+        public Player player;
         public MyGame thisgame;
         private string _fileName;
         private Drawer drawer = new Drawer();
@@ -39,7 +39,7 @@ namespace GXPEngine
             addPivots();
             drawAll();
 
-            Camera cam1 = new Camera(_player, this);
+            Camera cam1 = new Camera(player, this);
             AddChild(cam1);
         }
         void Update()
@@ -66,16 +66,16 @@ namespace GXPEngine
         }
         private void drawPlayer()
         {
-            _player = new Player(this);
-            _midgroundLayer.AddChild(_player);
-            _player.spawnX = 100;
-            _player.spawnY = 540;
-            _player.SetXY(_player.spawnX, _player.spawnY);
+            player = new Player(this);
+            _midgroundLayer.AddChild(player);
+            player.spawnX = 100;
+            player.spawnY = 540;
+            player.SetXY(player.spawnX, player.spawnY);
         }
         private void drawHUD()
         {
             string message = "Score: " + thisgame.playerScore;
-            string message2 = "Lives: " + _player.lives;
+            string message2 = "Lives: " + player.lives;
             string message3 = "FPS: " + thisgame.currentFps;
 
             hudLayer.AddChild(drawer);

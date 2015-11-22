@@ -36,6 +36,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pickups\Checkpoints.cs" />
     <Compile Include="GameScreens\Endscreen.cs" />
     <Compile Include="Enemy\EnemyBug.cs" />
     <Compile Include="Enumerator.cs" />

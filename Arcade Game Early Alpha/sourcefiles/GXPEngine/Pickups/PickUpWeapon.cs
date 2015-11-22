@@ -19,10 +19,10 @@ namespace GXPEngine
         }
         private void getCollisionPlayer()
         {
-            if (HitTest(_level._player))
+            if (HitTest(_level.player))
             {
                 this.Destroy();
-                _level._player.hasWeapon = true;
+                _level.player.hasWeapon = true;
             }
         }
 

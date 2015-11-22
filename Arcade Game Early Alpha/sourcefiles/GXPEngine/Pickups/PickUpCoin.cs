@@ -19,10 +19,10 @@ namespace GXPEngine
         }
         private void getCollisionPlayer()
         {
-            if (HitTest(_level._player))
+            if (HitTest(_level.player))
             {
                 this.Destroy();
-                _level._player.addPoints(20);
+                _level.player.addPoints(20);
             }
         }
     }
