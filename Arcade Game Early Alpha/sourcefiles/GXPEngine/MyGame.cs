@@ -7,25 +7,24 @@ using System.Text;
 public class MyGame : Game
 {
     private GameStates _state = GameStates.@default;
-    public GameStates oldGameState;
     public static bool playerHasWeapon = false;
 
-    Menu _menu;
-    Level _level;
+    private Menu _menu;
+    private Level _level;
     private Endscreen _endscreen;
     private NameInput _nameinput;
 
     public int playerScore = 0;
     public bool levelWon = false;
+
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(GameStates.nameinput);
+        setGameState(GameStates.menu);
     }
     public void setGameState(GameStates pState)
     {
         if (pState == _state) return;
         destroyGameState(_state);
-        oldGameState = _state;
         _state = pState;
         newGameState(pState);
     }
@@ -35,11 +34,11 @@ public class MyGame : Game
         {
             case GameStates.menu:
                 {
-                    _menu = new Menu();
+                    _menu = new Menu(this);
                     AddChild(_menu);
                     break;
                 }
-            case GameStates.level1:
+            case GameStates.level:
                 {
                     _level = new Level(this, "level1prototype.txt");
                     AddChild(_level);
@@ -68,9 +67,9 @@ public class MyGame : Game
                     if (_menu != null) { _menu.Destroy(); }
                     break;
                 }
-            case GameStates.level1:
+            case GameStates.level:
                 {
-                    if (_level != null) { _level.Destroy(); }
+                    //if (_level != null) { _level.Destroy(); }
                     break;
                 }
             case GameStates.endscreen:
