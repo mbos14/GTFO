@@ -10,14 +10,29 @@ namespace GXPEngine
     {
         private string[] _highScoreNames = new string[10];
         private int[] _highScores = new int[10];
+        private MyGame _game;
+        private bool _coinInserted = false;
 
-        public Menu()
+        public Menu(MyGame pGame)
         {
+            _game = pGame;
             drawBackGround();
             getHighScore();
         }
+        private void checkButtons()
+        {
+            if (Input.GetAnyKeyDown() && _coinInserted)
+            {
+                _game.setGameState(GameStates.level);
+            }
+            if (Input.GetKeyDown((int)PlayerButtons.shoot))
+            {
+                _coinInserted = true;
+            }
+        }
         void Update()
         {
+            checkButtons();
         }
         private void drawText()
         {

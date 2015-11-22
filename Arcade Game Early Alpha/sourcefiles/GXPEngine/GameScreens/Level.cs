@@ -343,7 +343,6 @@ namespace GXPEngine
             foreach (Sprite other in solidList)
             {
                 if (pSprite.HitTest(other))
-
                 {
                     return true;
                 }
