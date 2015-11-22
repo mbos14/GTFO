@@ -14,7 +14,7 @@ namespace GXPEngine
         public float spawnX;
         public float spawnY;
         public bool hasWeapon;
-        public int lives = 3;
+        public int lives = 1;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -345,7 +345,7 @@ namespace GXPEngine
         //-----------LIVES AND SCORE------------
         public void playerDIE()
         {
-            if (lives < 1)
+            if (lives > 1)
             {
                 lives -= 1;
                 x = spawnX;
@@ -353,6 +353,7 @@ namespace GXPEngine
             }
             else
             {
+                _level.thisgame.levelWon = false;
                 _level.thisgame.setGameState(GameStates.endscreen);
             }
         }

@@ -28,7 +28,7 @@ namespace GXPEngine.Core
 
         private Game _owner;
 
-        private int _targetFrameRate = 60;
+        private int _targetFrameRate = 400;
         private long _lastFrameTime = 0;
         private long _lastFPSTime = 0;
         private int _frameCount = 0;
