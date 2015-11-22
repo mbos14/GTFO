@@ -12,13 +12,18 @@ public class MyGame : Game
     private Menu _menu;
     private Level _level;
     private Endscreen _endscreen;
+    private NameInput _nameinput;
 
     public int playerScore = 0;
     public bool levelWon = false;
 
     public MyGame() : base(1024, 768, false)
     {
+<<<<<<< HEAD
         setGameState(GameStates.menu);
+=======
+        setGameState(GameStates.nameinput);
+>>>>>>> 43078d836e8ba7c51d0baedc79d2b1cea2bfea66
     }
     public void setGameState(GameStates pState)
     {
@@ -49,6 +54,12 @@ public class MyGame : Game
                     AddChild(_endscreen);
                     break;
                 }
+            case GameStates.nameinput:
+                {
+                    _nameinput = new NameInput();
+                    AddChild(_nameinput);
+                    break;
+                }
         }
     }
     private void destroyGameState(GameStates pState)
@@ -68,6 +79,11 @@ public class MyGame : Game
             case GameStates.endscreen:
                 {
                     if (_endscreen != null) { _endscreen.Destroy(); }
+                    break;
+                }
+            case GameStates.nameinput:
+                {
+                    if (_nameinput != null) { _nameinput.Destroy(); }
                     break;
                 }
         }

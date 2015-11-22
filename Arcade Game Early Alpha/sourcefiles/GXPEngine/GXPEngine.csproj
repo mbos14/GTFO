@@ -48,6 +48,8 @@
     <Compile Include="GameScreens\Level.cs" />
     <Compile Include="GameScreens\Menu.cs" />
     <Compile Include="Drawer.cs" />
+    <Compile Include="NameInput\KeyboardButtons.cs" />
+    <Compile Include="NameInput\Mouse.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="GXPEngine\Utils\MouseHandler.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
+    <Compile Include="NameInput\NameInput.cs" />
     <Compile Include="Pickups\PickUp.cs" />
     <Compile Include="Pickups\PickUpCoin.cs" />
     <Compile Include="Pickups\PickUpLife.cs" />
