@@ -19,11 +19,7 @@ public class MyGame : Game
 
     public MyGame() : base(1024, 768, false)
     {
-<<<<<<< HEAD
         setGameState(GameStates.menu);
-=======
-        setGameState(GameStates.nameinput);
->>>>>>> 43078d836e8ba7c51d0baedc79d2b1cea2bfea66
     }
     public void setGameState(GameStates pState)
     {
