@@ -15,3 +15,8 @@ C:\Users\XInfernoX\Documents\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\
 C:\Users\XInfernoX\Documents\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
 C:\Users\XInfernoX\Documents\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
 C:\Users\XInfernoX\Documents\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
+C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
