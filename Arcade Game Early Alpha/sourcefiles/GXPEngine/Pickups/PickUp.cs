@@ -14,7 +14,7 @@ namespace GXPEngine
         }
         virtual public void animation()
         {
-            _frame += 0.2f;
+            _frame += 0.1f;
             if (_frame >= frameCount) { _frame = 0.0f; }
             SetFrame((int)_frame);
         }

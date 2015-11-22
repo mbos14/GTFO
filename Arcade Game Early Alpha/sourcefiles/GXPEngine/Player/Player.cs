@@ -345,7 +345,7 @@ namespace GXPEngine
         //-----------LIVES AND SCORE------------
         public void playerDIE()
         {
-            if (lives > 0)
+            if (lives < 1)
             {
                 lives -= 1;
                 x = spawnX;

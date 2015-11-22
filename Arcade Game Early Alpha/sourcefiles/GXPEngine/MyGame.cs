@@ -15,6 +15,7 @@ public class MyGame : Game
     private Endscreen _endscreen;
 
     public int playerScore = 0;
+    public bool levelWon = false;
     public MyGame() : base(1024, 768, false)
     {
         setGameState(GameStates.level1);
@@ -45,7 +46,7 @@ public class MyGame : Game
                 }
             case GameStates.endscreen:
                 {
-                    _endscreen = new Endscreen();
+                    _endscreen = new Endscreen(this);
                     AddChild(_endscreen);
                     break;
                 }

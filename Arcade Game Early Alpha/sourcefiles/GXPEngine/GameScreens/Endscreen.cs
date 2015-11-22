@@ -7,6 +7,9 @@ namespace GXPEngine
 {
     public class Endscreen : GameObject
     {
+        public Endscreen(MyGame _game)
+        {
 
+        }
     }
 }

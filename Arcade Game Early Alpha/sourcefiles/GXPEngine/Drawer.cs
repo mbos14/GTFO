@@ -12,7 +12,7 @@ namespace GXPEngine
         Brush brush;
         PointF pos;
 
-        public Drawer() : base(1024, 60)
+        public Drawer() : base(1024, 100)
         {
             font = new Font("Arial", 25, FontStyle.Regular);
             brush = new SolidBrush(Color.LimeGreen);

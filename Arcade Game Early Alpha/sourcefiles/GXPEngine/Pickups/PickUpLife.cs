@@ -7,13 +7,23 @@ namespace GXPEngine
 {
     public class PickUpLife : PickUp
     {
-        public PickUpLife() : base("lifeupset.png", 4, 1)
+        private Level _level;
+        public PickUpLife(Level pLevel) : base("lifeupset.png", 4, 1)
         {
-
+            _level = pLevel;
         }
         void Update()
         {
             animation();
+            getCollisionPlayer();
+        }
+        private void getCollisionPlayer()
+        {
+            if (HitTest(_level._player))
+            {
+                this.Destroy();
+                _level._player.lives++;
+            }
         }
     }
 }

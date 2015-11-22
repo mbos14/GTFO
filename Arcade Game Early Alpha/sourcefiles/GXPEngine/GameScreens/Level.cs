@@ -10,25 +10,26 @@ namespace GXPEngine
     public class Level : GameObject
     {
         //Lists
-        public List<GameObject> objectList = new List<GameObject>();
+        public List<SolidObject> solidList = new List<SolidObject>();
         public List<DamageBlock> damageList = new List<DamageBlock>();
-        public List<PickUp> pickUpList = new List<PickUp>();
-        public List<Enemy> enemyList = new List<Enemy>();
+        //public List<PickUp> pickUpList = new List<PickUp>();
+        //public List<Enemy> enemyList = new List<Enemy>();
 
         //Data
-        private Player _player;
+        public Player _player;
         public MyGame thisgame;
         private string _fileName;
         private Drawer drawer = new Drawer();
-        
+
         //Variables for tile- and levelsize
-        const int HEIGHT = 26;
-        const int WIDTH = 60;
+        const int TILESY = 26; //Amount of tiles vertical
+        const int TILESX = 60; //Amount of tiles horizontal
         const int TILESIZE = 32;
 
         //Pivots
         private Pivot _backgroundLayer = new Pivot();
         private Pivot _midgroundLayer = new Pivot();
+        private Pivot _foregroundLayer = new Pivot();
         public Pivot hudLayer = new Pivot();
         public Level(MyGame pGame, string pFileName)
         {
@@ -60,6 +61,7 @@ namespace GXPEngine
         {
             AddChild(_backgroundLayer);
             AddChild(_midgroundLayer);
+            AddChild(_foregroundLayer);
             AddChild(hudLayer);
         }
         private void drawPlayer()
@@ -74,18 +76,21 @@ namespace GXPEngine
         {
             string message = "Score: " + thisgame.playerScore;
             string message2 = "Lives: " + _player.lives;
-            
+            string message3 = "FPS: " + thisgame.currentFps;
+
             hudLayer.AddChild(drawer);
             PointF pos1 = new PointF(0, 20);
             PointF pos2 = new PointF(thisgame.width - 150, 20);
+            PointF pos3 = new PointF(thisgame.width - 150, 60);
 
             drawer.DrawText(message, pos1);
             drawer.DrawText(message2, pos2);
+            drawer.DrawText(message3, pos3);
         }
         //Layers
         private void drawBackGroundLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -96,7 +101,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 14, i] = int.Parse(column);
@@ -104,9 +109,9 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     if (levelData[i, j] != 0)
                     {
@@ -120,7 +125,7 @@ namespace GXPEngine
         }
         private void drawbackGroundObjectLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -131,7 +136,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 44, i] = int.Parse(column);
@@ -139,9 +144,9 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     if (levelData[i, j] != 0)
                     {
@@ -155,7 +160,7 @@ namespace GXPEngine
         }
         private void drawPickUpLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -166,7 +171,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 74, i] = int.Parse(column);
@@ -174,47 +179,52 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     switch (levelData[i, j])
                     {
                         case 270: //Coin
                             {
-                                PickUpCoin thisobject = new PickUpCoin();
+                                PickUpCoin thisobject = new PickUpCoin(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                thisobject.SetFrame(levelData[i, j] - 1);
-                                pickUpList.Add(thisobject);
+                                //pickUpList.Add(thisobject);
                                 break;
                             }
                         case 269: //Reload
                             {
-                                PickUpReload thisobject = new PickUpReload();
+                                PickUpReload thisobject = new PickUpReload(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                thisobject.SetFrame(levelData[i, j] - 1);
-                                pickUpList.Add(thisobject);
+                                //pickUpList.Add(thisobject);
                                 break;
                             }
                         case 267: //Weapon
                             {
-                                PickUpWeapon thisobject = new PickUpWeapon();
+                                PickUpWeapon thisobject = new PickUpWeapon(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                thisobject.SetFrame(levelData[i, j] - 1);
-                                pickUpList.Add(thisobject);
+                                //pickUpList.Add(thisobject);
                                 break;
                             }
+                            //case : //Life
+                            //    {
+                            //        PickUpLife thisobject = new PickUpLife(this);
+                            //        _midgroundLayer.AddChild(thisobject);
+                            //        thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                            //        pickUpList.Add(thisobject);
+                            //        break;
+                            //    }
                     }
-                   
+
                 }
             }
         }
         private void drawSolidLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -225,7 +235,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 104, i] = int.Parse(column);
@@ -233,9 +243,9 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     if (levelData[i, j] != 0)
                     {
@@ -243,14 +253,14 @@ namespace GXPEngine
                         _midgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
-                        objectList.Add(thisobject);
+                        solidList.Add(thisobject);
                     }
                 }
             }
         }
         private void drawDamageLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -261,7 +271,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 134, i] = int.Parse(column);
@@ -269,9 +279,9 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     if (levelData[i, j] != 0)
                     {
@@ -286,7 +296,7 @@ namespace GXPEngine
         }
         private void drawForeGroundLayer()
         {
-            int[,] levelData = new int[HEIGHT, WIDTH];
+            int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
             string fileData = reader1.ReadToEnd();
@@ -297,7 +307,7 @@ namespace GXPEngine
             {
                 string[] columns = lines[j].Split(',');
 
-                for (int i = 0; i < WIDTH; i++)
+                for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
                     levelData[j - 164, i] = int.Parse(column);
@@ -305,14 +315,14 @@ namespace GXPEngine
             }
 
             //-------------------------------------READ THE NUMBERS, PLACE IN GAME-----------------------------
-            for (int i = 0; i < HEIGHT; i++)
+            for (int i = 0; i < TILESY; i++)
             {
-                for (int j = 0; j < WIDTH; j++)
+                for (int j = 0; j < TILESX; j++)
                 {
                     if (levelData[i, j] != 0)
                     {
                         BackgroundObject thisobject = new BackgroundObject();
-                        _midgroundLayer.AddChild(thisobject);
+                        _foregroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
                     }
@@ -322,21 +332,20 @@ namespace GXPEngine
         //Collisions
         public bool CheckCollision(Sprite pSprite)
         {
-            //Player collisions
-            if (pSprite is Player)
-            {
-                Player thisplayer = (Player)pSprite;
-                PlayerPickUps(thisplayer);
-            }
+            ////Player collisions
+            //if (pSprite is Player)
+            //{
+            //    Player thisplayer = (Player)pSprite;
+            //    PlayerPickUps(thisplayer);
+            //}
+
             //Solid objects            
-            foreach (Sprite other in objectList)
+            foreach (Sprite other in solidList)
             {
                 if (pSprite.HitTest(other))
+
                 {
-                    if (other is SolidObject)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             //Damage blocks
@@ -344,17 +353,14 @@ namespace GXPEngine
             {
                 if (pSprite.HitTest(other))
                 {
-                    if (other is DamageBlock)
+                    if (pSprite is Player)
                     {
-                        if (pSprite is Player)
-                        {
-                            Player thisplayer = (Player)pSprite;
-                            thisplayer.playerDIE();
-                        }
-                        else if (pSprite is PlayerBullet)
-                        {
-                            pSprite.Destroy();
-                        }
+                        Player thisplayer = (Player)pSprite;
+                        thisplayer.playerDIE();
+                    }
+                    else if (pSprite is PlayerBullet)
+                    {
+                        pSprite.Destroy();
                     }
                 }
             }
@@ -362,38 +368,38 @@ namespace GXPEngine
         }
         private void PlayerPickUps(Player pPlayer)
         {
-            foreach (Sprite other in pickUpList)
-            {
-                if (pPlayer.HitTest(other))
-                {
-                    if (other is PickUpCoin)
-                    {
-                        other.x = -100;
-                        _player.addPoints(10);
-                        other.Destroy();
-                    }
-                    else if (other is PickUpLife)
-                    {
-                        //Pickuplife
-                        other.Destroy();
-                    }
-                    else if (other is PickUpReload)
-                    {
-                        if (pPlayer.bulletCounter < 2)
-                        {
-                            pPlayer.bulletCounter = 2;
-                            other.Destroy();
-                        }
-                        //Pickupreload
-                    }
-                    else if (other is PickUpWeapon)
-                    {
-                        MyGame.playerHasWeapon = true;
-                        _player.hasWeapon = true;
-                        other.Destroy();
-                    }
-                }
-            }
+            //foreach (Sprite other in pickUpList)
+            //{
+            //    if (pPlayer.HitTest(other))
+            //    {
+            //        if (other is PickUpCoin)
+            //        {
+            //            other.x = -100;
+            //            _player.addPoints(10);
+            //            other.Destroy();
+            //        }
+            //        else if (other is PickUpLife)
+            //        {
+            //            //Pickuplife
+            //            other.Destroy();
+            //        }
+            //        else if (other is PickUpReload)
+            //        {
+            //            if (pPlayer.bulletCounter < 2)
+            //            {
+            //                pPlayer.bulletCounter = 2;
+            //                other.Destroy();
+            //            }
+            //            //Pickupreload
+            //        }
+            //        else if (other is PickUpWeapon)
+            //        {
+            //            MyGame.playerHasWeapon = true;
+            //            _player.hasWeapon = true;
+            //            other.Destroy();
+            //        }
+            //    }
+            //}
         }
     }
 }
