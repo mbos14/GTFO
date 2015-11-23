@@ -25,7 +25,7 @@ namespace GXPEngine
             streamReader.Close();
 
             string[] lines = fileData.Split('\n');
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < 9; i++)
             {
                 string[] columns = lines[i].Split(',');
                 //Save in arrays
@@ -51,10 +51,10 @@ namespace GXPEngine
         }
         public void AddScore(string pName, int pScore)
         {
-            if (pScore >= _highScores[10])
+            if (pScore >= _highScores[9])
             {
-                _highScores[10] = pScore;
-                _highScoreNames[10] = pName;
+                _highScores[9] = pScore;
+                _highScoreNames[9] = pName;
                 Array.Sort(_highScores, _highScoreNames);
                 writeHighScore();
             }

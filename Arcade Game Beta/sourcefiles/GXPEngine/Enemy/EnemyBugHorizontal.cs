@@ -15,6 +15,10 @@ namespace GXPEngine
             SetOrigin(width / 2, height / 2);
             scaleX *= -1;
         }
+        void Update()
+        {
+            Move();
+        }
         protected override void Move()
         {
             x += _velocityX;

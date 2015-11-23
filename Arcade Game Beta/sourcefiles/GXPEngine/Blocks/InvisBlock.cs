@@ -5,10 +5,10 @@ using System.Text;
 
 namespace GXPEngine
 {
-    public class InvisBlock : Sprite
+    public class InvisBlock : AnimationSprite
     {
         private Level _level;
-        public InvisBlock(Level pLevel) : base("tileset.png")
+        public InvisBlock(Level pLevel) : base("tileset.png", 14, 19)
         {
             _level = pLevel;
         }
@@ -18,10 +18,10 @@ namespace GXPEngine
         }
         private void getCollisions()
         {
-            foreach (Sprite other in _level.enemyList)
+            foreach (Enemy other in _level.enemyList)
             if (HitTest(other))
                 {
-                    //other.TurnAround();
+                    other.TurnAround();
                 }
         }
     }
