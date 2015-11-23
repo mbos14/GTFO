@@ -7,13 +7,14 @@ namespace GXPEngine
 {
     public class EnemyBugVertical : Enemy
     {
-        private Level _level;
         private float _velocityY = 1.0f;
         public EnemyBugVertical(Level pLevel) : base("robobug.png", 2, 2, pLevel)
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
             scaleX *= -1;
+            _points = EnemyPoints.bug;
+            _healthmax = EnemyHealth.bug;
         }
         void Update()
         {

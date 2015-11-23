@@ -7,26 +7,18 @@ namespace GXPEngine
 {
     public class EnemyBugHorizontal : Enemy
     {
-        private Level _level;
-        private float _velocityX = 1.0f;
+        
         public EnemyBugHorizontal(Level pLevel) : base("robobug.png", 2, 2, pLevel)
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
             scaleX *= -1;
+            _points = EnemyPoints.bug;
+            _healthmax = EnemyHealth.bug;
         }
         void Update()
         {
             Move();
-        }
-        protected override void Move()
-        {
-            x += _velocityX;
-        }
-        public override void TurnAround()
-        {
-            _velocityX *= -1;
-            scaleX *= -1;
         }
 
         //chanching the animation state

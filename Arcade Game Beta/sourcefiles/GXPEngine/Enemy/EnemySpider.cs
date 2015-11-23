@@ -7,35 +7,28 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
+<<<<<<< HEAD
         private float _velocityX = 1.0f;
 
+=======
+>>>>>>> ac69392ff1695253207e79488c78d9f65830ebfc
         //Animation
         private float _frame = 0.0f;
-        //private float _firstFrame;
-        //private float _lastFrame;
-
-        //private int _animState;
 
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
             SetOrigin(width / 2, 0);
             scaleX *= -1;
+            _points = EnemyPoints.spider;
+            _healthmax = EnemyHealth.spider;
         }
+
         void Update()
         {
             animation();
             Move();
         }
-        protected override void Move()
-        {
-            x += _velocityX; //Move
-        }
-        //Turn around
-        public override void TurnAround()
-        {
-            _velocityX *= -1; //Move the other way
-            scaleX *= -1; //Rescale
-        }
+
         private void animation()
         {
             _frame += 0.2f;
