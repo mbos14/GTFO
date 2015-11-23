@@ -13,6 +13,8 @@ namespace GXPEngine
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
             scaleX *= -1;
+            _points = EnemyPoints.bug;
+            _healthmax = EnemyHealth.bug;
         }
         void Update()
         {

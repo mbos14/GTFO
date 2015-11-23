@@ -10,8 +10,9 @@ namespace GXPEngine
         protected Level _level;
         //stores the animation state
         protected AnimationStateEnemy _animState;
-        //animation death state
+        //animation death/hit state
         protected bool _isDeath;
+        protected bool _isHit;
         //stores direction
         protected EnemyDirection _enemyDirection;
         //stores first and last frame
@@ -19,11 +20,18 @@ namespace GXPEngine
         protected float _lastFrame;
         //movement
         protected float _velocityX = 1.0f;
+        //stores points and max health
+        protected EnemyPoints _points;
+        protected EnemyHealth _healthmax;
+        //stores current health
+        private float _health;
 
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel) : base(pFileName, pColumns, pRows)
         {
             _level = pLevel;
             _isDeath = false;
+            _isHit = false;
+            _health = (float)_healthmax;
         }
         //general enemy movements
         protected virtual void Move()
@@ -46,7 +54,13 @@ namespace GXPEngine
         //is called from level to parce the death state to the enemy
         public void HitByBullet(float pBulletDamage)
         {
-            _isDeath = true;
+            _health -= pBulletDamage;
+            _isHit = true;
+            if (_health <= 0)
+            {
+                _isDeath = true;
+                _level.player.addPoints((int)_points);
+            }           
         }
     }
 }

@@ -13,6 +13,8 @@ namespace GXPEngine
         public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel)
         {
             SetOrigin(width / 2, height / 2);
+            _points = EnemyPoints.floater;
+            _healthmax = EnemyHealth.floater;
         }
 
         void Update()

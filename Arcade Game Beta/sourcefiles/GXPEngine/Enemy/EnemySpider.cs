@@ -7,7 +7,6 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-
         //Animation
         private float _frame = 0.0f;
 
@@ -15,6 +14,8 @@ namespace GXPEngine
         {
             SetOrigin(width / 2, 0);
             scaleX *= -1;
+            _points = EnemyPoints.spider;
+            _healthmax = EnemyHealth.spider;
         }
 
         void Update()

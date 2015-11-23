@@ -11,6 +11,8 @@ namespace GXPEngine
     //ENEMY
     public enum AnimationStateEnemy { idle, walk, hit, death, jump };
     public enum EnemyDirection { left, right, down };
+    public enum EnemyPoints {floater = 100, spider = 25, bug = 50};
+    public enum EnemyHealth { floater = 150, spider = 50, bug = 75};
 
     //ENEMYFRAMES
     //SPIDER
