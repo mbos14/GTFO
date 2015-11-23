@@ -29,6 +29,11 @@ namespace GXPEngine
             //if (!Level.positionIsFree(x + direction * TILE, y) || (level.positionIsFree(x + direction * TILE, y + TILE)) turnAround();
 
         }
+        //Turn around
+        public override void TurnAround()
+        {
+            //Move the other way
+        }
         //the animation
         private void Animation()
         {

@@ -6,20 +6,24 @@ using System.Text;
 
 public class MyGame : Game
 {
+    //GameState
     private GameStates _state = GameStates.@default;
-    public static bool playerHasWeapon = false;
 
+    //Gameobjects
     private Menu _menu;
     private Level _level;
+    private Level _bossArena;
     private Endscreen _endscreen;
     private NameInput _nameinput;
 
+    //Level variables
+    public static bool playerHasWeapon = false;
     public int playerScore = 0;
     public bool levelWon = false;
 
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(GameStates.nameinput);
+        setGameState(GameStates.endscreen);
     }
     public void setGameState(GameStates pState)
     {
@@ -44,18 +48,25 @@ public class MyGame : Game
                     AddChild(_level);
                     break;
                 }
+            case GameStates.bossarena:
+                {
+                    _bossArena = new Level(this, "bossarena.txt");
+                    AddChild(_bossArena);
+                    break;
+                }
+            case GameStates.nameinput:
+                {
+                    _nameinput = new NameInput(_level);
+                    AddChild(_nameinput);
+                    break;
+                }
             case GameStates.endscreen:
                 {
                     _endscreen = new Endscreen(this);
                     AddChild(_endscreen);
                     break;
                 }
-            case GameStates.nameinput:
-                {
-                    _nameinput = new NameInput();
-                    AddChild(_nameinput);
-                    break;
-                }
+
         }
     }
     private void destroyGameState(GameStates pState)
@@ -72,9 +83,9 @@ public class MyGame : Game
                     //if (_level != null) { _level.Destroy(); }
                     break;
                 }
-            case GameStates.endscreen:
+            case GameStates.bossarena:
                 {
-                    if (_endscreen != null) { _endscreen.Destroy(); }
+                    if (_bossArena != null) { _bossArena.Destroy(); }
                     break;
                 }
             case GameStates.nameinput:
@@ -82,6 +93,12 @@ public class MyGame : Game
                     if (_nameinput != null) { _nameinput.Destroy(); }
                     break;
                 }
+            case GameStates.endscreen:
+                {
+                    if (_endscreen != null) { _endscreen.Destroy(); }
+                    break;
+                }
+
         }
     }
     static void Main()

@@ -29,14 +29,13 @@ namespace GXPEngine
         }
         protected override void Move()
         {
-            if (_moveCounter >= 100)
-            {
-                _moveCounter = 0;
-                _velocityX *= -1;
-                _scaleX *= -1;
-            }
-            else { _moveCounter++; }
-            x += _velocityX;
+            x += _velocityX; //Move
+        }
+        //Turn around
+        public override void TurnAround()
+        {
+            _velocityX *= -1; //Move the other way
+            scaleX *= -1; //Rescale
         }
         private void animation()
         {

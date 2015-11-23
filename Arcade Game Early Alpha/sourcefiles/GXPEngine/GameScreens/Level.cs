@@ -12,8 +12,7 @@ namespace GXPEngine
         //Lists
         public List<SolidObject> solidList = new List<SolidObject>();
         public List<DamageBlock> damageList = new List<DamageBlock>();
-        //public List<PickUp> pickUpList = new List<PickUp>();
-        //public List<Enemy> enemyList = new List<Enemy>();
+        public List<Enemy> enemyList = new List<Enemy>();
 
         //Data
         public Player player;
@@ -53,7 +52,7 @@ namespace GXPEngine
             drawbackGroundObjectLayer();
             drawSolidLayer();
             drawDamageLayer();
-            drawPickUpLayer();
+            drawPreDefinedLayer();
             drawPlayer();
             drawForeGroundLayer();
         }
@@ -158,7 +157,7 @@ namespace GXPEngine
                 }
             }
         }
-        private void drawPickUpLayer()
+        private void drawPreDefinedLayer()
         {
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
@@ -209,14 +208,46 @@ namespace GXPEngine
                                 //pickUpList.Add(thisobject);
                                 break;
                             }
-                            //case : //Life
-                            //    {
-                            //        PickUpLife thisobject = new PickUpLife(this);
-                            //        _midgroundLayer.AddChild(thisobject);
-                            //        thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                            //        pickUpList.Add(thisobject);
-                            //        break;
-                            //    }
+                        case 10: //Life
+                            {
+                                PickUpLife thisobject = new PickUpLife(this);
+                                _midgroundLayer.AddChild(thisobject);
+                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                //pickUpList.Add(thisobject);
+                                break;
+                            }
+                        case 0: //Enemy bug Horizontal
+                            {
+                                EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 1: //Enemy bug Vertical
+                            {
+                                EnemyBugVertical thisenemy = new EnemyBugVertical(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 2: //EnemyFloater
+                            {
+                                EnemyFloater thisenemy = new EnemyFloater(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 3: //EnemySpider
+                            {
+                                EnemySpider thisenemy = new EnemySpider(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
                     }
 
                 }
@@ -329,16 +360,23 @@ namespace GXPEngine
                 }
             }
         }
+        private void drawInvisibleLayer()
+        {
+            //Enemy movement
+        }
         //Collisions
         public bool CheckCollision(Sprite pSprite)
         {
-            ////Player collisions
-            //if (pSprite is Player)
+            //foreach (Sprite other in invisibleList)
             //{
-            //    Player thisplayer = (Player)pSprite;
-            //    PlayerPickUps(thisplayer);
+            //    if (pSprite is Enemy)
+            //    {
+            //        if (pSprite.HitTest(other))
+            //        {
+            //            //Turn around
+            //        }
+            //    }
             //}
-
             //Solid objects            
             foreach (Sprite other in solidList)
             {
@@ -364,41 +402,6 @@ namespace GXPEngine
                 }
             }
             return false;
-        }
-        private void PlayerPickUps(Player pPlayer)
-        {
-            //foreach (Sprite other in pickUpList)
-            //{
-            //    if (pPlayer.HitTest(other))
-            //    {
-            //        if (other is PickUpCoin)
-            //        {
-            //            other.x = -100;
-            //            _player.addPoints(10);
-            //            other.Destroy();
-            //        }
-            //        else if (other is PickUpLife)
-            //        {
-            //            //Pickuplife
-            //            other.Destroy();
-            //        }
-            //        else if (other is PickUpReload)
-            //        {
-            //            if (pPlayer.bulletCounter < 2)
-            //            {
-            //                pPlayer.bulletCounter = 2;
-            //                other.Destroy();
-            //            }
-            //            //Pickupreload
-            //        }
-            //        else if (other is PickUpWeapon)
-            //        {
-            //            MyGame.playerHasWeapon = true;
-            //            _player.hasWeapon = true;
-            //            other.Destroy();
-            //        }
-            //    }
-            //}
         }
     }
 }

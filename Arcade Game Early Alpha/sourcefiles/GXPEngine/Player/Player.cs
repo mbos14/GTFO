@@ -354,7 +354,7 @@ namespace GXPEngine
             else
             {
                 _level.thisgame.levelWon = false;
-                _level.thisgame.setGameState(GameStates.endscreen);
+                _level.thisgame.setGameState(GameStates.nameinput);
             }
         }
         public void addPoints(int pPoints)

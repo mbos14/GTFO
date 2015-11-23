@@ -17,22 +17,22 @@ namespace GXPEngine
         private int buttonValue = 0;
         int stringposition = 0;
         Mouse mouse;
+        private Level _level;
         string finalName;
         private Drawer _drawer = new Drawer();
-        public NameInput()
+        public NameInput(Level pLevel)
         {
+            _level = pLevel;
             ButtonCreator();
             mouse = new Mouse();
             AddChild(mouse);
         }
-
         void Update()
         {
             ButtonSelectTest();
             MakeName();
             updateName();
         }
-
         private void ButtonCreator()
         {
             for (int i = 0; i < 4; i++)
@@ -49,24 +49,28 @@ namespace GXPEngine
                 }
             }
         }
-
         private void ButtonSelectTest()
         {
             foreach (KeyboardButtons button in buttonList)
             {
+                //If the tip of the mouse is on the letter
                 if (button.HitTestPoint(mouse.x, mouse.y))
                 {
+                    //Button is selected
                     button.selected = true;
                     if (Input.GetKeyDown(Key.ENTER))
                     {
                         int buttonNumber = button.GetButtonNumber();
+
                         if (buttonNumber < 38 && stringposition < 3)
                         {
+                            //Save letter
                             _name[stringposition] = button.GetButtonValue();
                             stringposition++;
                         }
                         else if (buttonNumber == 38)
                         {
+                            //Delete 1 Letter
                             stringposition--;
 
                             if (stringposition >= 2) { stringposition = 2; }
@@ -76,16 +80,20 @@ namespace GXPEngine
                         }
                         else if (buttonNumber == 39)
                         {
-                            //send finalName to highscorelist
+                            //Submit name
+                            HighScores highscores = new HighScores();
+                            highscores.AddScore(finalName, _level.thisgame.playerScore);
+                            _level.thisgame.setGameState(GameStates.endscreen);
                         }
                     }
                 }
+                //Otherwise button is not selected
                 else { button.selected = false; }
             }
         }
-
         private void MakeName()
         {
+            //Save final name
             finalName = "" + _name[0] + _name[1] + _name[2];
         }
         private void updateName()

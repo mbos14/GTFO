@@ -6,7 +6,7 @@ using System.Text;
 namespace GXPEngine
 {
     //GAME
-    public enum GameStates { menu, endscreen, level, highscore, nameinput, @default };
+    public enum GameStates { menu, level, bossarena, nameinput, endscreen, @default };
 
     //ENEMY
     public enum AnimationStateEnemy { idle, walk, hit, death, jump };

@@ -7,7 +7,7 @@ namespace GXPEngine
 {
     public class Enemy : AnimationSprite
     {
-        protected Level _level;
+        private Level _level;
         //stores the animation state
         protected AnimationStateEnemy _animState;
         //stores direction
@@ -25,7 +25,11 @@ namespace GXPEngine
         {
 
         }
-
+        //Let the enemy turn around
+        public virtual void TurnAround()
+        {
+            
+        }
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
             _firstFrame = pFirstFrame;
