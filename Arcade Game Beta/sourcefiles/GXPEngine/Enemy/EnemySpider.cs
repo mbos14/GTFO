@@ -44,5 +44,28 @@ namespace GXPEngine
             if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame);
         }
+
+        //chanching the animation state
+        private void AnimationState()
+        {
+            switch (_animState)
+            {
+                case AnimationStateEnemy.idle:
+                    setAnimationRange((float)SpiderIdle.firstFrame, (float)SpiderIdle.lastFrame);
+                    break;
+                case AnimationStateEnemy.walk:
+                    setAnimationRange((float)SpiderWalk.firstFrame, (float)SpiderWalk.lastFrame);
+                    break;
+                case AnimationStateEnemy.hit:
+                    setAnimationRange((float)SpiderHit.firstFrame, (float)SpiderHit.lastFrame);
+                    break;
+                case AnimationStateEnemy.death:
+                    setAnimationRange((float)SpiderDeath.firstFrame, (float)SpiderDeath.lastFrame);
+                    break;
+                case AnimationStateEnemy.jump:
+                    setAnimationRange((float)SpiderJump.firstFrame, (float)SpiderJump.lastFrame);
+                    break;
+            }
+        }
     }
 }
