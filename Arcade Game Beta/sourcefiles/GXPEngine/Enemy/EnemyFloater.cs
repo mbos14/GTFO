@@ -19,13 +19,6 @@ namespace GXPEngine
         {
             Move();
         }
-        //Let the enemy turn around
-        public override void TurnAround()
-        {
-            x -= _velocityX;
-            _velocityX *= -1;
-            scaleX *= -1;
-        }
         //chanching the animation state
         private void AnimationState()
         {
