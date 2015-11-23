@@ -14,7 +14,7 @@ namespace GXPEngine
         public float spawnX;
         public float spawnY;
         public bool hasWeapon;
-        public int lives = 1;
+        public int lives = 3;
 
         //Speed
         private float _velocityX = 0.0f;

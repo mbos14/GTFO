@@ -14,7 +14,7 @@ namespace GXPEngine
 
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
-            SetOrigin(width / 2, height / 2);
+            SetOrigin(width / 2, 0);
             scaleX *= -1;
         }
 

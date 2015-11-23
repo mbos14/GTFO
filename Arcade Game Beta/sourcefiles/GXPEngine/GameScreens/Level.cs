@@ -184,7 +184,7 @@ namespace GXPEngine
                 {
                     switch (levelData[i, j])
                     {
-                        case 270: //Coin
+                        case 5: //Coin
                             {
                                 PickUpCoin thisobject = new PickUpCoin(this);
                                 _midgroundLayer.AddChild(thisobject);
@@ -192,7 +192,7 @@ namespace GXPEngine
                                 //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 269: //Reload
+                        case 6: //Reload
                             {
                                 PickUpReload thisobject = new PickUpReload(this);
                                 _midgroundLayer.AddChild(thisobject);
@@ -200,7 +200,7 @@ namespace GXPEngine
                                 //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 267: //Weapon
+                        case 7: //Weapon
                             {
                                 PickUpWeapon thisobject = new PickUpWeapon(this);
                                 _midgroundLayer.AddChild(thisobject);
@@ -208,7 +208,7 @@ namespace GXPEngine
                                 //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 10: //Life
+                        case 8: //Life
                             {
                                 PickUpLife thisobject = new PickUpLife(this);
                                 _midgroundLayer.AddChild(thisobject);
@@ -216,7 +216,14 @@ namespace GXPEngine
                                 //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 0: //Enemy bug Horizontal
+                        case 9:
+                            {
+                                InvisBlock thisobject = new InvisBlock(this);
+                                _midgroundLayer.AddChild(thisobject);
+                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                break;
+                            }
+                        case 1: //Enemy bug Horizontal
                             {
                                 EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this);
                                 _midgroundLayer.AddChild(thisenemy);
@@ -224,7 +231,7 @@ namespace GXPEngine
                                 enemyList.Add(thisenemy);
                                 break;
                             }
-                        case 1: //Enemy bug Vertical
+                        case 2: //Enemy bug Vertical
                             {
                                 EnemyBugVertical thisenemy = new EnemyBugVertical(this);
                                 _midgroundLayer.AddChild(thisenemy);
@@ -232,7 +239,7 @@ namespace GXPEngine
                                 enemyList.Add(thisenemy);
                                 break;
                             }
-                        case 2: //EnemyFloater
+                        case 3: //EnemyFloater
                             {
                                 EnemyFloater thisenemy = new EnemyFloater(this);
                                 _midgroundLayer.AddChild(thisenemy);
@@ -240,7 +247,7 @@ namespace GXPEngine
                                 enemyList.Add(thisenemy);
                                 break;
                             }
-                        case 3: //EnemySpider
+                        case 4: //EnemySpider
                             {
                                 EnemySpider thisenemy = new EnemySpider(this);
                                 _midgroundLayer.AddChild(thisenemy);
