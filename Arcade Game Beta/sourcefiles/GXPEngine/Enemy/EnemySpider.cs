@@ -7,7 +7,6 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-        private float _velocityX = 1.0f;
 
         //Animation
         private float _frame = 0.0f;
@@ -22,17 +21,6 @@ namespace GXPEngine
         {
             animation();
             Move();
-        }
-
-        protected override void Move()
-        {
-            x += _velocityX; //Move
-        }
-        //Turn around
-        public override void TurnAround()
-        {
-            _velocityX *= -1; //Move the other way
-            scaleX *= -1; //Rescale
         }
 
         private void animation()

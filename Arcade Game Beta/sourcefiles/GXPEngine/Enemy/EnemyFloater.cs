@@ -10,9 +10,6 @@ namespace GXPEngine
         //speed at wich the frames change
         //private float _frameSpeed = 0.2f;
 
-
-        private float _velocityX = 2.0f;
-
         public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel)
         {
             SetOrigin(width / 2, height / 2);
@@ -22,20 +19,13 @@ namespace GXPEngine
         {
             Move();
         }
-        //the movement pattern
-        protected override void Move()
-        {
-            x += _velocityX;
-        }
-        //Turn around
+        //Let the enemy turn around
         public override void TurnAround()
         {
             x -= _velocityX;
             _velocityX *= -1;
             scaleX *= -1;
         }
-
-
         //chanching the animation state
         private void AnimationState()
         {

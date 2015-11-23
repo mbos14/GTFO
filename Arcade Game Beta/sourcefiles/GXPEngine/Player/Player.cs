@@ -41,7 +41,7 @@ namespace GXPEngine
         //Weapon
         public float maxBullets = 2;
         public float bulletCounter = 2;
-        private float _bulletCharge = 0.03f;
+        private float _bulletCharge = 0.02f;
 
         private bool _button1, _button2, _button3;
 
