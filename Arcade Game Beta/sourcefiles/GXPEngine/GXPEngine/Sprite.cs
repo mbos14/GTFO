@@ -109,10 +109,11 @@ namespace GXPEngine
 				return 0;
 			}
 			set {
-				if (_texture != null && _texture.width != 0) scaleX = value / ((float)_texture.width);
+				if (_texture != null) 
+					if (_texture.width != 0) scaleX = value / _texture.width;
 			}
 		}
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														height
 		//------------------------------------------------------------------------------------------------------------------------
@@ -125,10 +126,11 @@ namespace GXPEngine
 				return 0;
 			}
 			set {
-				if (_texture != null && _texture.height != 0) scaleY = value / ((float)_texture.height);
+				if (_texture != null) 
+					if (_texture.height != 0) scaleY = value / _texture.height;
 			}
 		}
-
+		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RenderSelf()
 		//------------------------------------------------------------------------------------------------------------------------

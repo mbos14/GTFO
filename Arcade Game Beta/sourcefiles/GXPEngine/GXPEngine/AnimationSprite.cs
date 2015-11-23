@@ -117,6 +117,7 @@ namespace GXPEngine
 			}
 		}
 
+		
 		//------------------------------------------------------------------------------------------------------------------------
 		//														SetFrame()
 		//------------------------------------------------------------------------------------------------------------------------
@@ -148,7 +149,7 @@ namespace GXPEngine
 			float right = left + _frameWidth;
 
 			//fix1
-			float wp = .5f / _texture.width;
+			float wp = 0.5f / _texture.width;
 			left += wp;
 			right -= wp;
 			//end fix1
@@ -160,7 +161,7 @@ namespace GXPEngine
 			float bottom = top + _frameHeight;
 
 			//fix2
-			float hp = .5f / _texture.height;
+			float hp = 0.5f / _texture.height;
 			top += hp;
 			bottom -= hp;
 			//end fix2

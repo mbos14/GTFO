@@ -32,9 +32,28 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enemy\EnemyBugHorizontal.cs" />
+    <Compile Include="Enemy\EnemyBugVertical.cs" />
+    <Compile Include="HighScores.cs" />
+    <Compile Include="Blocks\InvisBlock.cs" />
+    <Compile Include="Pickups\Checkpoints.cs" />
+    <Compile Include="GameScreens\Endscreen.cs" />
+    <Compile Include="Enumerator.cs" />
+    <Compile Include="Blocks\BackgroundObject.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Blocks\DamageBlock.cs" />
+    <Compile Include="Enemy\Enemy.cs" />
+    <Compile Include="Enemy\EnemyFloater.cs" />
+    <Compile Include="Enemy\EnemySpider.cs" />
+    <Compile Include="GameScreens\Level.cs" />
+    <Compile Include="GameScreens\Menu.cs" />
+    <Compile Include="Drawer.cs" />
+    <Compile Include="NameInput\KeyboardButtons.cs" />
+    <Compile Include="NameInput\Mouse.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
     <Compile Include="GXPEngine\Game.cs" />
@@ -62,8 +81,14 @@
     <Compile Include="GXPEngine\Utils\MouseHandler.cs" />
     <Compile Include="GXPEngine\Utils\Time.cs" />
     <Compile Include="GXPEngine\Utils\Utils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GXPEngine\" />
+    <Compile Include="NameInput\NameInput.cs" />
+    <Compile Include="Pickups\PickUp.cs" />
+    <Compile Include="Pickups\PickUpCoin.cs" />
+    <Compile Include="Pickups\PickUpLife.cs" />
+    <Compile Include="Pickups\PickUpReload.cs" />
+    <Compile Include="Pickups\PickUpWeapon.cs" />
+    <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\PlayerBullet.cs" />
+    <Compile Include="Blocks\SolidObject.cs" />
   </ItemGroup>
 </Project>
