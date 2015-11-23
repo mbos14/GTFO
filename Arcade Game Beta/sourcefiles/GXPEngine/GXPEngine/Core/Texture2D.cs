@@ -54,11 +54,15 @@ namespace GXPEngine.Core
 		//------------------------------------------------------------------------------------------------------------------------
 		public static void RemoveInstance (string filename)
 		{
-			if (LoadCache.ContainsKey (filename)) {
-				Texture2D tex2D = LoadCache[filename] as Texture2D;
-				tex2D.count --;
-				if (tex2D.count == 0) LoadCache.Remove (filename);
-			}
+            if (filename != null)
+            {
+                if (LoadCache.ContainsKey(filename))
+                {
+                    Texture2D tex2D = LoadCache[filename] as Texture2D;
+                    tex2D.count--;
+                    if (tex2D.count == 0) LoadCache.Remove(filename);
+                }
+            }
 		}
 
 		public void Dispose () {

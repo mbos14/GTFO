@@ -80,7 +80,7 @@ public class MyGame : Game
                 }
             case GameStates.level:
                 {
-                    //if (_level != null) { _level.Destroy(); }
+                    if (_level != null) { _level.Destroy(); }
                     break;
                 }
             case GameStates.bossarena:

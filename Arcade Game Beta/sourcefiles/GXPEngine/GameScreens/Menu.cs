@@ -18,8 +18,6 @@ namespace GXPEngine
             AddChild(_highscore);
             _game = pGame;
             drawBackGround();
-
-            _highscore.DrawHighScore(15, this);
         }
         private void checkButtons()
         {

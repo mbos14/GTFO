@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace GXPEngine
 {
@@ -62,7 +63,7 @@ namespace GXPEngine
 
             //Draw credits
             _credits = new Sprite("credits.png");
-            AddChild(_credits);
+            //AddChild(_credits);
             _credits.y = game.height;
 
             //Draw borders
@@ -92,6 +93,18 @@ namespace GXPEngine
             AddChild(_insertcoin);
             _insertcoin.SetOrigin(_insertcoin.width / 2, _insertcoin.height / 2);
             _insertcoin.SetXY(game.width / 2, game.height - _insertcoin.height);
+
+            //Highscores
+            HighScores high = new HighScores();
+            AddChild(high);
+            Drawer drawer = new Drawer(300, 768);
+            AddChild(drawer);
+            drawer.SetXY(game.width / 2, game.height / 2);
+            for (int i = 0; i < 9; i++)
+            {
+                PointF pos1 = new PointF(10, i * 30);
+                drawer.DrawText(high.ReturnHighScore(i), pos1);
+            }
         }
         private void endCredits()
         {
