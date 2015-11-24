@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -22,6 +23,10 @@ namespace GXPEngine
         void Update()
         {
             moveGame();
+        }
+        protected override Collider createCollider()
+        {
+            return null;
         }
         private void moveGame()
         {

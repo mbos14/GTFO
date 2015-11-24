@@ -10,11 +10,12 @@ namespace GXPEngine
 
         //Player
         private float _frame = 0.0f;
-        private PlayerDirection _aimDirection = PlayerDirection.right;
+        public PlayerDirection aimDirection = PlayerDirection.right;
         public float spawnX;
         public float spawnY;
         public bool hasWeapon;
         public int lives = 3;
+        public int coins = 0;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -92,7 +93,7 @@ namespace GXPEngine
             //------------------LEFT------------------
             if (Input.GetKey((int)PlayerButtons.left))
             {
-                _aimDirection = PlayerDirection.left;
+                aimDirection = PlayerDirection.left;
                 if (!_inAir && !_recoil)
                 {
                     //Set directions
@@ -106,7 +107,7 @@ namespace GXPEngine
             //------------------RIGHT-----------------
             else if (Input.GetKey((int)PlayerButtons.right))
             {
-                _aimDirection = PlayerDirection.right;
+                aimDirection = PlayerDirection.right;
                 if (!_inAir && !_recoil)
                 {
                     //Set directions
@@ -121,13 +122,13 @@ namespace GXPEngine
             else if (Input.GetKey((int)PlayerButtons.up) && !_recoil)
             {
                 //Set directions
-                _aimDirection = PlayerDirection.up;
+                aimDirection = PlayerDirection.up;
             }
             //------------------DOWN------------------
             else if (Input.GetKey((int)PlayerButtons.down) && !_recoil)
             {
                 //Set directions
-                _aimDirection = PlayerDirection.down;
+                aimDirection = PlayerDirection.down;
             }
             //----------------NO BUTTONS--------------
             if (_recoil)
@@ -247,10 +248,10 @@ namespace GXPEngine
                         }
                         else if (hasWeapon)
                         {
-                            if (_aimDirection == PlayerDirection.left) { setAnimationRange(8, 10); }
-                            else if (_aimDirection == PlayerDirection.right) { setAnimationRange(8, 10); }
-                            else if (_aimDirection == PlayerDirection.up) { setAnimationRange(16, 18); }
-                            else if (_aimDirection == PlayerDirection.down) { setAnimationRange(24, 26); }
+                            if (aimDirection == PlayerDirection.left) { setAnimationRange(8, 10); }
+                            else if (aimDirection == PlayerDirection.right) { setAnimationRange(8, 10); }
+                            else if (aimDirection == PlayerDirection.up) { setAnimationRange(16, 18); }
+                            else if (aimDirection == PlayerDirection.down) { setAnimationRange(24, 26); }
                         }
                         break;
                     }
@@ -262,19 +263,19 @@ namespace GXPEngine
                         }
                         else if (hasWeapon)
                         {
-                            if (_aimDirection == PlayerDirection.left) { setAnimationRange(11, 15); }
-                            else if (_aimDirection == PlayerDirection.right) { setAnimationRange(11, 15); }
-                            else if (_aimDirection == PlayerDirection.up) { setAnimationRange(19, 23); }
-                            else if (_aimDirection == PlayerDirection.down) { setAnimationRange(27, 31); }
+                            if (aimDirection == PlayerDirection.left) { setAnimationRange(11, 15); }
+                            else if (aimDirection == PlayerDirection.right) { setAnimationRange(11, 15); }
+                            else if (aimDirection == PlayerDirection.up) { setAnimationRange(19, 23); }
+                            else if (aimDirection == PlayerDirection.down) { setAnimationRange(27, 31); }
                         }
                         break;
                     }
                 case AnimationStatePlayer.jump:
                     {
-                        if (_aimDirection == PlayerDirection.left) { setAnimationRange(32, 32); }
-                        else if (_aimDirection == PlayerDirection.right) { setAnimationRange(32, 32); }
-                        else if (_aimDirection == PlayerDirection.up) { setAnimationRange(34, 34); }
-                        else if (_aimDirection == PlayerDirection.down) { setAnimationRange(33, 33); }
+                        if (aimDirection == PlayerDirection.left) { setAnimationRange(32, 32); }
+                        else if (aimDirection == PlayerDirection.right) { setAnimationRange(32, 32); }
+                        else if (aimDirection == PlayerDirection.up) { setAnimationRange(34, 34); }
+                        else if (aimDirection == PlayerDirection.down) { setAnimationRange(33, 33); }
                         break;
                     }
                 case AnimationStatePlayer.recoil:
@@ -291,31 +292,27 @@ namespace GXPEngine
             {
                 bulletCounter += _bulletCharge;
             }
-            else if (bulletCounter > maxBullets)
-            {
-                bulletCounter = maxBullets;
-            }
         }
         private void shootBullet()
         {
-            if (_aimDirection == PlayerDirection.up)
+            if (aimDirection == PlayerDirection.up)
             {
-                recoil(_aimDirection);
+                recoil(aimDirection);
             }
-            else if (_aimDirection == PlayerDirection.down)
+            else if (aimDirection == PlayerDirection.down)
             {
-                recoil(_aimDirection);
+                recoil(aimDirection);
             }
-            else if (_aimDirection == PlayerDirection.left)
+            else if (aimDirection == PlayerDirection.left)
             {
-                recoil(_aimDirection);
+                recoil(aimDirection);
             }
-            else if (_aimDirection == PlayerDirection.right)
+            else if (aimDirection == PlayerDirection.right)
             {
-                recoil(_aimDirection);
+                recoil(aimDirection);
             }
 
-            PlayerBullet bullet = new PlayerBullet(_aimDirection, _level);
+            PlayerBullet bullet = new PlayerBullet(aimDirection, _level);
             _level.AddChild(bullet);
             bullet.SetXY(x, y - (height / 2));
         }
@@ -352,6 +349,7 @@ namespace GXPEngine
                 _velocityY = 0.0f;
                 x = spawnX;
                 y = spawnY;
+                _level.DrawPreDefinedLayer();
             }
             else
             {

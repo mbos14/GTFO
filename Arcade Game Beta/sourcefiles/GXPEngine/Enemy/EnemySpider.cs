@@ -12,7 +12,6 @@ namespace GXPEngine
 
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
-            SetOrigin(width / 2, 0);
             scaleX *= -1;
             _points = EnemyPoints.spider;
             _healthmax = EnemyHealth.spider;
@@ -21,6 +20,8 @@ namespace GXPEngine
         void Update()
         {
             AnimationState();
+            Move();
+            recoil();
         }
 
         private void animation()

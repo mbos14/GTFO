@@ -21,8 +21,9 @@ namespace GXPEngine
         {
             if (HitTest(_level.player))
             {
-                this.Destroy();
+                _level.player.coins++;
                 _level.player.addPoints(20);
+                Destroy();
             }
         }
     }

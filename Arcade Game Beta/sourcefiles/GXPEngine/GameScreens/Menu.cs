@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using GXPEngine.Core;
 
 namespace GXPEngine
 {
     public class Menu : GameObject
     {
-
         private MyGame _game;
         private bool _coinInserted = false;
         public Menu(MyGame pGame)
         {
             _game = pGame;
             drawBackGround();
+        }
+        protected override Collider createCollider()
+        {
+            return null;
         }
         private void checkButtons()
         {

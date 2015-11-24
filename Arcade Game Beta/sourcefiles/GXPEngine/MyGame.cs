@@ -16,8 +16,6 @@ public class MyGame : Game
     private Endscreen _endscreen;
     private NameInput _nameinput;
 
-    //public Drawer drawer;
-    //Level variables
     public static bool playerHasWeapon = false;
     public int playerScore = 0;
     public bool levelWon = false;

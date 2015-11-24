@@ -21,11 +21,11 @@ namespace GXPEngine
         {
             if (HitTest(_level.player))
             {
-                if (_level.player.bulletCounter < 2)
+                if (_level.player.bulletCounter < 3)
                 {
-                    _level.player.bulletCounter = 2;
-                    this.Destroy();
+                    _level.player.bulletCounter++;
                 }
+                this.Destroy();
             }
         }
 

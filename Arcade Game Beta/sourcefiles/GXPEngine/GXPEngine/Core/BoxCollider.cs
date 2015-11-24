@@ -12,27 +12,44 @@ namespace GXPEngine.Core
 		public BoxCollider(Sprite owner) {
 			_owner = owner;
 		}
-		
-		//------------------------------------------------------------------------------------------------------------------------
-		//														HitTest()
-		//------------------------------------------------------------------------------------------------------------------------		
-		public override bool HitTest (Collider other) {
-			if (other is BoxCollider) {
-				Vector2[] c = _owner.GetExtents();
-				if (c == null) return false;
-				Vector2[] d = ((BoxCollider)other)._owner.GetExtents();
-				if (d == null) return false;
-				if (!areaOverlap(c, d)) return false;
-				return areaOverlap(d, c);
-			} else {
-				return false;
-			}
-		}
 
-		//------------------------------------------------------------------------------------------------------------------------
-		//														HitTest()
-		//------------------------------------------------------------------------------------------------------------------------		
-		public override bool HitTestPoint (float x, float y) {
+        //------------------------------------------------------------------------------------------------------------------------
+        //														HitTest()
+        //------------------------------------------------------------------------------------------------------------------------		
+        public override bool HitTest(Collider other)
+        {
+            if (other is BoxCollider)
+            {
+                BoxCollider boxCollider = other as BoxCollider;
+                Sprite sprite1 = this._owner;
+                Sprite sprite2 = boxCollider._owner;
+
+                float sprite1Left = sprite1.x - sprite1.originX;
+                float sprite1Right = sprite1.x + sprite1.width - sprite1.originX;
+                float sprite2Left = sprite2.x - sprite2.originX;
+                float sprite2Right = sprite2.x + sprite2.width - sprite2.originX;
+                if (sprite1Left > sprite2Right) return false;
+                if (sprite2Left > sprite1Right) return false;
+
+                float sprite1Top = sprite1.y - sprite1.originY;
+                float sprite1Bottom = sprite1.y + sprite1.height - sprite1.originY;
+                float sprite2Top = sprite2.y - sprite2.originY;
+                float sprite2Bottom = sprite2.y + sprite2.height - sprite2.originY;
+                if (sprite1Top > sprite2Bottom) return false;
+                if (sprite2Top > sprite1Bottom) return false;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //------------------------------------------------------------------------------------------------------------------------
+        //														HitTest()
+        //------------------------------------------------------------------------------------------------------------------------		
+        public override bool HitTestPoint (float x, float y) {
 			Vector2[] c = _owner.GetExtents();
 			if (c == null) return false;
 			Vector2 p = new Vector2(x, y);

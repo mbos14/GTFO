@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -35,6 +36,10 @@ namespace GXPEngine
             ButtonSelectTest();
             MakeName();
             updateName();
+        }
+        protected override Collider createCollider()
+        {
+            return null;
         }
         private void ButtonCreator()
         {

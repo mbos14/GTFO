@@ -19,7 +19,9 @@ namespace GXPEngine
 
         void Update()
         {
+            recoil();
             AnimationState();
+            Move();
         }
         //chanching the animation state
         private void AnimationState()

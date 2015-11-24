@@ -7,20 +7,25 @@ namespace GXPEngine
 {
     public class EnemyBugHorizontal : Enemy
     {
-        
-        public EnemyBugHorizontal(Level pLevel) : base("robobug.png", 2, 3, pLevel)
+        public float startY;
+        public EnemyBugHorizontal(Level pLevel, float pStartY) : base("robobug.png", 2, 3, pLevel)
         {
+            startY = pStartY;
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
-            scaleX *= -1;
+            Mirror(true, false);
             _points = EnemyPoints.bug;
             _healthmax = EnemyHealth.bug;
         }
         void Update()
         {
             AnimationState();
+            recoil();
+            Move();
+            getBackInPos();
+            die();
         }
-        //chanching the animation state
+        //ANIMATE
         private void AnimationState()
         {
             switch (_animState)
@@ -41,6 +46,16 @@ namespace GXPEngine
                         setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame);
                         break;*/
             }
+        }
+
+        //MOVEMENT
+        private void getBackInPos()
+        {
+            if (y == startY) return;
+            if (_isHit) return;
+
+            if (y > startY) y -= _velocityX;
+            if (y < startY) y += _velocityX;
         }
     }
 }

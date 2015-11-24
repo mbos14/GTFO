@@ -36,10 +36,12 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enemy\EnemyBullet.cs" />
     <Compile Include="Enemy\EnemyBugHorizontal.cs" />
     <Compile Include="Enemy\EnemyBugVertical.cs" />
     <Compile Include="GameScreens\HighScores.cs" />
     <Compile Include="Blocks\InvisBlock.cs" />
+    <Compile Include="GameScreens\LevelHUD.cs" />
     <Compile Include="Pickups\Checkpoints.cs" />
     <Compile Include="GameScreens\Endscreen.cs" />
     <Compile Include="Enumerator.cs" />

@@ -13,6 +13,10 @@ namespace GXPEngine
         {
             getHighScore();
         }
+        protected override Collider createCollider()
+        {
+            return null;
+        }
         private void getHighScore()
         {
             StreamReader streamReader = new StreamReader("highscoredata.txt");

@@ -11,8 +11,8 @@ namespace GXPEngine
 
         private PlayerDirection _direction;
         private float _distanceTraveled = 0.0f;
-        private float _maxTravel = 200.0f;
-        public float damage = 200.0f;
+        private float _maxTravel = 400.0f;
+        public float damage = 400.0f;
         private Level _level;
 
         private float _travelSpeed = 15.0f;
@@ -29,7 +29,7 @@ namespace GXPEngine
         {
             moveDirection();
             getCollisions();
-            shrinkBullet();
+            colorBullet();
         }
         private void moveDirection()
         {
@@ -83,21 +83,16 @@ namespace GXPEngine
                 Destroy();
             }
         }
-        private void shrinkBullet()
+        private void colorBullet()
         {
             if (_distanceTraveled == 0) return;
-            float shrinkvalue;
+            float colorValue;
+
             //Set shrinkvalue
-            if (_distanceTraveled >= 0) { shrinkvalue = (_maxTravel - _distanceTraveled) / 100.0f; }
-            else { shrinkvalue = (_maxTravel + _distanceTraveled) / 100.0f; }
-            //Scale
-            //if (shrinkvalue <= 1)
-            //{
-            //    //SetScaleXY(shrinkvalue, shrinkvalue);
-            //    //_overlaySprite.SetScaleXY(scaleX, scaleY);
-            //}
-            //Change opacity of the black overlaysprite
-            _overlaySprite.alpha = shrinkvalue * 100;
+            if (_distanceTraveled >= 0) { colorValue = (_maxTravel - _distanceTraveled) / 100.0f; }
+            else { colorValue = (_maxTravel + _distanceTraveled) / 100.0f; }
+
+            _overlaySprite.alpha = colorValue * 100;
 
         }
         private void drawOverlaySprite()
@@ -111,6 +106,19 @@ namespace GXPEngine
             if (_level.CheckCollision(this))
             {
                 Destroy();
+            }
+            
+            foreach (EnemyBullet bullet in _level.enemyBulletList)
+            {
+                if (HitTest(bullet))
+                {
+                    if (damage > damage / 2)
+                    {
+                        bullet.bulletTurnedAround = true;
+                        bullet.TurnBullet(_direction);
+                        Destroy();
+                    }
+                }
             }
         }
     }

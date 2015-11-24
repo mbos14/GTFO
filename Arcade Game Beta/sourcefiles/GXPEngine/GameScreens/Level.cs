@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -14,16 +15,20 @@ namespace GXPEngine
         public List<DamageBlock> damageList = new List<DamageBlock>();
         public List<Enemy> enemyList = new List<Enemy>();
 
+        public List<EnemyBullet> enemyBulletList = new List<EnemyBullet>();
+
         //Data
         public Player player;
         public MyGame thisgame;
         private string _fileName;
-        private Drawer drawer = new Drawer(1024, 100);
+        public Drawer drawer = new Drawer(1024, 100);
+
+        private bool _levelDrawed = false;
 
         //Variables for tile- and levelsize
         const int TILESY = 50; //Amount of tiles vertical
         const int TILESX = 100; //Amount of tiles horizontal
-        const int TILESIZE = 32;
+        const int TILESIZE = 64;
 
         const int BETWEENLAYERS = 4;
         const int TILEDINFO = 13;
@@ -45,9 +50,9 @@ namespace GXPEngine
             Camera cam1 = new Camera(player, this);
             AddChild(cam1);
         }
-        void Update()
+        protected override Collider createCollider()
         {
-            drawHUD();
+            return null;
         }
         //Drawfunctions
         private void drawAll()
@@ -56,9 +61,12 @@ namespace GXPEngine
             drawbackGroundObjectLayer();
             drawSolidLayer();
             drawDamageLayer();
-            drawPreDefinedLayer();
+            DrawPreDefinedLayer();
             drawPlayer();
             drawForeGroundLayer();
+
+            LevelHUD hud = new LevelHUD(this);
+            hudLayer.AddChild(hud);
         }
         private void addPivots()
         {
@@ -72,23 +80,8 @@ namespace GXPEngine
             player = new Player(this);
             _midgroundLayer.AddChild(player);
             player.spawnX = 100;
-            player.spawnY = 540;
+            player.spawnY = 1250;
             player.SetXY(player.spawnX, player.spawnY);
-        }
-        private void drawHUD()
-        {
-            string message = "Score: " + thisgame.playerScore;
-            string message2 = "Lives: " + player.lives;
-            string message3 = "FPS: " + thisgame.currentFps;
-
-            hudLayer.AddChild(drawer);
-            PointF pos1 = new PointF(0, 20);
-            PointF pos2 = new PointF(thisgame.width - 150, 20);
-            PointF pos3 = new PointF(thisgame.width - 150, 60);
-
-            drawer.DrawText(message, pos1);
-            drawer.DrawText(message2, pos2);
-            drawer.DrawText(message3, pos3);
         }
         //Layers
         private void drawBackGroundLayer()
@@ -167,7 +160,7 @@ namespace GXPEngine
                 }
             }
         }
-        private void drawPreDefinedLayer()
+        public void DrawPreDefinedLayer()
         {
             int startNr = TILEDINFO + BETWEENLAYERS * 2 + TILESY * 2;
             int endNr = startNr + TILESY;
@@ -208,69 +201,95 @@ namespace GXPEngine
                             }
                         case 2: //Life
                             {
-                                PickUpLife thisobject = new PickUpLife(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                if (!_levelDrawed)
+                                {
+                                    PickUpLife thisobject = new PickUpLife(this);
+                                    _midgroundLayer.AddChild(thisobject);
+                                    thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                }
                                 break;
                             }
                         case 3: //Coin
                             {
-                                PickUpCoin thisobject = new PickUpCoin(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                if (!_levelDrawed)
+                                {
+                                    PickUpCoin thisobject = new PickUpCoin(this);
+                                    _midgroundLayer.AddChild(thisobject);
+                                    thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                }
                                 break;
                             }
                         case 4: //EnemySpider
                             {
-                                EnemySpider thisenemy = new EnemySpider(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
+                                if (!_levelDrawed)
+                                {
+                                    EnemySpider thisenemy = new EnemySpider(this);
+                                    _midgroundLayer.AddChild(thisenemy);
+                                    thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                    enemyList.Add(thisenemy);
+                                }
                                 break;
                             }
                         case 5: //Enemy bug Horizontal
                             {
-                                EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
+                                if (!_levelDrawed)
+                                {
+                                    EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this, i * TILESIZE);
+                                    _midgroundLayer.AddChild(thisenemy);
+                                    thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                    enemyList.Add(thisenemy);
+                                }
                                 break;
                             }
                         case 6: //Enemy bug Vertical
                             {
-                                EnemyBugVertical thisenemy = new EnemyBugVertical(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
+                                if (!_levelDrawed)
+                                {
+                                    EnemyBugVertical thisenemy = new EnemyBugVertical(this);
+                                    _midgroundLayer.AddChild(thisenemy);
+                                    thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                    enemyList.Add(thisenemy);
+                                }
                                 break;
                             }
                         case 7: //EnemyFloater
                             {
-                                EnemyFloater thisenemy = new EnemyFloater(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
+                                if (!_levelDrawed)
+                                {
+                                    EnemyFloater thisenemy = new EnemyFloater(this);
+                                    _midgroundLayer.AddChild(thisenemy);
+                                    thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                    enemyList.Add(thisenemy);
+                                }
                                 break;
                             }
                         case 8: //Weapon
                             {
-                                PickUpWeapon thisobject = new PickUpWeapon(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                if (!_levelDrawed)
+                                {
+                                    PickUpWeapon thisobject = new PickUpWeapon(this);
+                                    _midgroundLayer.AddChild(thisobject);
+                                    thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                }
                                 break;
                             }
 
                         case 9: //Invisible block of doom
                             {
-                                InvisBlock thisobject = new InvisBlock(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                if (!_levelDrawed)
+                                {
+                                    InvisBlock thisobject = new InvisBlock(this);
+                                    _midgroundLayer.AddChild(thisobject);
+                                    thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                    thisobject.SetFrame(193);
+                                }
                                 break;
                             }
                     }
 
                 }
             }
+            _levelDrawed = true;
         }
         private void drawSolidLayer()
         {
@@ -408,6 +427,7 @@ namespace GXPEngine
                     {
                         Player thisplayer = (Player)pSprite;
                         thisplayer.playerDIE();
+                        DrawPreDefinedLayer();
                     }
                     else if (pSprite is PlayerBullet)
                     {
@@ -416,7 +436,7 @@ namespace GXPEngine
                 }
             }
             //Enemies
-            foreach (Sprite other in enemyList)
+            foreach (Enemy other in enemyList)
             {
                 if (pSprite.HitTest(other))
                 {
@@ -427,7 +447,8 @@ namespace GXPEngine
                     }
                     else if (pSprite is PlayerBullet)
                     {
-                        //Pass through data: bullet damage, 
+                        PlayerBullet bullet = (PlayerBullet)pSprite;
+                        other.HitByBullet(bullet.damage / 8, player.aimDirection);
                         pSprite.Destroy();
                     }
                 }
