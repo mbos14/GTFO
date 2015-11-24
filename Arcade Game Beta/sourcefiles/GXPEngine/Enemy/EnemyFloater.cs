@@ -19,7 +19,7 @@ namespace GXPEngine
 
         void Update()
         {
-            Move();
+            AnimationState();
         }
         //chanching the animation state
         private void AnimationState()
@@ -38,9 +38,9 @@ namespace GXPEngine
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)FLoaterDeath.firstFrame, (float)FLoaterDeath.lastFrame);
                     break;
-                case AnimationStateEnemy.jump:
+                /*case AnimationStateEnemy.jump:
                     setAnimationRange((float)FLoaterJump.firstFrame, (float)FLoaterJump.lastFrame);
-                    break;
+                    break;*/
             }
         }
     }

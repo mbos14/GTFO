@@ -7,7 +7,6 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-        private float _velocityX = 1.0f;
         //Animation
         private float _frame = 0.0f;
 
@@ -21,8 +20,7 @@ namespace GXPEngine
 
         void Update()
         {
-            animation();
-            Move();
+            AnimationState();
         }
 
         private void animation()
@@ -50,9 +48,9 @@ namespace GXPEngine
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)SpiderDeath.firstFrame, (float)SpiderDeath.lastFrame);
                     break;
-                case AnimationStateEnemy.jump:
+                /*case AnimationStateEnemy.jump:
                     setAnimationRange((float)SpiderJump.firstFrame, (float)SpiderJump.lastFrame);
-                    break;
+                    break;*/
             }
         }
     }

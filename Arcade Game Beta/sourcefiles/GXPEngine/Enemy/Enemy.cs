@@ -15,6 +15,7 @@ namespace GXPEngine
         protected bool _isHit;
         //stores direction
         protected EnemyDirection _enemyDirection;
+        protected PlayerDirection _directionHit;
         //stores first and last frame
         protected float _firstFrame;
         protected float _lastFrame;
@@ -33,6 +34,10 @@ namespace GXPEngine
             _isHit = false;
             _health = (float)_healthmax;
         }
+        void Update()
+        {
+            Move();
+        }
         //general enemy movements
         protected virtual void Move()
         {
@@ -46,21 +51,51 @@ namespace GXPEngine
             scaleX *= -1;
         }
 
+        private void Animation()
+        {
+            switch (_animState)
+            {
+                case AnimationStateEnemy.idle:
+
+                    _animState = AnimationStateEnemy.walk;
+                    break;
+                case AnimationStateEnemy.walk:
+                    
+                    break;
+                case AnimationStateEnemy.hit:
+
+                    _animState = AnimationStateEnemy.idle;
+                    break;
+                case AnimationStateEnemy.death:
+                    
+                    break;
+                /*case AnimationStateEnemy.jump:
+                    
+                    break;*/
+            }
+        }
+
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
             _firstFrame = pFirstFrame;
             _lastFrame = pLastFrame;
         }
         //is called from level to parce the death state to the enemy
-        public void HitByBullet(float pBulletDamage)
+        public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)
         {
-            _health -= pBulletDamage;
-            _isHit = true;
-            if (_health <= 0)
+            if (!_isDeath)
             {
-                _isDeath = true;
-                _level.player.addPoints((int)_points);
-            }           
+                _directionHit = pDirection;
+                _health -= pBulletDamage;
+                _isHit = true;
+                _animState = AnimationStateEnemy.hit;
+                if (_health <= 0)
+                {
+                    _isDeath = true;
+                    _level.player.addPoints((int)_points);
+                    _animState = AnimationStateEnemy.death;
+                }
+            }       
         }
     }
 }
