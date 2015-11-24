@@ -8,7 +8,7 @@ namespace GXPEngine
     public class InvisBlock : AnimationSprite
     {
         private Level _level;
-        public InvisBlock(Level pLevel) : base("tileset.png", 14, 19)
+        public InvisBlock(Level pLevel) : base("tileset.png", 23, 45)
         {
             _level = pLevel;
         }

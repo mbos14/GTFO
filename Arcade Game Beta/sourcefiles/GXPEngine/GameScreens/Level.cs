@@ -21,9 +21,12 @@ namespace GXPEngine
         private Drawer drawer = new Drawer(1024, 100);
 
         //Variables for tile- and levelsize
-        const int TILESY = 26; //Amount of tiles vertical
-        const int TILESX = 60; //Amount of tiles horizontal
+        const int TILESY = 50; //Amount of tiles vertical
+        const int TILESX = 100; //Amount of tiles horizontal
         const int TILESIZE = 32;
+
+        const int BETWEENLAYERS = 4;
+        const int TILEDINFO = 13;
 
         //Pivots
         private Pivot _backgroundLayer = new Pivot();
@@ -90,6 +93,9 @@ namespace GXPEngine
         //Layers
         private void drawBackGroundLayer()
         {
+            int startNr = TILEDINFO;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -97,14 +103,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 14; j < 40; j++)
+            for (int j = 13; j < 63; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 14, i] = int.Parse(column);
+                    levelData[j - 13, i] = int.Parse(column);
                 }
             }
 
@@ -125,6 +131,9 @@ namespace GXPEngine
         }
         private void drawbackGroundObjectLayer()
         {
+            int startNr = TILEDINFO + BETWEENLAYERS + TILESY;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -132,14 +141,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 44; j < 70; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 44, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -160,6 +169,9 @@ namespace GXPEngine
         }
         private void drawPreDefinedLayer()
         {
+            int startNr = TILEDINFO + BETWEENLAYERS * 2 + TILESY * 2;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -167,14 +179,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 74; j < 100; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 74, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -183,7 +195,9 @@ namespace GXPEngine
             {
                 for (int j = 0; j < TILESX; j++)
                 {
-                    switch (levelData[i, j])
+                    int tile = levelData[i, j];
+
+                    switch (tile)
                     {
                         case 1: //Reload
                             {
@@ -260,6 +274,9 @@ namespace GXPEngine
         }
         private void drawSolidLayer()
         {
+            int startNr = TILEDINFO + BETWEENLAYERS * 3+ TILESY * 3;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -267,14 +284,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 104; j < 130; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 104, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -296,6 +313,9 @@ namespace GXPEngine
         }
         private void drawDamageLayer()
         {
+            int startNr = TILEDINFO + BETWEENLAYERS * 4 + TILESY * 4;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -303,14 +323,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 134; j < 160; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 134, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -332,6 +352,9 @@ namespace GXPEngine
         }
         private void drawForeGroundLayer()
         {
+            int startNr = TILEDINFO + BETWEENLAYERS * 5 + TILESY * 5;
+            int endNr = startNr + TILESY;
+
             int[,] levelData = new int[TILESY, TILESX];
             //------------------------------------------READ FILE----------------------------------------------
             StreamReader reader1 = new StreamReader(_fileName);
@@ -339,14 +362,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 164; j < 190; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 164, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -364,10 +387,6 @@ namespace GXPEngine
                     }
                 }
             }
-        }
-        private void drawInvisibleLayer()
-        {
-            //Enemy movement
         }
         //Collisions
         public bool CheckCollision(Sprite pSprite)

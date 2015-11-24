@@ -8,7 +8,7 @@ namespace GXPEngine
 {
     public class BackgroundObject : AnimationSprite
     {
-        public BackgroundObject() : base("tileset.png", 14, 19)
+        public BackgroundObject() : base("tileset.png", 23, 45)
         {
 
         }

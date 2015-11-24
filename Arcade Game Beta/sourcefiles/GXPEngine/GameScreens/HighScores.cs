@@ -20,7 +20,7 @@ namespace GXPEngine
             streamReader.Close();
 
             string[] lines = fileData.Split('\n');
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < 10; i++)
             {
                 string[] columns = lines[i].Split(',');
                 //Save in arrays

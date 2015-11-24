@@ -24,10 +24,7 @@ public class MyGame : Game
 
     public MyGame() : base(1024, 768, false)
     {
-        //drawer = new Drawer(1024, 768);
-        //AddChild(drawer);
-
-        setGameState(GameStates.endscreen);
+        setGameState(GameStates.menu);
     }
     public void setGameState(GameStates pState)
     {

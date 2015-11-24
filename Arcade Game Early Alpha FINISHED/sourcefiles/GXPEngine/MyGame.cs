@@ -23,7 +23,7 @@ public class MyGame : Game
 
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(GameStates.endscreen);
+        setGameState(GameStates.level);
     }
     public void setGameState(GameStates pState)
     {

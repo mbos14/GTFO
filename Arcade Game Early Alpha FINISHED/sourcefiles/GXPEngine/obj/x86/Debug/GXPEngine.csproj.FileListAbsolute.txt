@@ -20,3 +20,8 @@ C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\ob
 C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
 C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
 C:\Users\XInfernoX\Desktop\GTFO\Arcade Game Early Alpha\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
+C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\GitHub\Arcade Game Early Alpha FINISHED\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.exe
+C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\GitHub\Arcade Game Early Alpha FINISHED\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.pdb
+C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\GitHub\Arcade Game Early Alpha FINISHED\sourcefiles\GXPEngine\bin\Debug\GXPEngine.exe
+C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\GitHub\Arcade Game Early Alpha FINISHED\sourcefiles\GXPEngine\bin\Debug\GXPEngine.pdb
+C:\Users\Leon\Documents\School\Year 1\Projects\Q2 Project 1 Arcade Game\GitHub\Arcade Game Early Alpha FINISHED\sourcefiles\GXPEngine\obj\x86\Debug\GXPEngine.csprojResolveAssemblyReference.cache
