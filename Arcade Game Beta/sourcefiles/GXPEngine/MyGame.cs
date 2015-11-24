@@ -16,6 +16,7 @@ public class MyGame : Game
     private Endscreen _endscreen;
     private NameInput _nameinput;
 
+    //public Drawer drawer;
     //Level variables
     public static bool playerHasWeapon = false;
     public int playerScore = 0;
@@ -23,7 +24,10 @@ public class MyGame : Game
 
     public MyGame() : base(1024, 768, false)
     {
-        setGameState(GameStates.level);
+        //drawer = new Drawer(1024, 768);
+        //AddChild(drawer);
+
+        setGameState(GameStates.endscreen);
     }
     public void setGameState(GameStates pState)
     {

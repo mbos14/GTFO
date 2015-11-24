@@ -14,6 +14,7 @@ namespace GXPEngine
         private Sprite _credits;
         private Sprite _insertcoin;
         private float _frameCounter = 0.0f;
+        private Drawer _drawer = new Drawer(300, 768);
         public Endscreen(MyGame pGame)
         {
             _game = pGame;
@@ -25,6 +26,7 @@ namespace GXPEngine
             _credits.y -= 1;
             insertCoinAnim();
             endCredits();
+            drawHighScores();
         }
         private void checkLevel()
         {
@@ -94,16 +96,21 @@ namespace GXPEngine
             _insertcoin.SetOrigin(_insertcoin.width / 2, _insertcoin.height / 2);
             _insertcoin.SetXY(game.width / 2, game.height - _insertcoin.height);
 
+        }
+        private void drawHighScores()
+        {
             //Highscores
             HighScores high = new HighScores();
             AddChild(high);
-            Drawer drawer = new Drawer(300, 768);
-            AddChild(drawer);
-            drawer.SetXY(game.width / 2, game.height / 2);
-            for (int i = 0; i < 9; i++)
+
+            AddChild(_drawer);
+
+            string[] highscores = high.ReturnHighScore(0);
+
+            for (int i = 0; i < highscores.Length; i++)
             {
-                PointF pos1 = new PointF(10, i * 30);
-                drawer.DrawText(high.ReturnHighScore(i), pos1);
+                PointF pos = new PointF(0, 500 - i * 50);
+                _drawer.DrawText(highscores[i], pos);
             }
         }
         private void endCredits()

@@ -34,6 +34,7 @@ namespace GXPEngine
         {
             _fileName = pFileName;
             thisgame = pGame;
+            thisgame.playerScore = 0;
 
             addPivots();
             drawAll();
@@ -184,67 +185,25 @@ namespace GXPEngine
                 {
                     switch (levelData[i, j])
                     {
-                        case 5: //Coin
-                            {
-                                PickUpCoin thisobject = new PickUpCoin(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                //pickUpList.Add(thisobject);
-                                break;
-                            }
-                        case 6: //Reload
+                        case 1: //Reload
                             {
                                 PickUpReload thisobject = new PickUpReload(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 7: //Weapon
-                            {
-                                PickUpWeapon thisobject = new PickUpWeapon(this);
-                                _midgroundLayer.AddChild(thisobject);
-                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                //pickUpList.Add(thisobject);
-                                break;
-                            }
-                        case 8: //Life
+                        case 2: //Life
                             {
                                 PickUpLife thisobject = new PickUpLife(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                //pickUpList.Add(thisobject);
                                 break;
                             }
-                        case 9:
+                        case 3: //Coin
                             {
-                                InvisBlock thisobject = new InvisBlock(this);
+                                PickUpCoin thisobject = new PickUpCoin(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                break;
-                            }
-                        case 1: //Enemy bug Horizontal
-                            {
-                                EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
-                                break;
-                            }
-                        case 2: //Enemy bug Vertical
-                            {
-                                EnemyBugVertical thisenemy = new EnemyBugVertical(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
-                                break;
-                            }
-                        case 3: //EnemyFloater
-                            {
-                                EnemyFloater thisenemy = new EnemyFloater(this);
-                                _midgroundLayer.AddChild(thisenemy);
-                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
-                                enemyList.Add(thisenemy);
                                 break;
                             }
                         case 4: //EnemySpider
@@ -253,6 +212,45 @@ namespace GXPEngine
                                 _midgroundLayer.AddChild(thisenemy);
                                 thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
                                 enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 5: //Enemy bug Horizontal
+                            {
+                                EnemyBugHorizontal thisenemy = new EnemyBugHorizontal(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 6: //Enemy bug Vertical
+                            {
+                                EnemyBugVertical thisenemy = new EnemyBugVertical(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 7: //EnemyFloater
+                            {
+                                EnemyFloater thisenemy = new EnemyFloater(this);
+                                _midgroundLayer.AddChild(thisenemy);
+                                thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
+                                enemyList.Add(thisenemy);
+                                break;
+                            }
+                        case 8: //Weapon
+                            {
+                                PickUpWeapon thisobject = new PickUpWeapon(this);
+                                _midgroundLayer.AddChild(thisobject);
+                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                break;
+                            }
+
+                        case 9: //Invisible block of doom
+                            {
+                                InvisBlock thisobject = new InvisBlock(this);
+                                _midgroundLayer.AddChild(thisobject);
+                                thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                                 break;
                             }
                     }

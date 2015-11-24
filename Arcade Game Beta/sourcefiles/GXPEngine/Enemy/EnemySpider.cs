@@ -7,11 +7,7 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-<<<<<<< HEAD
         private float _velocityX = 1.0f;
-
-=======
->>>>>>> ac69392ff1695253207e79488c78d9f65830ebfc
         //Animation
         private float _frame = 0.0f;
 

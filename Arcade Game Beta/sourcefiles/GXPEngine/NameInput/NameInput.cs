@@ -18,14 +18,17 @@ namespace GXPEngine
         int stringposition = 0;
         Mouse mouse;
         private Level _level;
-        string finalName;
+        private MyGame _game;
         private Drawer _drawer = new Drawer(1024, 100);
+        string finalName;
         public NameInput(Level pLevel)
         {
             _level = pLevel;
+            _game = _level.thisgame;
             ButtonCreator();
             mouse = new Mouse();
             AddChild(mouse);
+            AddChild(_drawer);
         }
         void Update()
         {
@@ -85,6 +88,7 @@ namespace GXPEngine
                                 //Submit name
                                 HighScores highscores = new HighScores();
                                 highscores.AddScore(finalName, _level.thisgame.playerScore);
+
                                 _level.thisgame.setGameState(GameStates.endscreen);
                             }
                         }
@@ -101,15 +105,9 @@ namespace GXPEngine
         }
         private void updateName()
         {
-            if (_drawer == null) return;
-            if (_drawer.parent == null) return;
-
-            _drawer.graphics.Clear(Color.Empty);
-            AddChild(_drawer);
-            _drawer.SetXY(0, 0);
             string message = "Name: " + finalName;
             PointF pos1 = new PointF(0, 0);
-
+            _game.SetChildIndex(_drawer, -1);
             _drawer.DrawText(message, pos1);
         }
     }
