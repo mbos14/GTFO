@@ -11,11 +11,8 @@ namespace GXPEngine
 
         private MyGame _game;
         private bool _coinInserted = false;
-        HighScores _highscore = new HighScores();
-
         public Menu(MyGame pGame)
         {
-            AddChild(_highscore);
             _game = pGame;
             drawBackGround();
         }
