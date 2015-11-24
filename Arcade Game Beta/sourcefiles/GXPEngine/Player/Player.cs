@@ -348,6 +348,8 @@ namespace GXPEngine
             if (lives > 1)
             {
                 lives -= 1;
+                _velocityX = 0.0f;
+                _velocityY = 0.0f;
                 x = spawnX;
                 y = spawnY;
             }

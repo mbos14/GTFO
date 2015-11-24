@@ -19,7 +19,7 @@ namespace GXPEngine
         Mouse mouse;
         private Level _level;
         string finalName;
-        private Drawer _drawer = new Drawer();
+        private Drawer _drawer = new Drawer(1024, 100);
         public NameInput(Level pLevel)
         {
             _level = pLevel;
@@ -80,10 +80,13 @@ namespace GXPEngine
                         }
                         else if (buttonNumber == 39)
                         {
-                            //Submit name
-                            HighScores highscores = new HighScores();
-                            highscores.AddScore(finalName, _level.thisgame.playerScore);
-                            _level.thisgame.setGameState(GameStates.endscreen);
+                            if (stringposition == 3)
+                            {
+                                //Submit name
+                                HighScores highscores = new HighScores();
+                                highscores.AddScore(finalName, _level.thisgame.playerScore);
+                                _level.thisgame.setGameState(GameStates.endscreen);
+                            }
                         }
                     }
                 }
@@ -98,6 +101,10 @@ namespace GXPEngine
         }
         private void updateName()
         {
+            if (_drawer == null) return;
+            if (_drawer.parent == null) return;
+
+            _drawer.graphics.Clear(Color.Empty);
             AddChild(_drawer);
             _drawer.SetXY(0, 0);
             string message = "Name: " + finalName;

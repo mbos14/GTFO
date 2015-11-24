@@ -12,7 +12,7 @@ namespace GXPEngine
         Brush brush;
         PointF pos;
 
-        public Drawer() : base(1024, 100)
+        public Drawer(int pWidth, int pHeight) : base(pWidth, pHeight)
         {
             font = new Font("Arial", 25, FontStyle.Regular);
             brush = new SolidBrush(Color.LimeGreen);
@@ -20,16 +20,11 @@ namespace GXPEngine
         }
         void Update()
         {
-            graphics.Clear(Color.Empty);
         }
         public void DrawText(string pMessage, PointF pPos)
         {
+            //graphics.Clear(Color.Empty);
             graphics.DrawString(pMessage, font, brush, pPos);
-        }
-        public void DrawSprite(Sprite pSprite, PointF pPos)
-        {
-            DrawSprite(pSprite);
-            pSprite.SetXY(pPos.X, pPos.Y);
         }
     }
 }

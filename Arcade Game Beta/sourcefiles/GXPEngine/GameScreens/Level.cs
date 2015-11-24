@@ -18,7 +18,7 @@ namespace GXPEngine
         public Player player;
         public MyGame thisgame;
         private string _fileName;
-        private Drawer drawer = new Drawer();
+        private Drawer drawer = new Drawer(1024, 100);
 
         //Variables for tile- and levelsize
         const int TILESY = 26; //Amount of tiles vertical
@@ -374,16 +374,6 @@ namespace GXPEngine
         //Collisions
         public bool CheckCollision(Sprite pSprite)
         {
-            //foreach (Sprite other in invisibleList)
-            //{
-            //    if (pSprite is Enemy)
-            //    {
-            //        if (pSprite.HitTest(other))
-            //        {
-            //            //Turn around
-            //        }
-            //    }
-            //}
             //Solid objects            
             foreach (Sprite other in solidList)
             {
@@ -404,6 +394,23 @@ namespace GXPEngine
                     }
                     else if (pSprite is PlayerBullet)
                     {
+                        pSprite.Destroy();
+                    }
+                }
+            }
+            //Enemies
+            foreach (Sprite other in enemyList)
+            {
+                if (pSprite.HitTest(other))
+                {
+                    if (pSprite is Player)
+                    {
+                        Player thisplayer = (Player)pSprite;
+                        thisplayer.playerDIE();
+                    }
+                    else if (pSprite is PlayerBullet)
+                    {
+                        //Pass through data: bullet damage, 
                         pSprite.Destroy();
                     }
                 }
