@@ -63,23 +63,25 @@ namespace GXPEngine
 
         private void secretCheat()
         {
-            //Button 1
-            if (Input.GetKeyDown(Key.V))
+            if (Input.GetKeyDown(Key.V))//Button 1
             {
                 _button1 = true;
             }
-
-            //Button 2
-            if (_button1 && Input.GetKeyDown(Key.B))
+            else if (_button1 && Input.GetKeyDown(Key.B))//Button 2
             {
                 _button2 = true;
             }
-
-            //Button 3
-            if (_button2 && Input.GetKeyDown(Key.H))
+            else if (_button2 && Input.GetKeyDown(Key.H))//Button 3
             {
                 _button3 = true;
             }
+            else if (Input.GetAnyKeyDown())
+            {
+                _button1 = false;
+                _button2 = false;
+                _button3 = false;
+            }
+
 
             if (_button1 && _button2 && _button3)
             {

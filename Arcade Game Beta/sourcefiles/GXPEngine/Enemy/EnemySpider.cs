@@ -7,9 +7,6 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-        //Animation
-        private float _frame = 0.0f;
-
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
             SetOrigin(width / 2, 0);
@@ -22,15 +19,6 @@ namespace GXPEngine
         {
             AnimationState();
         }
-
-        private void animation()
-        {
-            _frame += 0.2f;
-            if (_frame >= 5.0f) { _frame = 2.0f; }
-            if (_frame <= 2.0f) { _frame = 2.0f; }
-            SetFrame((int)_frame);
-        }
-
         //chanching the animation state
         private void AnimationState()
         {
