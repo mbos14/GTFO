@@ -44,16 +44,13 @@ namespace GXPEngine
             _isHit = false;
             _health = (float)_healthmax;
         }
-<<<<<<< HEAD
 
         //MOVEMENT
-=======
         void Update()
         {
-            Animation();
+            animation();
         }
         //general enemy movements
->>>>>>> b588a38c577b70267e4bdcd486ed030cd6ca6c6d
         protected virtual void Move()
         {
             if (!_isHit)
@@ -78,32 +75,19 @@ namespace GXPEngine
                     _animState = AnimationStateEnemy.walk;
                     break;
                 case AnimationStateEnemy.walk:
-<<<<<<< HEAD
-
-=======
                     Move();
->>>>>>> b588a38c577b70267e4bdcd486ed030cd6ca6c6d
                     break;
                 case AnimationStateEnemy.hit:
 
                     _animState = AnimationStateEnemy.idle;
                     break;
                 case AnimationStateEnemy.death:
-
                     break;
-<<<<<<< HEAD
                     /*case AnimationStateEnemy.jump:
 
                         break;*/
             }
         }
-=======
-                /*case AnimationStateEnemy.jump:                    
-                    break;*/
-            }
-        }
-
-
         private void animation()
         {
             _frame += 0.2f;
@@ -112,7 +96,6 @@ namespace GXPEngine
             SetFrame((int)_frame);
         }
 
->>>>>>> b588a38c577b70267e4bdcd486ed030cd6ca6c6d
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
             _firstFrame = pFirstFrame;
