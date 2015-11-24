@@ -8,7 +8,7 @@ namespace GXPEngine
     public class EnemyBugVertical : Enemy
     {
         private float _velocityY = 1.0f;
-        public EnemyBugVertical(Level pLevel) : base("robobug.png", 2, 2, pLevel)
+        public EnemyBugVertical(Level pLevel) : base("robobug.png", 2, 3, pLevel)
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
@@ -18,8 +18,7 @@ namespace GXPEngine
         }
         void Update()
         {
-            animation();
-            Move();
+            AnimationState();
         }
         protected override void Move()
         {
@@ -30,11 +29,6 @@ namespace GXPEngine
             _velocityY *= -1;
             //scaleY *= -1;
         }
-        private void animation()
-        {
-
-        }
-
         //chanching the animation state
         private void AnimationState()
         {
@@ -46,15 +40,15 @@ namespace GXPEngine
                 case AnimationStateEnemy.walk:
                     setAnimationRange((float)BugWalk.firstFrame, (float)BugWalk.lastFrame);
                     break;
-              /*case AnimationStateEnemy.hit:
+                case AnimationStateEnemy.hit:
                     setAnimationRange((float)BugHit.firstFrame, (float)BugHit.lastFrame);
                     break;
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
-                case AnimationStateEnemy.jump:
-                    setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame)
-                    break;*/
+                    /*case AnimationStateEnemy.jump:
+                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame)
+                        break;*/
             }
         }
     }

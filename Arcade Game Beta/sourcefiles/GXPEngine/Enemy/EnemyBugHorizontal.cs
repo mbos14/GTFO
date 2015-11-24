@@ -8,7 +8,7 @@ namespace GXPEngine
     public class EnemyBugHorizontal : Enemy
     {
         
-        public EnemyBugHorizontal(Level pLevel) : base("robobug.png", 2, 2, pLevel)
+        public EnemyBugHorizontal(Level pLevel) : base("robobug.png", 2, 3, pLevel)
         {
             _level = pLevel;
             SetOrigin(width / 2, height / 2);
@@ -18,9 +18,8 @@ namespace GXPEngine
         }
         void Update()
         {
-            Move();
+            AnimationState();
         }
-
         //chanching the animation state
         private void AnimationState()
         {
@@ -32,15 +31,15 @@ namespace GXPEngine
                 case AnimationStateEnemy.walk:
                     setAnimationRange((float)BugWalk.firstFrame, (float)BugWalk.lastFrame);
                     break;
-                /*case AnimationStateEnemy.hit:
+                case AnimationStateEnemy.hit:
                     setAnimationRange((float)BugHit.firstFrame, (float)BugHit.lastFrame);
                     break;
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
-                case AnimationStateEnemy.jump:
-                    setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame);
-                    break;*/
+                    /*case AnimationStateEnemy.jump:
+                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame);
+                        break;*/
             }
         }
     }

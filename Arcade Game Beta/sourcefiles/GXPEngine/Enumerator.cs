@@ -30,8 +30,8 @@ namespace GXPEngine
     //BUG
     public enum BugIdle { firstFrame = 3, lastFrame = 3 };
     public enum BugWalk { firstFrame = 0, lastFrame = 2 };
-    //public enum BugHit { firstFrame = 8, lastFrame = 9 };
-    //public enum BugDeath { firstFrame = 10, lastFrame = 11 };
+    public enum BugHit { firstFrame = 3, lastFrame = 3 };
+    public enum BugDeath { firstFrame = 4, lastFrame = 5 };
 
 
     //PLAYER
