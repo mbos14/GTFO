@@ -21,15 +21,15 @@ namespace GXPEngine
             foreach (Enemy other in _level.enemyList)
             if (HitTest(other))
                 {
-                    if (other.isHIt)
+                    if (other.isHit)
                     {
                         if (other.directionHit == PlayerDirection.left)
                         {
-                            x -= 20;
+                            x += 20;
                         }
                         else if (other.directionHit == PlayerDirection.right)
                         {
-                            x += 20;
+                            x -= 20;
                         }
                         else if (other.directionHit == PlayerDirection.up)
                         {
@@ -39,7 +39,7 @@ namespace GXPEngine
                         {
                             y -= 20;
                         }
-                        other.isHIt = false;
+                        other.isHit = false;
                         other.frameCounter = 0;
                     }
                     else { other.TurnAround(); }

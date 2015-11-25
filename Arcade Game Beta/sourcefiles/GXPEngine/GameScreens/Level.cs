@@ -462,7 +462,7 @@ namespace GXPEngine
                         else if (pSprite is PlayerBullet)
                         {
                             PlayerBullet bullet = (PlayerBullet)pSprite;
-                            other.HitByBullet(bullet.damage / 8, player.aimDirection);
+                            other.HitByBullet(bullet.damage / 4, player.aimDirection);
                             pSprite.Destroy();
                         }
                     }

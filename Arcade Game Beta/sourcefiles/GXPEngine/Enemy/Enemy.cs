@@ -15,7 +15,7 @@ namespace GXPEngine
 
         //animation death/hit state
         protected bool _isDeath;
-        public bool isHIt;
+        public bool isHit;
 
         //stores direction
         protected EnemyDirection _enemyDirection;
@@ -41,20 +41,17 @@ namespace GXPEngine
         {
             _level = pLevel;
             _isDeath = false;
-            isHIt = false;
+            isHit = false;
             _state = EnemyState.idle;
         }
 
         //general enemy movements
         protected virtual void Move()
         {
-            if (!isHIt)
-            {
                 if (_state == EnemyState.walk)
                 {
                     x += _velocityX;
                 }
-            }
         }
         //make the enemy turn around
         public virtual void TurnAround()
@@ -80,7 +77,7 @@ namespace GXPEngine
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
-                        isHIt = false;
+                        isHit = false;
                         _state = EnemyState.idle;
                     }
                     break;
@@ -90,9 +87,6 @@ namespace GXPEngine
                         this.Destroy();
                     }
                     break;
-                    /*case EnemyState.jump:
-
-                        break;*/
             }
         }
 
@@ -133,13 +127,13 @@ namespace GXPEngine
             {
                 directionHit = pDirection;
                 _health -= pBulletDamage;
-                isHIt = true;
+                isHit = true;
                 _state = EnemyState.hit;
             }           
         }
         public virtual void recoil()
         {
-            if (!isHIt) return;
+            if (!isHit) return;
             if (_isDeath) return;
 
             frameCounter++;
@@ -171,10 +165,10 @@ namespace GXPEngine
                 }
             }
 
-            if (frameCounter >= 50)
+            if (frameCounter >= 25)
             {
                 frameCounter = 0;
-                isHIt = false;
+                isHit = false;
             }
         }
         protected virtual void die()

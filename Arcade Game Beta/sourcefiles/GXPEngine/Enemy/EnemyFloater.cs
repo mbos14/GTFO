@@ -59,7 +59,7 @@ namespace GXPEngine
         }
         public override void recoil()
         {
-            if (!isHIt) return;
+            if (!isHit) return;
             if (_isDeath) return;
 
             frameCounter++;
@@ -80,7 +80,7 @@ namespace GXPEngine
                         }
                 }
             }
-            else isHIt = false;
+            else isHit = false;
         }
     }
 }

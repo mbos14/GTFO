@@ -35,7 +35,7 @@ namespace GXPEngine
         }
         protected override void Move()
         {
-            if (isHIt) return;
+            if (isHit) return;
             if (_isDeath) return;
 
             y += _velocityY;
@@ -44,7 +44,7 @@ namespace GXPEngine
         private void getBackInPos()
         {
             if (x == _startX) return;
-            if (isHIt) return;
+            if (isHit) return;
 
             if (x > _startX) x -= 2;
             if (x < _startX) x += 2;

@@ -10,6 +10,7 @@ namespace GXPEngine
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
         {
             scaleX *= -1;
+            SetOrigin(width / 2, 0);
             _points = EnemyPoints.spider;
             _healthmax = EnemyHealth.spider;
             _health = (float)_healthmax;
@@ -47,7 +48,7 @@ namespace GXPEngine
         }
         public override void recoil()
         {
-            if (!isHIt) return;
+            if (!isHit) return;
             if (_isDeath) return;
 
             frameCounter++;
