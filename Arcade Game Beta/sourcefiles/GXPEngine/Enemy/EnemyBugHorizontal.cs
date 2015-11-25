@@ -20,12 +20,15 @@ namespace GXPEngine
         }
         void Update()
         {
-            AnimationState();
-            animation();
-            recoil();
-            Move();
+            //related to movement
             getBackInPos();
-            die();
+            Move();
+            recoil();
+            //related to animation
+            animation();
+            //related to states
+            StateSwitch();
+            AnimationState();
         }
         //ANIMATE
         private void AnimationState()

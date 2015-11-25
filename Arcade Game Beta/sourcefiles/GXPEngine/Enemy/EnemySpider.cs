@@ -17,11 +17,14 @@ namespace GXPEngine
 
         void Update()
         {
-            AnimationState();
-            animation();
-
+            //related to movement
             Move();
             recoil();
+            //related to animation
+            animation();
+            //related to states
+            StateSwitch();
+            AnimationState();
         }
         //chanching the animation state
         private void AnimationState()

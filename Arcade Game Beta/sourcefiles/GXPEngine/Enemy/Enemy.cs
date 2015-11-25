@@ -42,21 +42,18 @@ namespace GXPEngine
             _level = pLevel;
             _isDeath = false;
             _isHit = false;
+            _state = EnemyState.idle;
         }
 
-        //MOVEMENT
-        void Update()
-        {
-            animation();
-        }
         //general enemy movements
         protected virtual void Move()
         {
-            if (!_isHit)
+            if (_state == EnemyState.walk)
             {
                 x += _velocityX;
             }
         }
+        //make the enemy turn around
         public virtual void TurnAround()
         {
             x -= _velocityX;
@@ -64,35 +61,50 @@ namespace GXPEngine
             scaleX *= -1;
         }
 
-        //ANIMATION
-        private void setAnimState()
+        protected void StateSwitch()
         {
             switch (_state)
             {
                 case EnemyState.idle:
-
-                    _state = EnemyState.walk;
+                    if (_frame >= _lastFrame)
+                    {
+                        _state = EnemyState.walk;
+                    }
                     break;
                 case EnemyState.walk:
-                    
-                    Move();
+                                        
                     break;
                 case EnemyState.hit:
-
-                    _state = EnemyState.idle;
+                    if (_frame >= _lastFrame)
+                    {
+                        _isHit = false;
+                        _state = EnemyState.idle;
+                    }
                     break;
                 case EnemyState.death:
+                    if (_frame > _lastFrame)
+                    {
+                        this.Destroy();
+                    }
                     break;
                     /*case EnemyState.jump:
 
                         break;*/
             }
         }
+
         protected void animation()
         {
-            _frame += 0.2f;
-            if (_frame >= 5.0f) { _frame = 2.0f; }
-            if (_frame <= 2.0f) { _frame = 2.0f; }
+            if (_frame <= _lastFrame)
+            {
+                _frame += 0.2f;
+            }
+            else
+            {
+                _frame = _firstFrame;
+            }            
+            //if (_frame >= 5.0f) { _frame = 2.0f; }
+            //if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame);
         }
 
@@ -100,6 +112,7 @@ namespace GXPEngine
         {
             _firstFrame = pFirstFrame;
             _lastFrame = pLastFrame;
+            _frame = pFirstFrame;
         }
 
         //GET HIT
@@ -107,14 +120,11 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
-            Console.WriteLine("Health: " + _health);
-            Console.WriteLine("Damage: " + pBulletDamage);
-
             if (_health <= 0)
             {
                 _isDeath = true;
-                _level.player.addPoints((int)_points);
                 _state = EnemyState.death;
+                _level.player.addPoints((int)_points);
             }
             else if (_health > 0)
             {
@@ -122,7 +132,7 @@ namespace GXPEngine
                 _health -= pBulletDamage;
                 _isHit = true;
                 _state = EnemyState.hit;
-            }
+            }           
         }
         public virtual void recoil()
         {
@@ -162,15 +172,6 @@ namespace GXPEngine
             {
                 frameCounter = 0;
                 _isHit = false;
-            }
-        }
-        protected virtual void die()
-        {
-            if (_isDeath)
-            {
-                //Destroyanimation?
-                this.Destroy();
-                _level.player.addPoints(10);
             }
         }
     }
