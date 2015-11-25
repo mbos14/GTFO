@@ -82,7 +82,7 @@ namespace GXPEngine
                     }
                     break;
                 case EnemyState.death:
-                    if (_frame > _lastFrame)
+                    if (_frame >= _lastFrame)
                     {
                         this.Destroy();
                     }
@@ -95,14 +95,11 @@ namespace GXPEngine
 
         protected void animation()
         {
-            if (_frame <= _lastFrame)
-            {
-                _frame += 0.2f;
-            }
-            else
+            _frame += 0.2f;
+            if (_frame > _lastFrame)
             {
                 _frame = _firstFrame;
-            }            
+            }        
             //if (_frame >= 5.0f) { _frame = 2.0f; }
             //if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame);
