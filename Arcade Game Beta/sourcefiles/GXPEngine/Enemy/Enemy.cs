@@ -41,24 +41,19 @@ namespace GXPEngine
         {
             _level = pLevel;
             _isDeath = false;
-<<<<<<< HEAD
             isHIt = false;
-=======
-            _isHit = false;
             _state = EnemyState.idle;
->>>>>>> e0d32dddaf01edd70db835e57ba401ebd8c815b9
         }
 
         //general enemy movements
         protected virtual void Move()
         {
-<<<<<<< HEAD
             if (!isHIt)
-=======
-            if (_state == EnemyState.walk)
->>>>>>> e0d32dddaf01edd70db835e57ba401ebd8c815b9
             {
-                x += _velocityX;
+                if (_state == EnemyState.walk)
+                {
+                    x += _velocityX;
+                }
             }
         }
         //make the enemy turn around
@@ -85,7 +80,7 @@ namespace GXPEngine
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
-                        _isHit = false;
+                        isHIt = false;
                         _state = EnemyState.idle;
                     }
                     break;
@@ -182,7 +177,6 @@ namespace GXPEngine
                 isHIt = false;
             }
         }
-<<<<<<< HEAD
         protected virtual void die()
         {
             if (_isDeath)
@@ -193,7 +187,5 @@ namespace GXPEngine
                 _level.player.addPoints(10);
             }
         }
-=======
->>>>>>> e0d32dddaf01edd70db835e57ba401ebd8c815b9
     }
 }
