@@ -9,19 +9,26 @@ namespace GXPEngine
     {
         private float _velocityY = 1.0f;
         private float _bulletTimer = 0.0f;
-        public EnemyBugVertical(Level pLevel) : base("robobug.png", 2, 3, pLevel)
+        private float _startX;
+        public EnemyBugVertical(Level pLevel, float pStartX) : base("robobug.png", 2, 3, pLevel)
         {
             _level = pLevel;
+            _startX = pStartX;
             SetOrigin(width / 2, height / 2);
             _points = EnemyPoints.bug;
             _healthmax = EnemyHealth.bug;
+            _health = (float)_healthmax;
         }
         void Update()
         {
             recoil();
-            AnimationState();
             Move();
             lookDirection();
+            getBackInPos();
+
+            animation();
+            AnimationState();
+
             shootBullet();
             die();
         }
@@ -31,8 +38,16 @@ namespace GXPEngine
             if (_isDeath) return;
 
             y += _velocityY;
+            _animState = AnimationStateEnemy.walk;
         }
+        private void getBackInPos()
+        {
+            if (x == _startX) return;
+            if (_isHit) return;
 
+            if (x > _startX) y -= 2;
+            if (x < _startX) y += 2;
+        }
         private void lookDirection()
         {
             if (_level.player.x > x) { Mirror(true, false); _enemyDirection = EnemyDirection.left; }
@@ -54,7 +69,6 @@ namespace GXPEngine
         }
         public override void TurnAround()
         {
-            //y -= _velocityY;
             _velocityY *= -1;
         }
         //chanching the animation state
@@ -62,10 +76,14 @@ namespace GXPEngine
         {
             switch (_state)
             {
+<<<<<<< HEAD
+                case AnimationStateEnemy.walk:
+=======
                 case EnemyState.idle:
                     setAnimationRange((float)BugIdle.firstFrame, (float)BugIdle.lastFrame);
                     break;
                 case EnemyState.walk:
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
                     setAnimationRange((float)BugWalk.firstFrame, (float)BugWalk.lastFrame);
                     break;
                 case EnemyState.hit:
@@ -74,9 +92,12 @@ namespace GXPEngine
                 case EnemyState.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
+<<<<<<< HEAD
+=======
                     /*case EnemyState.jump:
                         setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame)
                         break;*/
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             }
         }
     }

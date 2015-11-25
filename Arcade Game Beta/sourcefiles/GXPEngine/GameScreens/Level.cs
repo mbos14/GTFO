@@ -22,6 +22,7 @@ namespace GXPEngine
         public MyGame thisgame;
         private string _fileName;
         public Drawer drawer = new Drawer(1024, 100);
+        public int levelPart;
 
         private bool _levelDrawed = false;
 
@@ -38,8 +39,9 @@ namespace GXPEngine
         private Pivot _midgroundLayer = new Pivot();
         private Pivot _foregroundLayer = new Pivot();
         public Pivot hudLayer = new Pivot();
-        public Level(MyGame pGame, string pFileName)
+        public Level(MyGame pGame, string pFileName, int pLevelPart)
         {
+            levelPart = pLevelPart;
             _fileName = pFileName;
             thisgame = pGame;
             thisgame.playerScore = 0;

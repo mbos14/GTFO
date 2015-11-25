@@ -38,6 +38,7 @@ namespace GXPEngine
 
         //Air check
         private bool _inAir;
+        private int _inAirCounter = 0;
 
         //Weapon
         public float maxBullets = 2;
@@ -186,6 +187,7 @@ namespace GXPEngine
             //If collision
             if (_level.CheckCollision(this))
             {
+                _inAirCounter = 0;
                 //Move outside the block
                 while (_level.CheckCollision(this))
                 {
@@ -197,6 +199,14 @@ namespace GXPEngine
                 if (_velocityY > 0) { _velocityY = 0.0f; _inAir = false; }
                 //If jumping up
                 else if (_velocityY < 0) { _velocityY *= _bounce; }
+            }
+            else
+            {
+                _inAirCounter++;
+                if (_inAirCounter > 10)
+                {
+                    _inAir = true;
+                }
             }
 
         }
@@ -215,11 +225,6 @@ namespace GXPEngine
                 _recoilFrames = 0;
             }
         }
-        ////------------PICKUPS-------------------
-        //private void addLife()
-        //{
-
-        //}
 
         //------------ANIMATION-----------------
         private void animation()

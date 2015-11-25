@@ -8,13 +8,12 @@ namespace GXPEngine
     public class PickUpWeapon : PickUp
     {
         private Level _level;
-        public PickUpWeapon(Level pLevel) : base("weaponset.png", 4, 1)
+        public PickUpWeapon(Level pLevel) : base("weaponset.png", 1, 1)
         {
             _level = pLevel;
         }
         void Update()
         {
-            animation();
             getCollisionPlayer();
         }
         private void getCollisionPlayer()

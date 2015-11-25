@@ -33,7 +33,7 @@ namespace GXPEngine
         protected EnemyHealth _healthmax;
 
         //stores current health
-        private float _health;
+        protected float _health;
         //Animation
         private float _frame = 0.0f;
 
@@ -42,7 +42,6 @@ namespace GXPEngine
             _level = pLevel;
             _isDeath = false;
             _isHit = false;
-            _health = (float)_healthmax;
         }
 
         //MOVEMENT
@@ -89,7 +88,7 @@ namespace GXPEngine
                         break;*/
             }
         }
-        private void animation()
+        protected void animation()
         {
             _frame += 0.2f;
             if (_frame >= 5.0f) { _frame = 2.0f; }
@@ -108,6 +107,12 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
+<<<<<<< HEAD
+            Console.WriteLine("Health: " + _health);
+            Console.WriteLine("Damage: " + pBulletDamage);
+
+            if (_health > 0)
+=======
             if (_health <= 0)
             {
                 _isDeath = true;
@@ -115,12 +120,21 @@ namespace GXPEngine
                 _state = EnemyState.death;
             }
             else if (_health > 0)
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             {
                 _directionHit = pDirection;
                 _health -= pBulletDamage;
                 _isHit = true;
                 _state = EnemyState.hit;
             }
+
+            if (_health <= 0)
+            {
+                _isDeath = true;
+                _level.player.addPoints((int)_points);
+                _animState = AnimationStateEnemy.death;
+            }
+
         }
         public virtual void recoil()
         {
@@ -135,22 +149,22 @@ namespace GXPEngine
                 {
                     case PlayerDirection.left:
                         {
-                            x -= _velocityX;
+                            x -= 2;
                             break;
                         }
                     case PlayerDirection.right:
                         {
-                            x += _velocityX;
+                            x += 2;
                             break;
                         }
                     case PlayerDirection.up:
                         {
-                            y -= _velocityX;
+                            y -= 2;
                             break;
                         }
                     case PlayerDirection.down:
                         {
-                            y += _velocityX;
+                            y += 2;
                             break;
                         }
                 }
