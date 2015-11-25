@@ -20,17 +20,18 @@ namespace GXPEngine
             _health = (float)_healthmax;
         }
         void Update()
-        {
-            recoil();
-            Move();
-            lookDirection();
-            getBackInPos();
-
-            animation();
-            AnimationState();
-
+        {                     
             shootBullet();
-            die();
+            //related to movement
+            getBackInPos();
+            Move();
+            recoil();         
+            //related to animation
+            animation();
+            lookDirection();
+            //related to states
+            StateSwitch();
+            AnimationState();
         }
         protected override void Move()
         {
@@ -55,15 +56,18 @@ namespace GXPEngine
         }
         private void shootBullet()
         {
-            _bulletTimer += 0.01f;
-            if (DistanceTo(_level.player) < 400)
+            if (_state != EnemyState.death)
             {
-                if (_bulletTimer >= 1)
+                _bulletTimer += 0.01f;
+                if (DistanceTo(_level.player) < 400)
                 {
-                    EnemyBullet bullet = new EnemyBullet(_enemyDirection, _level);
-                    bullet.SetXY(x, y);
-                    _level.AddChild(bullet);
-                    _bulletTimer = 0;
+                    if (_bulletTimer >= 1)
+                    {
+                        EnemyBullet bullet = new EnemyBullet(_enemyDirection, _level);
+                        bullet.SetXY(x, y);
+                        _level.AddChild(bullet);
+                        _bulletTimer = 0;
+                    }
                 }
             }
         }

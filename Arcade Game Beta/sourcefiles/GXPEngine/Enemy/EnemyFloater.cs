@@ -16,20 +16,17 @@ namespace GXPEngine
         }
         void Update()
         {
-            recoil();
-            playerDistance();
+            //related to movement
             Move();
-
-            AnimationState();
+            recoil();
+            //related to animation
             animation();
+            //related to states
+            StateSwitch();
+            playerDistance();
+            AnimationState();
         }
-        protected override void Move()
-        {
-            if (_state == EnemyState.walk)
-            {
-                base.Move();
-            }
-        }
+        
         private void playerDistance()
         {
             if (DistanceTo(_level.player) > 400)
