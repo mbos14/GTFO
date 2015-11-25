@@ -21,7 +21,28 @@ namespace GXPEngine
             foreach (Enemy other in _level.enemyList)
             if (HitTest(other))
                 {
-                    other.TurnAround();
+                    if (other.isHIt)
+                    {
+                        if (other.directionHit == PlayerDirection.left)
+                        {
+                            x -= 20;
+                        }
+                        else if (other.directionHit == PlayerDirection.right)
+                        {
+                            x += 20;
+                        }
+                        else if (other.directionHit == PlayerDirection.up)
+                        {
+                            y += 20;
+                        }
+                        else if (other.directionHit == PlayerDirection.down)
+                        {
+                            y -= 20;
+                        }
+                        other.isHIt = false;
+                        other.frameCounter = 0;
+                    }
+                    else { other.TurnAround(); }
                 }
         }
     }

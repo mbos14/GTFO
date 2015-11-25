@@ -8,18 +8,18 @@ namespace GXPEngine
     public class Enemy : AnimationSprite
     {
         protected Level _level;
-        protected int frameCounter = 0;
+        public int frameCounter = 0;
 
         //stores the animation state
-        protected EnemyState _state;
+        public EnemyState _state;
 
         //animation death/hit state
         protected bool _isDeath;
-        protected bool _isHit;
+        public bool isHIt;
 
         //stores direction
         protected EnemyDirection _enemyDirection;
-        protected PlayerDirection _directionHit;
+        public PlayerDirection directionHit;
 
         //stores first and last frame
         protected float _firstFrame;
@@ -41,7 +41,7 @@ namespace GXPEngine
         {
             _level = pLevel;
             _isDeath = false;
-            _isHit = false;
+            isHIt = false;
         }
 
         //MOVEMENT
@@ -52,7 +52,7 @@ namespace GXPEngine
         //general enemy movements
         protected virtual void Move()
         {
-            if (!_isHit)
+            if (!isHIt)
             {
                 x += _velocityX;
             }
@@ -107,9 +107,6 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
-            Console.WriteLine("Health: " + _health);
-            Console.WriteLine("Damage: " + pBulletDamage);
-
             if (_health <= 0)
             {
                 _isDeath = true;
@@ -118,22 +115,22 @@ namespace GXPEngine
             }
             else if (_health > 0)
             {
-                _directionHit = pDirection;
+                directionHit = pDirection;
                 _health -= pBulletDamage;
-                _isHit = true;
+                isHIt = true;
                 _state = EnemyState.hit;
             }
         }
         public virtual void recoil()
         {
-            if (!_isHit) return;
+            if (!isHIt) return;
             if (_isDeath) return;
 
             frameCounter++;
 
             if (frameCounter < 25)
             {
-                switch (_directionHit)
+                switch (directionHit)
                 {
                     case PlayerDirection.left:
                         {
@@ -161,7 +158,7 @@ namespace GXPEngine
             if (frameCounter >= 50)
             {
                 frameCounter = 0;
-                _isHit = false;
+                isHIt = false;
             }
         }
         protected virtual void die()
@@ -170,6 +167,7 @@ namespace GXPEngine
             {
                 //Destroyanimation?
                 this.Destroy();
+                this.SetXY(-200, 0); //Put outside of the screen to end collisions
                 _level.player.addPoints(10);
             }
         }
