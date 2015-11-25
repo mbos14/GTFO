@@ -77,10 +77,6 @@ namespace GXPEngine
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
-<<<<<<< HEAD
-                        isHit = false;
-=======
->>>>>>> 7b9c37dfcf003c3e0394d96e9df9cdf90ad74042
                         _state = EnemyState.idle;
                     }
                     break;
