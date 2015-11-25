@@ -55,7 +55,7 @@
         public override void recoil()
         {
             if (!isHit) return;
-            if (_isDeath) return;
+            if (_state == EnemyState.death) return;
 
             frameCounter++;
 
