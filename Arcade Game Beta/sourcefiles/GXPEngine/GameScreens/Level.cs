@@ -297,6 +297,16 @@ namespace GXPEngine
                                 }
                                 break;
                             }
+                        case 11: //Checkpoint
+                            {
+                                if (!_levelDrawed)
+                                {
+                                    Checkpoints thispoint = new Checkpoints("checkpint.png", true, this);
+                                    _midgroundLayer.AddChild(thispoint);
+                                    thispoint.SetXY(j * TILESIZE, i * TILESIZE);
+                                }
+                                break;
+                            }
                     }
 
                 }

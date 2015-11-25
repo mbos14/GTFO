@@ -66,7 +66,7 @@ namespace GXPEngine
                 {
                     //Button is selected
                     button.selected = true;
-                    if (Input.GetKeyDown(Key.ENTER))
+                    if (Input.GetKeyDown((int)PlayerButtons.shoot))
                     {
                         int buttonNumber = button.GetButtonNumber();
 

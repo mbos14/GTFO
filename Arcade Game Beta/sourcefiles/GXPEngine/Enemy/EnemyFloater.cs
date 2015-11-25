@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GXPEngine
+﻿namespace GXPEngine
 {
     class EnemyFloater : Enemy
     {
@@ -29,11 +24,11 @@ namespace GXPEngine
         
         private void playerDistance()
         {
-            if (DistanceTo(_level.player) > 400)
+            if (DistanceTo(_level.player) > 500)
             {
                 _state= EnemyState.idle;
             }
-            else if (DistanceTo(_level.player) <= 400)
+            else if (DistanceTo(_level.player) <= 500)
             {
                 _state = EnemyState.walk;
             }
@@ -80,7 +75,11 @@ namespace GXPEngine
                         }
                 }
             }
-            else isHit = false;
+            else
+            {
+                isHit = false;
+                frameCounter = 0;
+            }
         }
     }
 }

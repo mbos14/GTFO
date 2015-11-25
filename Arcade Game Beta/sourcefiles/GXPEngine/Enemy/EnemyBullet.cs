@@ -11,6 +11,7 @@ namespace GXPEngine
         private float _speed = 5.0f;
         private Level _level;
         public bool bulletTurnedAround = false;
+        public float distanceTraveled = 0.0f;
         public EnemyBullet(EnemyDirection pDirection, Level pLevel) : base("enemybullet.png")
         {
             _level = pLevel;
@@ -21,6 +22,7 @@ namespace GXPEngine
         {
             moveBullet();
             checkCollisions();
+            checkDistance();
         }
         private void moveBullet()
         {
@@ -40,6 +42,7 @@ namespace GXPEngine
             {
                 y += _speed;
             }
+            distanceTraveled += _speed;
         }
         public void TurnBullet(PlayerDirection pDirection)
         {
@@ -66,6 +69,13 @@ namespace GXPEngine
                         Destroy();
                     }
                 }
+            }
+        }
+        private void checkDistance()
+        {
+            if (distanceTraveled > 300)
+            {
+                this.Destroy();
             }
         }
     }

@@ -116,8 +116,9 @@ namespace GXPEngine
                     {
                         bullet.bulletTurnedAround = true;
                         bullet.TurnBullet(_direction);
-                        Destroy();
+                        bullet.distanceTraveled = 0;
                     }
+                    Destroy();
                 }
             }
         }
