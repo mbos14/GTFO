@@ -75,6 +75,7 @@ namespace GXPEngine
                     _state = EnemyState.walk;
                     break;
                 case EnemyState.walk:
+                    
                     Move();
                     break;
                 case EnemyState.hit:
