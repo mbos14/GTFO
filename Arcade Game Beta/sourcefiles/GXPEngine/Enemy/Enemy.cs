@@ -107,12 +107,6 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
-<<<<<<< HEAD
-            Console.WriteLine("Health: " + _health);
-            Console.WriteLine("Damage: " + pBulletDamage);
-
-            if (_health > 0)
-=======
             if (_health <= 0)
             {
                 _isDeath = true;
@@ -120,7 +114,7 @@ namespace GXPEngine
                 _state = EnemyState.death;
             }
             else if (_health > 0)
->>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
+
             {
                 _directionHit = pDirection;
                 _health -= pBulletDamage;
@@ -132,7 +126,7 @@ namespace GXPEngine
             {
                 _isDeath = true;
                 _level.player.addPoints((int)_points);
-                _animState = AnimationStateEnemy.death;
+                _state = EnemyState.death;
             }
 
         }
