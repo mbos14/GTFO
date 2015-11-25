@@ -48,13 +48,10 @@ namespace GXPEngine
         //general enemy movements
         protected virtual void Move()
         {
-            if (!isHIt)
-            {
                 if (_state == EnemyState.walk)
                 {
                     x += _velocityX;
                 }
-            }
         }
         //make the enemy turn around
         public virtual void TurnAround()
@@ -80,7 +77,6 @@ namespace GXPEngine
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
-                        isHIt = false;
                         _state = EnemyState.idle;
                     }
                     break;
@@ -98,11 +94,12 @@ namespace GXPEngine
 
         protected void animation()
         {
-            _frame += 0.2f;
+            
             if (_frame > _lastFrame)
             {
                 _frame = _firstFrame;
-            }        
+            }
+            _frame += 0.2f;
             //if (_frame >= 5.0f) { _frame = 2.0f; }
             //if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame);
@@ -181,7 +178,6 @@ namespace GXPEngine
                 //Destroyanimation?
                 this.Destroy();
                 this.SetXY(-200, 0); //Put outside of the screen to end collisions
-                _level.player.addPoints(10);
             }
         }
     }

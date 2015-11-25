@@ -51,8 +51,11 @@ namespace GXPEngine
         }
         private void lookDirection()
         {
-            if (_level.player.x > x) { Mirror(true, false); _enemyDirection = EnemyDirection.left; }
-            else if (_level.player.x < x) { Mirror(false, false); _enemyDirection = EnemyDirection.right; }
+            if (_state != EnemyState.death)
+            {
+                if (_level.player.x > x) { Mirror(true, false); _enemyDirection = EnemyDirection.left; }
+                else if (_level.player.x < x) { Mirror(false, false); _enemyDirection = EnemyDirection.right; }
+            }
         }
         private void shootBullet()
         {
