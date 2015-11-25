@@ -12,11 +12,14 @@ namespace GXPEngine
             scaleX *= -1;
             _points = EnemyPoints.spider;
             _healthmax = EnemyHealth.spider;
+            _health = (float)_healthmax;
         }
 
         void Update()
         {
             AnimationState();
+            animation();
+
             Move();
             recoil();
         }
@@ -37,9 +40,6 @@ namespace GXPEngine
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)SpiderDeath.firstFrame, (float)SpiderDeath.lastFrame);
                     break;
-                /*case AnimationStateEnemy.jump:
-                    setAnimationRange((float)SpiderJump.firstFrame, (float)SpiderJump.lastFrame);
-                    break;*/
             }
         }
     }

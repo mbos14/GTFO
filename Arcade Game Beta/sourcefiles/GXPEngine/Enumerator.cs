@@ -1,7 +1,7 @@
 ﻿namespace GXPEngine
 {
     //GAME
-    public enum GameStates { menu, level, bossarena, nameinput, endscreen, @default };
+    public enum GameStates { menu, part1, part2, part3, nameinput, endscreen, @default };
 
     //ENEMY
     public enum AnimationStateEnemy { idle, walk, hit, death, jump };

@@ -24,7 +24,7 @@ namespace GXPEngine
         {
             if (Input.GetAnyKeyDown() && _coinInserted)
             {
-                _game.setGameState(GameStates.level);
+                _game.setGameState(GameStates.part1);
             }
             if (Input.GetKeyDown((int)PlayerButtons.insert))
             {
@@ -44,7 +44,6 @@ namespace GXPEngine
         private void drawBackGround()
         {
             Canvas menuBG = new Canvas("menubackground.png");
-            menuBG.SetScaleXY(4, 4);
             AddChild(menuBG);
         }
 

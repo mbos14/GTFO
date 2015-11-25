@@ -131,7 +131,7 @@ namespace GXPEngine
             if (Input.GetKey((int)PlayerButtons.insert))
             {
                 _game.levelWon = false;
-                _game.setGameState(GameStates.level);
+                _game.setGameState(GameStates.part1);
             }
         }
     }

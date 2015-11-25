@@ -16,10 +16,12 @@ namespace GXPEngine
             Mirror(true, false);
             _points = EnemyPoints.bug;
             _healthmax = EnemyHealth.bug;
+            _health = (float)_healthmax;
         }
         void Update()
         {
             AnimationState();
+            animation();
             recoil();
             Move();
             getBackInPos();
@@ -42,9 +44,6 @@ namespace GXPEngine
                 case AnimationStateEnemy.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
-                    /*case AnimationStateEnemy.jump:
-                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame);
-                        break;*/
             }
         }
 
@@ -54,8 +53,8 @@ namespace GXPEngine
             if (y == startY) return;
             if (_isHit) return;
 
-            if (y > startY) y -= _velocityX;
-            if (y < startY) y += _velocityX;
+            if (y > startY) y -= 2;
+            if (y < startY) y += 2;
         }
     }
 }

@@ -9,20 +9,9 @@ namespace GXPEngine
     {
         private bool _thisIsCP;
         private Level _level;
+        private float _frame = 0.0f;
+        private bool _checked = false;
 
-        /// <summary>
-        /// Checkpoint class. Creates an sprite with collision with the player.
-        /// A checkpoint can be a finish point as well.
-        /// </summary>
-        /// <param name="pFileName">
-        /// This defines the animated image of the checkpoint
-        /// </param>
-        /// <param name="pThisIsCheckPoint">
-        /// This defines wether this object is a checkpoint or a finishflag
-        /// </param>
-        /// <param name="pLevel">
-        /// Passes through the leveldata
-        /// </param>
         public Checkpoints(string pFileName, bool pThisIsCheckPoint, Level pLevel) : base(pFileName, 10, 10)
         {
             _level = pLevel;
@@ -31,6 +20,7 @@ namespace GXPEngine
         void Update()
         {
             getCollisions();
+            animate();
         }
         private void getCollisions()
         {
@@ -38,24 +28,29 @@ namespace GXPEngine
             {
                 if (_thisIsCP)
                 {
+                    _checked = true;
                     _level.player.spawnX = x;
                     _level.player.spawnY = y;
-                    //Play animation / Set frame to captured
                 }
+
                 else if (!_thisIsCP)
                 {
-                    if (!_level.thisgame.levelWon)
-                    {
-                    _level.thisgame.levelWon = true;
-                    _level.thisgame.setGameState(GameStates.bossarena);  
-                    }
-                    else if (_level.thisgame.levelWon)
-                    {
-                        _level.thisgame.setGameState(GameStates.nameinput);
-                    }
-
- 
+                    //Go to part 2
+                    if (_level.levelPart == 1) { _level.thisgame.setGameState(GameStates.part2); } 
+                    //Go to part 3
+                    else if (_level.levelPart == 2) { _level.thisgame.setGameState(GameStates.part3); }
+                    //Finish game
+                    else if (_level.levelPart == 3) { _level.thisgame.setGameState(GameStates.nameinput); }
                 }
+            }
+        }
+        private void animate()
+        {
+            if (_checked)
+            {
+                _frame += 0.05f;
+                if (_frame > frameCount) { _frame = frameCount; }
+                SetFrame((int)_frame);
             }
         }
     }
