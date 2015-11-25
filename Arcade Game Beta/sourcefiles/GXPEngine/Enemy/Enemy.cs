@@ -77,12 +77,15 @@ namespace GXPEngine
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
+<<<<<<< HEAD
                         isHit = false;
+=======
+>>>>>>> 7b9c37dfcf003c3e0394d96e9df9cdf90ad74042
                         _state = EnemyState.idle;
                     }
                     break;
                 case EnemyState.death:
-                    if (_frame > _lastFrame)
+                    if (_frame >= _lastFrame)
                     {
                         this.Destroy();
                     }
@@ -92,14 +95,12 @@ namespace GXPEngine
 
         protected void animation()
         {
-            if (_frame <= _lastFrame)
-            {
-                _frame += 0.2f;
-            }
-            else
+            
+            if (_frame > _lastFrame)
             {
                 _frame = _firstFrame;
-            }            
+            }
+            _frame += 0.2f;
             //if (_frame >= 5.0f) { _frame = 2.0f; }
             //if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame);
@@ -178,7 +179,6 @@ namespace GXPEngine
                 //Destroyanimation?
                 this.Destroy();
                 this.SetXY(-200, 0); //Put outside of the screen to end collisions
-                _level.player.addPoints(10);
             }
         }
     }
