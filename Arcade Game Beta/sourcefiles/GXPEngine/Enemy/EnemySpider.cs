@@ -40,12 +40,6 @@ namespace GXPEngine
                 case EnemyState.death:
                     setAnimationRange((float)SpiderDeath.firstFrame, (float)SpiderDeath.lastFrame);
                     break;
-<<<<<<< HEAD
-=======
-                    /*case EnemyState.jump:
-                        setAnimationRange((float)SpiderJump.firstFrame, (float)SpiderJump.lastFrame);
-                        break;*/
->>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             }
         }
     }

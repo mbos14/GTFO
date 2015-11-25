@@ -247,7 +247,7 @@ namespace GXPEngine
                             {
                                 if (!_levelDrawed)
                                 {
-                                    EnemyBugVertical thisenemy = new EnemyBugVertical(this);
+                                    EnemyBugVertical thisenemy = new EnemyBugVertical(this, j * TILESIZE);
                                     _midgroundLayer.AddChild(thisenemy);
                                     thisenemy.SetXY(j * TILESIZE, i * TILESIZE);
                                     enemyList.Add(thisenemy);
