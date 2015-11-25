@@ -11,7 +11,7 @@ namespace GXPEngine
         protected int frameCounter = 0;
 
         //stores the animation state
-        protected AnimationStateEnemy _animState;
+        protected EnemyState _state;
 
         //animation death/hit state
         protected bool _isDeath;
@@ -67,22 +67,22 @@ namespace GXPEngine
         //ANIMATION
         private void setAnimState()
         {
-            switch (_animState)
+            switch (_state)
             {
-                case AnimationStateEnemy.idle:
+                case EnemyState.idle:
 
-                    _animState = AnimationStateEnemy.walk;
+                    _state = EnemyState.walk;
                     break;
-                case AnimationStateEnemy.walk:
+                case EnemyState.walk:
                     Move();
                     break;
-                case AnimationStateEnemy.hit:
+                case EnemyState.hit:
 
-                    _animState = AnimationStateEnemy.idle;
+                    _state = EnemyState.idle;
                     break;
-                case AnimationStateEnemy.death:
+                case EnemyState.death:
                     break;
-                    /*case AnimationStateEnemy.jump:
+                    /*case EnemyState.jump:
 
                         break;*/
             }
@@ -106,15 +106,25 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
+<<<<<<< HEAD
             Console.WriteLine("Health: " + _health);
             Console.WriteLine("Damage: " + pBulletDamage);
 
             if (_health > 0)
+=======
+            if (_health <= 0)
+            {
+                _isDeath = true;
+                _level.player.addPoints((int)_points);
+                _state = EnemyState.death;
+            }
+            else if (_health > 0)
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             {
                 _directionHit = pDirection;
                 _health -= pBulletDamage;
                 _isHit = true;
-                _animState = AnimationStateEnemy.hit;
+                _state = EnemyState.hit;
             }
 
             if (_health <= 0)

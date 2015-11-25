@@ -30,20 +30,26 @@ namespace GXPEngine
         //ANIMATE
         private void AnimationState()
         {
-            switch (_animState)
+            switch (_state)
             {
-                case AnimationStateEnemy.idle:
+                case EnemyState.idle:
                     setAnimationRange((float)BugIdle.firstFrame, (float)BugIdle.lastFrame);
                     break;
-                case AnimationStateEnemy.walk:
+                case EnemyState.walk:
                     setAnimationRange((float)BugWalk.firstFrame, (float)BugWalk.lastFrame);
                     break;
-                case AnimationStateEnemy.hit:
+                case EnemyState.hit:
                     setAnimationRange((float)BugHit.firstFrame, (float)BugHit.lastFrame);
                     break;
-                case AnimationStateEnemy.death:
+                case EnemyState.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
+<<<<<<< HEAD
+=======
+                    /*case EnemyState.jump:
+                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame);
+                        break;*/
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             }
         }
 

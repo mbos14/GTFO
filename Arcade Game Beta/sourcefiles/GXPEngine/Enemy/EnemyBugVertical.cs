@@ -74,17 +74,30 @@ namespace GXPEngine
         //chanching the animation state
         private void AnimationState()
         {
-            switch (_animState)
+            switch (_state)
             {
+<<<<<<< HEAD
                 case AnimationStateEnemy.walk:
+=======
+                case EnemyState.idle:
+                    setAnimationRange((float)BugIdle.firstFrame, (float)BugIdle.lastFrame);
+                    break;
+                case EnemyState.walk:
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
                     setAnimationRange((float)BugWalk.firstFrame, (float)BugWalk.lastFrame);
                     break;
-                case AnimationStateEnemy.hit:
+                case EnemyState.hit:
                     setAnimationRange((float)BugHit.firstFrame, (float)BugHit.lastFrame);
                     break;
-                case AnimationStateEnemy.death:
+                case EnemyState.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
+<<<<<<< HEAD
+=======
+                    /*case EnemyState.jump:
+                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame)
+                        break;*/
+>>>>>>> fe5dd89189d6215925353291b1281672f352d3dd
             }
         }
     }
