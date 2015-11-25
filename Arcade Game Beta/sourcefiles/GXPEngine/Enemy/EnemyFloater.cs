@@ -23,23 +23,23 @@ namespace GXPEngine
         //chanching the animation state
         private void AnimationState()
         {
-            switch(_animState)
+            switch(_state)
             {
-                case AnimationStateEnemy.idle:
+                case EnemyState.idle:
                     setAnimationRange((float)FLoaterIdle.firstFrame,(float)FLoaterIdle.lastFrame);
                     break;
-                case AnimationStateEnemy.walk:
+                case EnemyState.walk:
                     setAnimationRange((float)FLoaterWalk.firstFrame, (float)FLoaterWalk.lastFrame);
                     break;
-                case AnimationStateEnemy.hit:
+                case EnemyState.hit:
                     setAnimationRange((float)FLoaterHit.firstFrame, (float)FLoaterHit.lastFrame);
                     break;
-                case AnimationStateEnemy.death:
+                case EnemyState.death:
                     setAnimationRange((float)FLoaterDeath.firstFrame, (float)FLoaterDeath.lastFrame);
                     break;
-                /*case AnimationStateEnemy.jump:
-                    setAnimationRange((float)FLoaterJump.firstFrame, (float)FLoaterJump.lastFrame);
-                    break;*/
+                    /*case EnemyState.jump:
+                        setAnimationRange((float)FLoaterJump.firstFrame, (float)FLoaterJump.lastFrame);
+                        break;*/
             }
         }
     }

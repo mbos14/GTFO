@@ -11,7 +11,7 @@ namespace GXPEngine
         protected int frameCounter = 0;
 
         //stores the animation state
-        protected AnimationStateEnemy _animState;
+        protected EnemyState _state;
 
         //animation death/hit state
         protected bool _isDeath;
@@ -68,22 +68,22 @@ namespace GXPEngine
         //ANIMATION
         private void setAnimState()
         {
-            switch (_animState)
+            switch (_state)
             {
-                case AnimationStateEnemy.idle:
+                case EnemyState.idle:
 
-                    _animState = AnimationStateEnemy.walk;
+                    _state = EnemyState.walk;
                     break;
-                case AnimationStateEnemy.walk:
+                case EnemyState.walk:
                     Move();
                     break;
-                case AnimationStateEnemy.hit:
+                case EnemyState.hit:
 
-                    _animState = AnimationStateEnemy.idle;
+                    _state = EnemyState.idle;
                     break;
-                case AnimationStateEnemy.death:
+                case EnemyState.death:
                     break;
-                    /*case AnimationStateEnemy.jump:
+                    /*case EnemyState.jump:
 
                         break;*/
             }
@@ -111,14 +111,14 @@ namespace GXPEngine
             {
                 _isDeath = true;
                 _level.player.addPoints((int)_points);
-                _animState = AnimationStateEnemy.death;
+                _state = EnemyState.death;
             }
             else if (_health > 0)
             {
                 _directionHit = pDirection;
                 _health -= pBulletDamage;
                 _isHit = true;
-                _animState = AnimationStateEnemy.hit;
+                _state = EnemyState.hit;
             }
         }
         public virtual void recoil()
