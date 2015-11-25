@@ -107,12 +107,9 @@ namespace GXPEngine
         {
             if (_isDeath) return;
 
-<<<<<<< HEAD
             Console.WriteLine("Health: " + _health);
             Console.WriteLine("Damage: " + pBulletDamage);
 
-=======
->>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
             if (_health <= 0)
             {
                 _isDeath = true;
@@ -120,27 +117,12 @@ namespace GXPEngine
                 _state = EnemyState.death;
             }
             else if (_health > 0)
-<<<<<<< HEAD
-=======
-
->>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
             {
                 _directionHit = pDirection;
                 _health -= pBulletDamage;
                 _isHit = true;
                 _state = EnemyState.hit;
             }
-
-<<<<<<< HEAD
-=======
-            if (_health <= 0)
-            {
-                _isDeath = true;
-                _level.player.addPoints((int)_points);
-                _state = EnemyState.death;
-            }
-
->>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
         }
         public virtual void recoil()
         {

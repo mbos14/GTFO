@@ -1,10 +1,10 @@
-180,WOW
-220,ROP
-220,ZZZ
-260,LLL
-345,LEO
-480,KUR
-580,CHR
-580,MAI
-600,DOM
-600,LOL
+220,ROP
+220,ZZZ
+245,AAA
+260,LLL
+345,LEO
+480,KUR
+580,CHR
+580,MAI
+600,DOM
+600,LOL
