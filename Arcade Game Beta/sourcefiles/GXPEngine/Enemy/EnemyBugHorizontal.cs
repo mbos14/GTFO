@@ -54,7 +54,7 @@ namespace GXPEngine
         private void getBackInPos()
         {
             if (y == startY) return;
-            if (_isHit) return;
+            if (isHIt) return;
 
             if (y > startY) y -= 2;
             if (y < startY) y += 2;

@@ -287,6 +287,16 @@ namespace GXPEngine
                                 }
                                 break;
                             }
+                        case 10: //End of the levelpart
+                            {
+                                if (!_levelDrawed)
+                                {
+                                    Checkpoints thispoint = new Checkpoints("checkpoint.png", false, this);
+                                    _midgroundLayer.AddChild(thispoint);
+                                    thispoint.SetXY(j * TILESIZE, i * TILESIZE);
+                                }
+                                break;
+                            }
                     }
 
                 }
@@ -440,18 +450,21 @@ namespace GXPEngine
             //Enemies
             foreach (Enemy other in enemyList)
             {
-                if (pSprite.HitTest(other))
+                if (other._state != EnemyState.death)
                 {
-                    if (pSprite is Player)
+                    if (pSprite.HitTest(other))
                     {
-                        Player thisplayer = (Player)pSprite;
-                        thisplayer.playerDIE();
-                    }
-                    else if (pSprite is PlayerBullet)
-                    {
-                        PlayerBullet bullet = (PlayerBullet)pSprite;
-                        other.HitByBullet(bullet.damage / 8, player.aimDirection);
-                        pSprite.Destroy();
+                        if (pSprite is Player)
+                        {
+                            Player thisplayer = (Player)pSprite;
+                            thisplayer.playerDIE();
+                        }
+                        else if (pSprite is PlayerBullet)
+                        {
+                            PlayerBullet bullet = (PlayerBullet)pSprite;
+                            other.HitByBullet(bullet.damage / 8, player.aimDirection);
+                            pSprite.Destroy();
+                        }
                     }
                 }
             }

@@ -45,5 +45,29 @@ namespace GXPEngine
                     break;
             }
         }
+        public override void recoil()
+        {
+            if (!isHIt) return;
+            if (_isDeath) return;
+
+            frameCounter++;
+
+            if (frameCounter < 25)
+            {
+                switch (directionHit)
+                {
+                    case PlayerDirection.left:
+                        {
+                            x -= 2;
+                            break;
+                        }
+                    case PlayerDirection.right:
+                        {
+                            x += 2;
+                            break;
+                        }
+                }
+            }
+        }
     }
 }
