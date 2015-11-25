@@ -13,8 +13,7 @@ namespace GXPEngine
         //stores the animation state
         public EnemyState _state;
 
-        //animation death/hit state
-        protected bool _isDeath;
+        //animation hit state
         public bool isHit;
 
         //stores direction
@@ -40,7 +39,6 @@ namespace GXPEngine
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel) : base(pFileName, pColumns, pRows)
         {
             _level = pLevel;
-            _isDeath = false;
             isHit = false;
             _state = EnemyState.idle;
         }
@@ -71,8 +69,7 @@ namespace GXPEngine
                         _state = EnemyState.walk;
                     }
                     break;
-                case EnemyState.walk:
-                                        
+                case EnemyState.walk:                                        
                     break;
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
@@ -90,16 +87,20 @@ namespace GXPEngine
         }
 
         protected void animation()
-        {
-            
+        {            
             if (_frame > _lastFrame)
+            {
+                _frame = _firstFrame;                
+            }
+            if (_frame < _firstFrame)
             {
                 _frame = _firstFrame;
             }
+            Console.WriteLine(_frame);
             _frame += 0.2f;
             //if (_frame >= 5.0f) { _frame = 2.0f; }
             //if (_frame <= 2.0f) { _frame = 2.0f; }
-            SetFrame((int)_frame);
+            SetFrame((int)_frame + 1);
         }
 
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
@@ -112,11 +113,10 @@ namespace GXPEngine
         //GET HIT
         public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)
         {
-            if (_isDeath) return;
+            if (_state == EnemyState.death) return;
 
             if (_health <= 0)
             {
-                _isDeath = true;
                 _state = EnemyState.death;
                 _level.player.addPoints((int)_points);
             }
@@ -131,7 +131,7 @@ namespace GXPEngine
         public virtual void recoil()
         {
             if (!isHit) return;
-            if (_isDeath) return;
+            if (_state == EnemyState.death) return;
 
             frameCounter++;
 

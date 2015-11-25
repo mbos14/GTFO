@@ -36,7 +36,7 @@ namespace GXPEngine
         protected override void Move()
         {
             if (isHit) return;
-            if (_isDeath) return;
+            if (_state == EnemyState.death) return;
 
             y += _velocityY;
             _state = EnemyState.walk;
