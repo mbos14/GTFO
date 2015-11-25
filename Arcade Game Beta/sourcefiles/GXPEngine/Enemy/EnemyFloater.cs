@@ -23,6 +23,7 @@ namespace GXPEngine
             AnimationState();
             animation();
         }
+<<<<<<< HEAD
         protected override void Move()
         {
             if (_state == EnemyState.walk)
@@ -30,11 +31,18 @@ namespace GXPEngine
                 base.Move();
             }
         }
+=======
+        
+>>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
         private void playerDistance()
         {
             if (DistanceTo(_level.player) > 400)
             {
+<<<<<<< HEAD
                 _state= EnemyState.idle;
+=======
+                _state = EnemyState.idle;
+>>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
             }
             else if (DistanceTo(_level.player) <= 400)
             {
@@ -58,6 +66,13 @@ namespace GXPEngine
                 case EnemyState.death:
                     setAnimationRange((float)FLoaterDeath.firstFrame, (float)FLoaterDeath.lastFrame);
                     break;
+<<<<<<< HEAD
+=======
+                    /*case EnemyState.jump:
+                        setAnimationRange((float)FLoaterJump.firstFrame, (float)FLoaterJump.lastFrame);
+                        break;*/
+
+>>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
             }
         }
     }

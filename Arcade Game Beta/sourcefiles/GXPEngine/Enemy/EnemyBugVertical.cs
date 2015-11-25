@@ -88,6 +88,12 @@ namespace GXPEngine
                 case EnemyState.death:
                     setAnimationRange((float)BugDeath.firstFrame, (float)BugDeath.lastFrame);
                     break;
+<<<<<<< HEAD
+=======
+                    /*case EnemyState.jump:
+                        setAnimationRange((float)BugJump.firstFrame, (float)BugJump.lastFrame)
+                        break;*/
+>>>>>>> cd0dd5e6d215dad5b90ff7c06875869a53b101fa
             }
         }
     }
