@@ -2,46 +2,25 @@
 {
     class EnemyFloater : Enemy
     {
-        public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel)
+        public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel, EnemyPoints.floater, EnemyHealth.floater)
         {
             SetOrigin(width / 2, height / 2 - 10);
-            _points = EnemyPoints.floater;
-            _healthmax = EnemyHealth.floater;
-            _health = (float)_healthmax;
         }
         void Update()
-        {
-            //related to movement
-            recoil();
-            //related to animation
-            animation();
+        {      
             //related to states
             StateSwitch();
             playerDistance();
             AnimationState();
         }
-        
-        private void playerDistance()
-        {
-            if (_state == EnemyState.death) return;
-            if (_state == EnemyState.hit) return;
-
-            if (DistanceTo(_level.player) > 500)
-            {
-                _state= EnemyState.idle;
-            }
-            else if (DistanceTo(_level.player) <= 500)
-            {
-                _state = EnemyState.walk;
-            }
-        }
-        //chanching the animation state
+        //ANIMATION
+        //chanching the animation range
         private void AnimationState()
         {
-            switch(_state)
+            switch (_state)
             {
                 case EnemyState.idle:
-                    setAnimationRange((float)FLoaterIdle.firstFrame,(float)FLoaterIdle.lastFrame);
+                    setAnimationRange((float)FLoaterIdle.firstFrame, (float)FLoaterIdle.lastFrame);
                     break;
                 case EnemyState.walk:
                     setAnimationRange((float)FLoaterWalk.firstFrame, (float)FLoaterWalk.lastFrame);
@@ -54,11 +33,27 @@
                     break;
             }
         }
+
+        //LOGIC
+        //checks distance to player
+        private void playerDistance()
+        {
+            if (_state == EnemyState.death || _state == EnemyState.hit) return;
+            //turn of when distance is to big
+            if (DistanceTo(_level.player) > 500)
+            {
+                _state = EnemyState.idle;
+            }//turn on if distance to player is to close
+            else if (DistanceTo(_level.player) <= 500)
+            {
+                _state = EnemyState.walk;
+            }
+        }
+
+        //MOVEMENT
+        //if hit get pushed back in the opisite direction
         public override void recoil()
         {
-            if (!(_state == EnemyState.hit)) return;
-            if (_state == EnemyState.death) return;
-
             frameCounter++;
 
             if (frameCounter < 25)
@@ -81,7 +76,6 @@
             if (frameCounter >= 25)
             {
                 frameCounter = 0;
-                isHit = false;
             }
         }
     }

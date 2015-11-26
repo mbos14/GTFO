@@ -7,26 +7,20 @@ namespace GXPEngine
 {
     public class EnemySpider : Enemy
     {
-        public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel)
+        public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel, EnemyPoints.floater, EnemyHealth.floater)
         {
             scaleX *= -1;
             SetOrigin(width / 2, 0);
-            _points = EnemyPoints.spider;
-            _healthmax = EnemyHealth.spider;
-            _health = (float)_healthmax;
         }
 
         void Update()
         {
-            //related to movement
-            recoil();
-            //related to animation
-            animation();
             //related to states
             StateSwitch();
             AnimationState();
         }
-        //chanching the animation state
+        //ANIMATION
+        //chanching the animation range
         private void AnimationState()
         {
             switch (_state)
@@ -45,11 +39,11 @@ namespace GXPEngine
                     break;
             }
         }
+
+        //MOVEMENT
+        //if hit get pushed back in the opisite direction
         public override void recoil()
         {
-            if (!(_state == EnemyState.hit)) return;
-            if (_state == EnemyState.death) return;
-
             frameCounter++;
 
             if (frameCounter < 25)
@@ -72,7 +66,6 @@ namespace GXPEngine
             if (frameCounter >= 25)
             {
                 frameCounter = 0;
-                isHit = false;
             }
         }
     }
