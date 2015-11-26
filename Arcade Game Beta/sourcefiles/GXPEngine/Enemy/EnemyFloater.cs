@@ -9,8 +9,7 @@
         void Update()
         {      
             //related to states
-            StateSwitch();
-            playerDistance();
+            StateSwitch();            
             AnimationState();
         }
         //ANIMATION
@@ -38,15 +37,53 @@
         //checks distance to player
         private void playerDistance()
         {
-            if (_state == EnemyState.death || _state == EnemyState.hit) return;
             //turn of when distance is to big
             if (DistanceTo(_level.player) > 500)
             {
                 _state = EnemyState.idle;
+                _idleTimer = 0f;
+                if (_enemyDirection == EnemyDirection.down) { Mirror(true, false); }
             }//turn on if distance to player is to close
             else if (DistanceTo(_level.player) <= 500)
             {
                 _state = EnemyState.walk;
+            }
+        }
+        //uses states to switch between wich could should be used.
+        protected override void StateSwitch()
+        {
+            switch (_state)
+            {
+                case EnemyState.idle:
+                    playerDistance();
+                    WalkingIdleAnimation();
+                    _idleTimer += 0.1f;
+                    if (_idleTimer >= 2f)
+                    {
+                        _idleTimer = 0f;
+                        _state = EnemyState.walk;
+                    }
+                    break;
+                case EnemyState.walk:
+                    {
+                        playerDistance();
+                        Move();
+                        WalkingIdleAnimation();
+                        break;
+                    }
+                case EnemyState.hit:
+                    recoil();
+                    DeathHitAnimation();
+                    _hitTimer -= 0.5f;
+                    if (_hitTimer <= 0f)
+                    {
+                        _hitTimer = 0f;
+                        _state = EnemyState.idle;
+                    }
+                    break;
+                case EnemyState.death:
+                    DeathHitAnimation();
+                    break;
             }
         }
 

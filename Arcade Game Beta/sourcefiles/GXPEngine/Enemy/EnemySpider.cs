@@ -9,7 +9,6 @@ namespace GXPEngine
     {
         public EnemySpider(Level pLevel) : base("robospider.png", 4, 3, pLevel, EnemyPoints.floater, EnemyHealth.floater)
         {
-            scaleX *= -1;
             SetOrigin(width / 2, 0);
         }
 
