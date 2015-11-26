@@ -87,12 +87,12 @@ namespace GXPEngine
         //LOGIC
         //bug die
         protected void BugDie()
-        {
+        {                        
             _bugDeathTimer -= 0.01f;
-            if (_bugDeathTimer >= 0)
+            if (_bugDeathTimer > 0)
             {
                 alpha = _bugDeathTimer;
-            }          
+            }              
         }
         //gethit
         public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)

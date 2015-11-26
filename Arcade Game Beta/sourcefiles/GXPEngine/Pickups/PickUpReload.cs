@@ -19,16 +19,9 @@ namespace GXPEngine
         }
         private void getCollisionPlayer()
         {
-            if (HitTest(_level.player))
-            {
-                if(_level.player.bulletCounter < 2f)
-                {
-                    _level.player.bulletCounter = 2f;
-                }
-                else if (_level.player.bulletCounter == 2f)
-                {
-                    _level.player.bulletCounter = 3f;
-                }
+            if (HitTest(_level.player) && _level.player.bulletCounter < 3f)
+            {               
+                _level.player.bulletCounter = 3f;
                 this.Destroy();
             }
         }
