@@ -2,7 +2,7 @@
 {
     class EnemyFloater : Enemy
     {
-        public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel, EnemyPoints.floater, EnemyHealth.floater)
+        public EnemyFloater(Level pLevel) : base("robofloater.png", 4, 3, pLevel, EnemyPoints.floater, EnemyHealth.floater,EnemyDirection.left, false)
         {
             SetOrigin(width / 2, height / 2 - 10);
         }
@@ -10,7 +10,7 @@
         {      
             //related to states
             StateSwitch();            
-            AnimationState();
+            AnimationState();            
         }
         //ANIMATION
         //chanching the animation range
@@ -113,6 +113,23 @@
             if (frameCounter >= 25)
             {
                 frameCounter = 0;
+            }
+        }
+        //turns the enemy around
+        public override void TurnAround()
+        {
+            x -= _velocityX;
+            _velocityX *= -1;
+
+            if (_enemyDirection == EnemyDirection.left)
+            {
+                Mirror(true, false);
+                _enemyDirection = EnemyDirection.right;
+            }
+            else
+            {
+                Mirror(false, false);
+                _enemyDirection = EnemyDirection.left;
             }
         }
     }

@@ -117,22 +117,5 @@ namespace GXPEngine
             if (y > startY) y -= 2;
             if (y < startY) y += 2;
         }
-        //turns the enemy around
-        public override void TurnAround()
-        {
-            x -= _velocityX;
-            _velocityX *= -1;
-
-            if (_mirrorX)
-            {
-                Mirror(false, false);
-                _enemyDirection = EnemyDirection.right;
-            }
-            else
-            {
-                Mirror(true, false);
-                _enemyDirection = EnemyDirection.left;
-            }
-        }
     }
 }

@@ -31,13 +31,15 @@ namespace GXPEngine
         protected float _idleTimer = 0f;
         private float _deathHitAnimationTimer = 0f;
 
-        public Enemy(string pFileName, int pColumns, int pRows, Level pLevel, EnemyPoints pPoints, EnemyHealth pHealth) : base(pFileName, pColumns, pRows)
+        public Enemy(string pFileName, int pColumns, int pRows, Level pLevel, EnemyPoints pPoints, EnemyHealth pHealth, EnemyDirection pEnemyDirection = EnemyDirection.left, bool pMirrow = true) : base(pFileName, pColumns, pRows)
         {
             _level = pLevel;
             _state = EnemyState.idle;
             _points = pPoints;
             _healthmax = pHealth;
             _health = (float)_healthmax;
+            _enemyDirection = pEnemyDirection;
+            Mirror(pMirrow, false);
         }
         //ANIMATION
         //animation for death and hit state
@@ -68,7 +70,7 @@ namespace GXPEngine
         //animation for walking and idle state
         protected void WalkingIdleAnimation()
         {
-            _frame += 0.05f;
+            _frame += 0.1f;
             //checks if not bigger then last frame and not smaller then first frame
             if (_frame > _lastFrame || _frame < _firstFrame)
             {
@@ -180,7 +182,17 @@ namespace GXPEngine
         {
             x -= _velocityX;
             _velocityX *= -1;
-            scaleX *= -1;
+            //scaleX *= -1;
+            if (_enemyDirection == EnemyDirection.left)
+            {
+                Mirror(false, false);
+                _enemyDirection = EnemyDirection.right;
+            }
+            else
+            {
+                Mirror(true, false);
+                _enemyDirection = EnemyDirection.left;
+            }
         }
     }
 }
