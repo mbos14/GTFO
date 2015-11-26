@@ -66,7 +66,16 @@ namespace GXPEngine
                     if (_bulletTimer >= 1)
                     {
                         EnemyBullet bullet = new EnemyBullet(_enemyDirection, _level);
-                        bullet.SetXY(x, y);
+                        if (_enemyDirection == EnemyDirection.left)
+                        {
+                            bullet.SetXY(x + 20, y);
+                            bullet.Mirror(true, false);
+                        }
+                        else if (_enemyDirection == EnemyDirection.right)
+                        {
+                            bullet.SetXY(x - width, y);
+                            bullet.Mirror(false, false);
+                        }
                         _level.AddChild(bullet);
                         _bulletTimer = 0;
                     }

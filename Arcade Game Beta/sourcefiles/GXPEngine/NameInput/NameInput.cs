@@ -19,7 +19,7 @@ namespace GXPEngine
         int stringposition = 0;
         Mouse mouse;
         private Level _level;
-        private MyGame _game;
+        private HeraGUN _game;
         private Drawer _drawer = new Drawer(1024, 100);
         string finalName;
         public NameInput(Level pLevel)

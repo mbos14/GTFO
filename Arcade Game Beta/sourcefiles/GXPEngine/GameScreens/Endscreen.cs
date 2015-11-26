@@ -11,12 +11,12 @@ namespace GXPEngine
     {
         private enum LevelTest { Won, Lost }
         private LevelTest CurrentWonTest;
-        private MyGame _game;
+        private HeraGUN _game;
         private Sprite _credits;
-        private Sprite _insertcoin;
+        private AnimationSprite _insertcoin;
         private float _frameCounter = 0.0f;
         private Drawer _drawer = new Drawer(300, 768);
-        public Endscreen(MyGame pGame)
+        public Endscreen(HeraGUN pGame)
         {
             _game = pGame;
             checkLevel();
@@ -64,40 +64,31 @@ namespace GXPEngine
         }
         private void drawScreen()
         {
-            //Background
-            AnimationSprite background = new AnimationSprite("endscreenbg.png", 1, 2);
-            AddChild(background);
+            //Check if player has won or lost
+            if (CurrentWonTest == LevelTest.Won)
+            {
+                Sprite sprite = new Sprite("youwin.png");
+                AddChild(sprite);
+            }
+            else if (CurrentWonTest == LevelTest.Lost)
+            {
+                Sprite sprite = new Sprite("gameover.png");
+                AddChild(sprite);
+            }
 
             //Draw credits
             _credits = new Sprite("credits.png");
-            //AddChild(_credits);
+            AddChild(_credits);
             _credits.y = game.height;
 
             //Draw borders
             Sprite borders = new Sprite("endscreenborders.png");
             AddChild(borders);
 
-            //Draw YOUWON or YOULOST
-            AnimationSprite wonlost = new AnimationSprite("wonlost.png", 1, 2);
-            wonlost.SetOrigin(wonlost.width / 2, wonlost.height / 2);
-            wonlost.SetXY(_game.width / 2, 100);
-            AddChild(wonlost);
-
-            //Check if player has won or lost
-            if (CurrentWonTest == LevelTest.Won)
-            {
-                background.SetFrame((int)CurrentWonTest);
-                wonlost.SetFrame((int)CurrentWonTest);
-            }
-            else if (CurrentWonTest == LevelTest.Lost)
-            {
-                background.SetFrame((int)CurrentWonTest);
-                wonlost.SetFrame((int)CurrentWonTest);
-            }
-
             //Draw "Throw in a coin to play again"
-            _insertcoin = new Sprite("insertcoin.png");
+            _insertcoin = new AnimationSprite("text.png", 1, 4);
             AddChild(_insertcoin);
+            _insertcoin.SetFrame(3);
             _insertcoin.SetOrigin(_insertcoin.width / 2, _insertcoin.height / 2);
             _insertcoin.SetXY(game.width / 2, game.height - _insertcoin.height);
 

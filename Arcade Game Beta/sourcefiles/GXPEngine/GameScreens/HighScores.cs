@@ -11,13 +11,13 @@ namespace GXPEngine
         private int[] _highScores = new int[10];
         public HighScores()
         {
-            getHighScore();
+            readHighScore();
         }
         protected override Collider createCollider()
         {
             return null;
         }
-        private void getHighScore()
+        private void readHighScore()
         {
             StreamReader streamReader = new StreamReader("highscoredata.txt");
             string fileData = streamReader.ReadToEnd();
@@ -62,7 +62,7 @@ namespace GXPEngine
         }
         public string[] ReturnHighScore(int pI)
         {
-            getHighScore();
+            readHighScore();
 
             string[] highscorelist = new string[10];
             for (int i = 0; i < _highScoreNames.Length; i++)

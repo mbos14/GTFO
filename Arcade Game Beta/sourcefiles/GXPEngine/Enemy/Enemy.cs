@@ -74,8 +74,11 @@ namespace GXPEngine
                         _state = EnemyState.walk;
                     }
                     break;
-                case EnemyState.walk:                                        
-                    break;
+                case EnemyState.walk:
+                    {
+                        Move();
+                        break;
+                    }
                 case EnemyState.hit:
                     _hitTimer -= 1f;
                     if (_hitTimer <= 0f)
@@ -84,8 +87,7 @@ namespace GXPEngine
                         _state = EnemyState.idle;
                     }
                     break;
-                case EnemyState.death:
-                    
+                case EnemyState.death:                    
                     break;
             }
         }

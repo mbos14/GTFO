@@ -22,7 +22,7 @@ namespace GXPEngine
         private float _velocityY = 0.0f;
         private float _walkSpeed = 5.0f;
         private float _jumpSpeed = -15.0f;
-        private float maxVelocityY = 20.0f;
+        private float _maxVelocityY = 20.0f;
         private float _pushBackSpeed = 3.0f;
         private float _gravity = 0.65f;
         private float _bounce = -0.25f;
@@ -49,7 +49,7 @@ namespace GXPEngine
 
         public Player(Level pLevel) : base("player.png", 4, 11)
         {
-            if (MyGame.playerHasWeapon) { hasWeapon = true; }
+            if (HeraGUN.playerHasWeapon) { hasWeapon = true; }
 
             SetOrigin(width / 2, height);
             _level = pLevel;
@@ -62,7 +62,6 @@ namespace GXPEngine
             recoilCounter();
             secretCheat();
         }
-
         private void secretCheat()
         {
             if (Input.GetKeyDown(Key.V))//Button 1
@@ -87,6 +86,7 @@ namespace GXPEngine
             if (_button1 && _button2 && _button3)
             {
                 _bulletCharge = 100;
+                lives = 999;
             }
         }
         //-------------MOVEMENT-----------------
@@ -155,7 +155,10 @@ namespace GXPEngine
             }
 
             //Keep velocity at his max
-            if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }     
+            if (_velocityY > _maxVelocityY) { _velocityY = _maxVelocityY; }
+            //Update animstate
+            if (_velocityX == 0.0f) { _currentAnimState = AnimationStatePlayer.idle; }
+            if (_inAir == true) { _currentAnimState = AnimationStatePlayer.jump; }
         }
         private void movePlayer()
         {
@@ -321,8 +324,10 @@ namespace GXPEngine
             }
 
             PlayerBullet bullet = new PlayerBullet(aimDirection, _level);
-            _level.AddChild(bullet);
+            _level.backgroundLayer.AddChild(bullet);
             bullet.SetXY(x, y - (height / 2));
+
+            _level.thisgame.shakeScreen();
         }
         private void recoil(PlayerDirection pDirection)
         {
@@ -362,7 +367,7 @@ namespace GXPEngine
             else
             {
                 _level.thisgame.levelWon = false;
-                _level.thisgame.setGameState(GameStates.nameinput);
+                _level.thisgame.setGameState(GameStates.wonlostscreen);
             }
         }
         public void addPoints(int pPoints)

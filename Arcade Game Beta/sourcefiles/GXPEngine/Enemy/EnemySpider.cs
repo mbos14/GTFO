@@ -19,7 +19,6 @@ namespace GXPEngine
         void Update()
         {
             //related to movement
-            Move();
             recoil();
             //related to animation
             animation();
@@ -48,7 +47,7 @@ namespace GXPEngine
         }
         public override void recoil()
         {
-            if (!isHit) return;
+            if (!(_state == EnemyState.hit)) return;
             if (_state == EnemyState.death) return;
 
             frameCounter++;
@@ -68,6 +67,12 @@ namespace GXPEngine
                             break;
                         }
                 }
+            }
+
+            if (frameCounter >= 25)
+            {
+                frameCounter = 0;
+                isHit = false;
             }
         }
     }

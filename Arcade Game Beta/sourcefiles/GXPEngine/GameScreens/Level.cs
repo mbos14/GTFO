@@ -19,7 +19,7 @@ namespace GXPEngine
 
         //Data
         public Player player;
-        public MyGame thisgame;
+        public HeraGUN thisgame;
         private string _fileName;
         public Drawer drawer = new Drawer(1024, 100);
         public int levelPart;
@@ -35,11 +35,11 @@ namespace GXPEngine
         const int TILEDINFO = 13;
 
         //Pivots
-        private Pivot _backgroundLayer = new Pivot();
+        public Pivot backgroundLayer = new Pivot();
         private Pivot _midgroundLayer = new Pivot();
         private Pivot _foregroundLayer = new Pivot();
         public Pivot hudLayer = new Pivot();
-        public Level(MyGame pGame, string pFileName, int pLevelPart)
+        public Level(HeraGUN pGame, string pFileName, int pLevelPart)
         {
             levelPart = pLevelPart;
             _fileName = pFileName;
@@ -72,7 +72,7 @@ namespace GXPEngine
         }
         private void addPivots()
         {
-            AddChild(_backgroundLayer);
+            AddChild(backgroundLayer);
             AddChild(_midgroundLayer);
             AddChild(_foregroundLayer);
             AddChild(hudLayer);
@@ -117,7 +117,7 @@ namespace GXPEngine
                     if (levelData[i, j] != 0)
                     {
                         BackgroundObject thisobject = new BackgroundObject();
-                        _backgroundLayer.AddChild(thisobject);
+                        backgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
                     }
@@ -155,7 +155,7 @@ namespace GXPEngine
                     if (levelData[i, j] != 0)
                     {
                         BackgroundObject thisobject = new BackgroundObject();
-                        _backgroundLayer.AddChild(thisobject);
+                        backgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);
                     }

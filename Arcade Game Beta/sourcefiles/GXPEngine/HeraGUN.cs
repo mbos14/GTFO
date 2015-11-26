@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class MyGame : Game
+public class HeraGUN : Game
 {
     //GameState
     private GameStates _state = GameStates.@default;
@@ -14,17 +14,40 @@ public class MyGame : Game
     private Level _part1;
     private Level _part2;
     private Level _part3;
+    private WonLostScreen _wlscreen;
     private Endscreen _endscreen;
     private NameInput _nameinput;
 
     public static bool playerHasWeapon = false;
     public int playerScore = 0;
     public bool levelWon = false;
+    private bool shaked = false;
 
-    public MyGame() : base(1024, 768, false)
+    SoundChannel soundChannel = new SoundChannel(1);
+    Sound backgroundSound = new Sound("background.wav", false, true);
+    private bool _loopStarted = false;
+    public HeraGUN() : base(1024, 768, false)
     {
+        backgroundSound.Play(false, 1);
         setGameState(GameStates.menu);
     }
+    void Update()
+    {
+        resetShake();
+        loopMusic();
+    }
+    private void loopMusic()
+    {
+        if (_loopStarted) return;
+
+        if (soundChannel.IsPlaying == false)
+        {
+            Sound backgroundloop = new Sound("backgroundloop.mp3", true, true);
+            backgroundloop.Play(false, 1);
+            _loopStarted = true;
+        }
+    }
+
     public void setGameState(GameStates pState)
     {
         if (pState == _state) return;
@@ -58,6 +81,12 @@ public class MyGame : Game
                 {
                     _part3 = new Level(this, "part3.txt", 3);
                     AddChild(_part3);
+                    break;
+                }
+            case GameStates.wonlostscreen:
+                {
+                    _wlscreen = new WonLostScreen(this);
+                    AddChild(_wlscreen);
                     break;
                 }
             case GameStates.nameinput:
@@ -99,6 +128,11 @@ public class MyGame : Game
                     if (_part3 != null) { _part3.Destroy(); }
                     break;
                 }
+            case GameStates.wonlostscreen:
+                {
+                    if (_wlscreen != null) { _wlscreen.Destroy(); }
+                    break;
+                }
             case GameStates.nameinput:
                 {
                     if (_nameinput != null) { _nameinput.Destroy(); }
@@ -112,8 +146,26 @@ public class MyGame : Game
 
         }
     }
+
+    public void shakeScreen()
+    {
+        if (!shaked)
+        {
+            x += 5;
+            shaked = true;
+        }
+    }
+    private void resetShake()
+    {
+        if (shaked)
+        {
+            x -= 5;
+            shaked = false;
+        }
+    }
+
     static void Main()
     {
-        new MyGame().Start();
+        new HeraGUN().Start();
     }
 }
