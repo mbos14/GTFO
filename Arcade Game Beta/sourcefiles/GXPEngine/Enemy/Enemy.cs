@@ -68,7 +68,7 @@ namespace GXPEngine
         //animation for walking and idle state
         protected void WalkingIdleAnimation()
         {
-            _frame += 0.1f;
+            _frame += 0.05f;
             //checks if not bigger then last frame and not smaller then first frame
             if (_frame > _lastFrame || _frame < _firstFrame)
             {
@@ -119,7 +119,7 @@ namespace GXPEngine
                 case EnemyState.hit:
                     recoil();
                     DeathHitAnimation();
-                    _hitTimer -= 1f;
+                    _hitTimer -= 0.5f;
                     if (_hitTimer <= 0f)
                     {
                         _hitTimer = 0f;
