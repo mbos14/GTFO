@@ -47,8 +47,7 @@ namespace GXPEngine
         }
         public override void recoil()
         {
-            if (!(_state == EnemyState.hit)) return;
-            if (_state == EnemyState.death) return;
+            if (_state == EnemyState.death || !(_state == EnemyState.hit)) return;
 
             frameCounter++;
 

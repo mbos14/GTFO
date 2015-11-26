@@ -24,7 +24,6 @@ namespace GXPEngine
         {
             //related to movement
             getBackInPos();
-            Move();
             recoil();
             shootBullet();
             //related to animation
@@ -63,7 +62,7 @@ namespace GXPEngine
         }
         private void shootBullet()
         {
-            if (_state != EnemyState.death)
+            if (_state == EnemyState.walk)
             {
                 _bulletTimer += 0.01f;
                 if (DistanceTo(_level.player) < 400)

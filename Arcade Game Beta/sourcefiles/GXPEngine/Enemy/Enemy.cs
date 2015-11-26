@@ -48,11 +48,8 @@ namespace GXPEngine
 
         //general enemy movements
         protected virtual void Move()
-        {
-                if (_state == EnemyState.walk)
-                {
-                    x += _velocityX;
-                }
+        {                
+                    x += _velocityX;               
         }
         //make the enemy turn around
         public virtual void TurnAround()
@@ -130,8 +127,7 @@ namespace GXPEngine
         }
         public virtual void recoil()
         {
-            if (!isHit) return;
-            if (_state == EnemyState.death) return;
+            if (_state == EnemyState.death || !(_state == EnemyState.hit)) return;
 
             frameCounter++;
 
