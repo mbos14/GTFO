@@ -12,8 +12,8 @@
     //ENEMYFRAMES
     //SPIDER
     public enum SpiderIdle { firstFrame = 0, lastFrame = 1 };
-    public enum SpiderWalk { firstFrame = 2, lastFrame = 6 };
-    public enum SpiderHit { firstFrame = 7, lastFrame = 9 };
+    public enum SpiderWalk { firstFrame = 2, lastFrame = 5 };
+    public enum SpiderHit { firstFrame = 6, lastFrame = 9 };
     public enum SpiderDeath { firstFrame = 10, lastFrame = 11 };
     //FLOATER
     public enum FLoaterIdle { firstFrame = 0, lastFrame = 0 };
@@ -22,7 +22,7 @@
     public enum FLoaterDeath { firstFrame = 9, lastFrame = 11 };
     //BUG
     public enum BugIdle { firstFrame = 2, lastFrame = 3 };
-    public enum BugWalk { firstFrame = 0, lastFrame = 1 };
+    public enum BugWalk { firstFrame = 0, lastFrame = 2 };
     public enum BugHit { firstFrame = 2, lastFrame = 3 };
     public enum BugDeath { firstFrame = 4, lastFrame = 5 };
 

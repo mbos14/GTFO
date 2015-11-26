@@ -19,6 +19,7 @@ namespace GXPEngine
         }
         private void getCollisionPlayer()
         {
+<<<<<<< HEAD
             if (HitTest(_level.player))
             {
                 if(_level.player.bulletCounter < 2f)
@@ -33,6 +34,11 @@ namespace GXPEngine
                 SoundChannel soundChannel = new SoundChannel(2);
                 Sound reload = new Sound("reloadgun.mp3");
                 reload.Play(false, 2);
+=======
+            if (HitTest(_level.player) && _level.player.bulletCounter < 3f)
+            {               
+                _level.player.bulletCounter = 3f;
+>>>>>>> be0a3a8f18f66fe58aaa9548ee83ec1273b8b45d
                 this.Destroy();
             }
         }
