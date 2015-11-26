@@ -25,11 +25,12 @@ namespace GXPEngine
         //stores current health
         protected float _health;
         //Animation
-        private float _frame = 0.0f;
+        protected float _frame = 0.0f;
         //TIMERS
         protected float _hitTimer = 0f;
         protected float _idleTimer = 0f;
         private float _deathHitAnimationTimer = 0f;
+        protected float _bugDeathTimer;
 
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel, EnemyPoints pPoints, EnemyHealth pHealth, EnemyDirection pEnemyDirection = EnemyDirection.left, bool pMirrow = true) : base(pFileName, pColumns, pRows)
         {
@@ -80,6 +81,15 @@ namespace GXPEngine
         }
 
         //LOGIC
+        //bug die
+        protected void BugDie()
+        {
+            _bugDeathTimer -= 0.01f;
+            if (_bugDeathTimer >= 0)
+            {
+                alpha = _bugDeathTimer;
+            }          
+        }
         //gethit
         public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)
         {

@@ -14,7 +14,7 @@ namespace GXPEngine
         {
             startY = pStartY;
             SetOrigin(width / 2, height / 2);
-            Mirror(true, false);
+            _bugDeathTimer = 1f;
         }
         void Update()
         {
@@ -103,6 +103,10 @@ namespace GXPEngine
                     break;
                 case EnemyState.death:
                     DeathHitAnimation();
+                    if (_frame == _lastFrame)
+                    {
+                        BugDie();
+                    }
                     break;
             }
         }
