@@ -361,7 +361,6 @@ namespace GXPEngine
         {
             if (lives > 1)
             {
-                foreach (PickUpReload reload in _level.reloadList) { Destroy(); }
                 lives -= 1;
                 _velocityX = 0.0f;
                 _velocityY = 0.0f;
