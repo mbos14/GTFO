@@ -12,7 +12,7 @@ namespace GXPEngine
         private float _frame = 0.0f;
         private bool _checked = false;
 
-        public Checkpoints(bool pThisIsCheckPoint, Level pLevel) : base("checkpoint.png", 6, 0)
+        public Checkpoints(bool pThisIsCheckPoint, Level pLevel) : base("checkpoint.png", 6, 1)
         {
             _level = pLevel;
             _thisIsCP = pThisIsCheckPoint;
@@ -48,8 +48,8 @@ namespace GXPEngine
         {
             if (_checked)
             {
-                _frame += 0.05f;
-                if (_frame > frameCount) { _frame = frameCount; }
+                _frame += 0.1f;
+                if (_frame > frameCount + 1) { _frame = frameCount; }
                 SetFrame((int)_frame);
             }
         }

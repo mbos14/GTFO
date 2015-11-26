@@ -34,7 +34,7 @@ namespace GXPEngine
             Sprite menuBG = new Sprite("menubackground.png");
             AddChild(menuBG);
 
-            _text = new AnimationSprite("text.png", 0, 4);
+            _text = new AnimationSprite("text.png", 1, 4);
             AddChild(_text);
             _text.SetXY(game.width / 2, game.height - _text.width);
             _text.SetFrame(2);

@@ -88,7 +88,6 @@ namespace GXPEngine
             //Set shrinkvalue
             if (_distanceTraveled >= 0) { colorValue = (_maxTravel - _distanceTraveled); }
             else { colorValue = (_maxTravel + _distanceTraveled); }
-            Console.WriteLine(colorValue);
             alpha = colorValue / 4 / 100;
 
         }
