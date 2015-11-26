@@ -35,11 +35,10 @@ namespace GXPEngine
         }
         protected override void Move()
         {
-            if (isHit) return;
-            if (_state == EnemyState.death) return;
-
-            y += _velocityY;
-            _state = EnemyState.walk;
+            if (_state == EnemyState.walk)
+            {
+                y += _velocityY;
+            }
         }
         private void getBackInPos()
         {
@@ -51,7 +50,7 @@ namespace GXPEngine
         }
         private void lookDirection()
         {
-            if (_state != EnemyState.death)
+            if (_state == EnemyState.walk)
             {
                 if (_level.player.x > x) { Mirror(true, false); _enemyDirection = EnemyDirection.left; }
                 else if (_level.player.x < x) { Mirror(false, false); _enemyDirection = EnemyDirection.right; }
@@ -59,7 +58,7 @@ namespace GXPEngine
         }
         private void shootBullet()
         {
-            if (_state != EnemyState.death)
+            if (_state == EnemyState.walk)
             {
                 _bulletTimer += 0.01f;
                 if (DistanceTo(_level.player) < 400)

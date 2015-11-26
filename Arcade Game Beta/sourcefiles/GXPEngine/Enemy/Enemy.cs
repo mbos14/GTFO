@@ -35,6 +35,9 @@ namespace GXPEngine
         protected float _health;
         //Animation
         private float _frame = 0.0f;
+        //TIMERS
+        private float _hitTimer = 0f;
+        private float _idleTimer = 0f;
 
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel) : base(pFileName, pColumns, pRows)
         {
@@ -64,50 +67,44 @@ namespace GXPEngine
             switch (_state)
             {
                 case EnemyState.idle:
-                    if (_frame >= _lastFrame)
+                    _idleTimer += 0.1f;
+                    if (_idleTimer >= 2f)
                     {
+                        _idleTimer = 0f;
                         _state = EnemyState.walk;
                     }
                     break;
                 case EnemyState.walk:                                        
                     break;
                 case EnemyState.hit:
-                    if (_frame >= _lastFrame)
+                    _hitTimer -= 1f;
+                    if (_hitTimer <= 0f)
                     {
+                        _hitTimer = 0f;
                         _state = EnemyState.idle;
                     }
                     break;
                 case EnemyState.death:
-                    if (_frame >= _lastFrame)
-                    {
-                        this.Destroy();
-                    }
+                    
                     break;
             }
         }
 
         protected void animation()
-        {            
-            if (_frame > _lastFrame)
-            {
-                _frame = _firstFrame;                
-            }
-            if (_frame < _firstFrame)
+        {
+            _frame += 0.1f;
+            
+            if (_frame > _lastFrame || _frame < _firstFrame)
             {
                 _frame = _firstFrame;
-            }
-            Console.WriteLine(_frame);
-            _frame += 0.2f;
-            //if (_frame >= 5.0f) { _frame = 2.0f; }
-            //if (_frame <= 2.0f) { _frame = 2.0f; }
-            SetFrame((int)_frame + 1);
+            }        
+            SetFrame((int)_frame);
         }
 
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
             _firstFrame = pFirstFrame;
-            _lastFrame = pLastFrame;
-            _frame = pFirstFrame;
+            _lastFrame = pLastFrame;            
         }
 
         //GET HIT
@@ -115,16 +112,17 @@ namespace GXPEngine
         {
             if (_state == EnemyState.death) return;
 
-            if (_health <= 0)
+            if (_health <= 0f)
             {
                 _state = EnemyState.death;
                 _level.player.addPoints((int)_points);
             }
-            else if (_health > 0)
+            else if (_health > 0f)
             {
                 directionHit = pDirection;
                 _health -= pBulletDamage;
                 isHit = true;
+                _hitTimer = pBulletDamage;
                 _state = EnemyState.hit;
             }           
         }

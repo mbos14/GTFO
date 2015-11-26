@@ -47,7 +47,7 @@ namespace GXPEngine
 
         private bool _button1, _button2, _button3;
 
-        public Player(Level pLevel) : base("player.png", 4, 10)
+        public Player(Level pLevel) : base("player.png", 4, 11)
         {
             if (MyGame.playerHasWeapon) { hasWeapon = true; }
 
@@ -84,7 +84,6 @@ namespace GXPEngine
                 _button3 = false;
             }
 
-
             if (_button1 && _button2 && _button3)
             {
                 _bulletCharge = 100;
@@ -93,6 +92,10 @@ namespace GXPEngine
         //-------------MOVEMENT-----------------
         private void getInput()
         {
+            //Update animstate
+            if (_velocityX == 0.0f) { _currentAnimState = AnimationStatePlayer.idle; }
+            if (_inAir == true) { _currentAnimState = AnimationStatePlayer.jump; }
+
             //------------------LEFT------------------
             if (Input.GetKey((int)PlayerButtons.left))
             {
@@ -136,7 +139,6 @@ namespace GXPEngine
             //----------------NO BUTTONS--------------
             if (_recoil)
             {
-                _currentAnimState = AnimationStatePlayer.recoil;
                 if (_velocityX > 0) { _velocityX -= 0.5f; }
                 else if (_velocityX < 0) { _velocityX += 0.5f; }
             }
@@ -147,15 +149,13 @@ namespace GXPEngine
             //------------------SHOOT-----------------
             if (Input.GetKeyDown((int)PlayerButtons.shoot) && hasWeapon && bulletCounter >= 1)
             {
+                _currentAnimState = AnimationStatePlayer.shoot;
                 shootBullet();
                 bulletCounter -= 1.0f;
             }
 
             //Keep velocity at his max
-            if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }
-            //Update animstate
-            if (_velocityX == 0.0f) { _currentAnimState = AnimationStatePlayer.idle; }
-            if (_inAir == true) { _currentAnimState = AnimationStatePlayer.jump; }
+            if (_velocityY > maxVelocityY) { _velocityY = maxVelocityY; }     
         }
         private void movePlayer()
         {
@@ -230,11 +230,9 @@ namespace GXPEngine
         private void animation()
         {
             animationState();
+             _frame += _animSpeed;
 
-            _frame += _animSpeed;
-
-            if (_frame > _lastFrame) { _frame = _firstFrame; }
-            else if (_frame < _firstFrame) { _frame = _lastFrame; }
+            if (_frame > _lastFrame || _frame < _firstFrame) { _frame = _firstFrame; }
 
             SetFrame((int)_frame);
         }
@@ -285,9 +283,12 @@ namespace GXPEngine
                         else if (aimDirection == PlayerDirection.down) { setAnimationRange(33, 33); }
                         break;
                     }
-                case AnimationStatePlayer.recoil:
-                    {
-                        setAnimationRange(36, 36);
+                case AnimationStatePlayer.shoot:
+                    {                     
+                        if (aimDirection == PlayerDirection.left){ setAnimationRange(40, 41); }
+                        else if (aimDirection == PlayerDirection.right){ setAnimationRange(40, 41); }
+                        else if (aimDirection == PlayerDirection.up){ setAnimationRange(36, 37); }
+                        else if (aimDirection == PlayerDirection.down){ setAnimationRange(38, 39); }
                         break;
                     }
             }

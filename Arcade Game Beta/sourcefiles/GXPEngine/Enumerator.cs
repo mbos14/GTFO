@@ -23,15 +23,15 @@
     public enum FLoaterDeath { firstFrame = 9, lastFrame = 11 };
     public enum FLoaterJump { firstFrame = 4, lastFrame = 8 };
     //BUG
-    public enum BugIdle { firstFrame = 3, lastFrame = 3 };
-    public enum BugWalk { firstFrame = 0, lastFrame = 2 };
-    public enum BugHit { firstFrame = 3, lastFrame = 3 };
+    public enum BugIdle { firstFrame = 2, lastFrame = 3 };
+    public enum BugWalk { firstFrame = 0, lastFrame = 1 };
+    public enum BugHit { firstFrame = 2, lastFrame = 3 };
     public enum BugDeath { firstFrame = 4, lastFrame = 5 };
 
 
     //PLAYER
     public enum PlayerDirection { left, right, up, down };
-    public enum AnimationStatePlayer { idle, walk, jump, recoil };
+    public enum AnimationStatePlayer { idle, walk, jump, shoot };
     public enum PlayerButtons { left = Key.A, right = Key.D, up = Key.W, down = Key.S, shoot = Key.F, insert = Key.Z };
     public enum ChargeWeapon { p0, p10, p20, p30, p40, p50, p60, p70, p80, p90, p100 }
 }
