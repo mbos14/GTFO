@@ -29,11 +29,11 @@ public class HeraGUN : Game
     SoundChannel soundChannel = new SoundChannel(1);
     Sound backgroundSound = new Sound("background.wav", false, true);
     private bool _loopStarted = false;
-    public HeraGUN() : base(1024, 768, false)
+    public HeraGUN() : base(1024, 768, true)
     {
         backgroundSound.Play(false, 1);
         soundChannel.Volume = 0.001f;
-        setGameState(GameStates.part1);
+        setGameState(GameStates.menu);
     }
     void Update()
     {
