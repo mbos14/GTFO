@@ -47,7 +47,7 @@ namespace GXPEngine
 
         private bool _button1, _button2, _button3;
 
-        public Player(Level pLevel) : base("player.png", 4, 11)
+        public Player(Level pLevel) : base("player.png", 4, 10)
         {
             if (HeraGUN.playerHasWeapon) { hasWeapon = true; }
 
@@ -288,10 +288,14 @@ namespace GXPEngine
                     }
                 case AnimationStatePlayer.shoot:
                     {                     
-                        if (aimDirection == PlayerDirection.left){ setAnimationRange(40, 41); }
-                        else if (aimDirection == PlayerDirection.right){ setAnimationRange(40, 41); }
-                        else if (aimDirection == PlayerDirection.up){ setAnimationRange(36, 37); }
-                        else if (aimDirection == PlayerDirection.down){ setAnimationRange(38, 39); }
+                        //if (aimDirection == PlayerDirection.left){ setAnimationRange(40, 41); }
+                        //else if (aimDirection == PlayerDirection.right){ setAnimationRange(40, 41); }
+                        //else if (aimDirection == PlayerDirection.up){ setAnimationRange(36, 37); }
+                        //else if (aimDirection == PlayerDirection.down){ setAnimationRange(38, 39); }
+                        if (aimDirection == PlayerDirection.left) { setAnimationRange(36, 36); }
+                        else if (aimDirection == PlayerDirection.right) { setAnimationRange(36, 36); }
+                        else if (aimDirection == PlayerDirection.up) { setAnimationRange(35, 35); }
+                        else if (aimDirection == PlayerDirection.down) { setAnimationRange(37, 37); }
                         break;
                     }
             }
@@ -357,6 +361,7 @@ namespace GXPEngine
         {
             if (lives > 1)
             {
+                foreach (PickUpReload reload in _level.reloadList) { Destroy(); }
                 lives -= 1;
                 _velocityX = 0.0f;
                 _velocityY = 0.0f;

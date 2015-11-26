@@ -9,7 +9,7 @@ namespace GXPEngine
     {
         private Level _level;
         List<GameObject> previousFrameCollisions = new List<GameObject>();
-        public InvisBlock(Level pLevel) : base("tileset.png", 23, 45)
+        public InvisBlock(Level pLevel) : base("tileset.png", 32, 66)
         {
             _level = pLevel;
         }

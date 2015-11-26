@@ -12,13 +12,12 @@ namespace GXPEngine
         private Level _level;
         private HeraGUN _game;
         Drawer drawer;
-
         public LevelHUD(Level pLevel) : base("hud.png", 1, 4)
         {
             _level = pLevel;
             _game = pLevel.thisgame;
 
-            drawer = new Drawer(1024, 400);
+            drawer = new Drawer(1024, 100);
             AddChild(drawer);
 
             game.Remove(this);

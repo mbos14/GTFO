@@ -33,5 +33,4 @@
     public enum PlayerDirection { left, right, up, down };
     public enum AnimationStatePlayer { idle, walk, jump, shoot };
     public enum PlayerButtons { left = Key.A, right = Key.D, up = Key.W, down = Key.S, shoot = Key.F, insert = Key.Z };
-    public enum ChargeWeapon { p0, p10, p20, p30, p40, p50, p60, p70, p80, p90, p100 }
 }

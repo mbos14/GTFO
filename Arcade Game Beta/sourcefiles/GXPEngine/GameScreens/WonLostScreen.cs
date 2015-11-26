@@ -11,10 +11,10 @@ namespace GXPEngine
         private float _frameCounter = 0.0f;
 
         AnimationSprite pressButton = new AnimationSprite("text.png", 1, 4);
-        public WonLostScreen(HeraGUN pGame)
+        public WonLostScreen(HeraGUN pGame, bool pLevelWon)
         {
             _game = pGame;
-            getEnding();
+            getEnding(pLevelWon);
 
             AddChild(pressButton);
             pressButton.SetOrigin(pressButton.width / 2, pressButton.height);
@@ -26,14 +26,14 @@ namespace GXPEngine
             pressButtonAnim();
             getButton();
         }
-        private void getEnding()
+        private void getEnding(bool pLevelWon)
         {
-            if (_game.levelWon)
+            if (pLevelWon)
             {
                 Sprite background = new Sprite("youwon.png");
                 AddChild(background);
             }
-            else if (!_game.levelWon)
+            else
             {
                 Sprite background = new Sprite("gameover.png");
                 AddChild(background);
@@ -46,20 +46,12 @@ namespace GXPEngine
             if (_frameCounter >= 1)
             {
                 _frameCounter = 0;
-                if (!pressButton.visible)
-                {
-                    pressButton.visible = true;
-                }
-                else
-                {
-                    pressButton.visible = false;
-                }
-
+                visible = visible ? false : true;
             }
         }
         private void getButton()
         {
-            if (Input.GetAnyKeyDown())
+            if (Input.GetKeyDown((int)PlayerButtons.shoot))
             {
                 _game.setGameState(GameStates.nameinput);
             }
