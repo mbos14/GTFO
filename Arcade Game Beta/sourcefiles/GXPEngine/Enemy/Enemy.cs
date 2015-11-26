@@ -25,11 +25,11 @@ namespace GXPEngine
         //stores current health
         protected float _health;
         //Animation
-        protected float _frame = 0.0f;
+        protected float _frame = 0;
         //TIMERS
-        protected float _hitTimer = 0f;
-        protected float _idleTimer = 0f;
-        private float _deathHitAnimationTimer = 0f;
+        protected float _hitTimer;
+        protected float _idleTimer;
+        private float _deathHitAnimationTimer;
         protected float _bugDeathTimer;
 
         public Enemy(string pFileName, int pColumns, int pRows, Level pLevel, EnemyPoints pPoints, EnemyHealth pHealth, EnemyDirection pEnemyDirection = EnemyDirection.left, bool pMirrow = true) : base(pFileName, pColumns, pRows)
@@ -41,13 +41,16 @@ namespace GXPEngine
             _health = (float)_healthmax;
             _enemyDirection = pEnemyDirection;
             Mirror(pMirrow, false);
+            _hitTimer = 0f;
+            _idleTimer = 0f;
+            _deathHitAnimationTimer = 0;
         }
         //ANIMATION
         //animation for death and hit state
         protected void DeathHitAnimation()
         {
-            _deathHitAnimationTimer += 0.2f;
-            if (_deathHitAnimationTimer == 1f)
+            _deathHitAnimationTimer += 1;
+            if (_deathHitAnimationTimer == 10)
             {
                 _frame += 1;
                 if (_frame < _firstFrame)
@@ -58,7 +61,7 @@ namespace GXPEngine
                 {
                     _frame = _lastFrame;
                 }
-                _deathHitAnimationTimer = 0f;
+                _deathHitAnimationTimer = 0;
                 SetFrame((int)_frame);
             }
         }
@@ -78,6 +81,7 @@ namespace GXPEngine
                 _frame = _firstFrame;
             }
             SetFrame((int)_frame);
+
         }
 
         //LOGIC
