@@ -21,8 +21,13 @@ namespace GXPEngine
         {
             if (HitTest(_level.player))
             {
+                SoundChannel soundChannel = new SoundChannel(2);
+                Sound pickup = new Sound("lifeup.wav");
+                pickup.Play(false, 2);
+
                 this.Destroy();
-                _level.player.lives++;
+                _level.thisgame.playerLives++;
+                _level.player.addPoints(20);
             }
         }
     }

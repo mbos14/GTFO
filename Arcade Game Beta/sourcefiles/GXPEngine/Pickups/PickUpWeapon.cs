@@ -22,6 +22,7 @@ namespace GXPEngine
             {
                 this.Destroy();
                 _level.player.hasWeapon = true;
+                _level.player.addPoints(50);
             }
         }
 

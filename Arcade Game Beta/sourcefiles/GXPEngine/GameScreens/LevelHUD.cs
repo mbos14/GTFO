@@ -30,9 +30,9 @@ namespace GXPEngine
         }
         private void drawText()
         {
-            string message = _level.player.lives + "";
+            string message = _level.thisgame.playerLives + "";
             string message2 = _game.playerScore + "";
-            string message3 = _level.player.coins + "";
+            string message3 = _level.thisgame.playerCoins + "";
 
             PointF pos1 = new PointF(160, 35);
             PointF pos2 = new PointF(_game.width - 220, 5);

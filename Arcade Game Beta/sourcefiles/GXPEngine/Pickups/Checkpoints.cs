@@ -31,10 +31,12 @@ namespace GXPEngine
                     _checked = true;
                     _level.player.spawnX = x;
                     _level.player.spawnY = y;
+                    _level.player.addPoints(10);
                 }
 
                 else if (!_thisIsCP)
                 {
+                    visible = false;
                     //Go to part 2
                     if (_level.levelPart == 1) { _level.thisgame.setGameState(GameStates.part2); } 
                     //Go to part 3

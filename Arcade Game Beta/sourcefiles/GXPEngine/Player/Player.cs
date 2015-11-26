@@ -14,8 +14,6 @@ namespace GXPEngine
         public float spawnX;
         public float spawnY;
         public bool hasWeapon;
-        public int lives = 3;
-        public int coins = 0;
 
         //Speed
         private float _velocityX = 0.0f;
@@ -41,8 +39,8 @@ namespace GXPEngine
         private int _inAirCounter = 0;
 
         //Weapon
-        public float maxBullets = 2;
-        public float bulletCounter = 2;
+        public float maxBullets = 3;
+        public float bulletCounter = 3;
         private float _bulletCharge = 0.02f;
 
         private bool _button1, _button2, _button3;
@@ -86,7 +84,7 @@ namespace GXPEngine
             if (_button1 && _button2 && _button3)
             {
                 _bulletCharge = 100;
-                lives = 999;
+                _level.thisgame.playerLives = 999;
             }
         }
         //-------------MOVEMENT-----------------
@@ -331,6 +329,10 @@ namespace GXPEngine
             _level.backgroundLayer.AddChild(bullet);
             bullet.SetXY(x, y - (height / 2));
 
+            SoundChannel soundChannel = new SoundChannel(2);
+            Sound shootsound = new Sound("shoot.wav");
+            shootsound.Play(false, 2);
+
             _level.thisgame.shakeScreen();
         }
         private void recoil(PlayerDirection pDirection)
@@ -359,9 +361,9 @@ namespace GXPEngine
         //-----------LIVES AND SCORE------------
         public void playerDIE()
         {
-            if (lives > 1)
+            if (_level.thisgame.playerLives > 1)
             {
-                lives -= 1;
+                _level.thisgame.playerLives -= 1;
                 _velocityX = 0.0f;
                 _velocityY = 0.0f;
                 x = spawnX;

@@ -21,8 +21,12 @@ namespace GXPEngine
         {
             if (HitTest(_level.player))
             {
-                _level.player.coins++;
-                _level.player.addPoints(20);
+                SoundChannel soundChannel = new SoundChannel(2);
+                Sound pickup = new Sound("coin.wav");
+                pickup.Play(false, 2);
+
+                _level.thisgame.playerCoins++;
+                _level.player.addPoints(40);
                 Destroy();
             }
         }

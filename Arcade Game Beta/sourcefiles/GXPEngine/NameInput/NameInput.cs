@@ -14,7 +14,7 @@ namespace GXPEngine
         private int _buttonStartPointX = 32;
         private int _buttonStartPointY = 352;
         private int _frameIndicator = 0;
-        private string[] _name = new string[3];
+        private string[] _name = new string[3] { "_", "_", "_" };
         private int _buttonValue = 0;
         private int _stringpos = 0;
         private Mouse _mouse;
@@ -26,10 +26,11 @@ namespace GXPEngine
         {
             _level = pLevel;
             _game = _level.thisgame;
-            ButtonCreator();
-            _mouse = new Mouse();
-            AddChild(_mouse);
+
+            drawInput();
+
             AddChild(_drawer);
+            _drawer.SetXY(413, 120);
         }
         void Update()
         {
@@ -41,8 +42,11 @@ namespace GXPEngine
         {
             return null;
         }
-        private void ButtonCreator()
+        private void drawInput()
         {
+            Sprite background = new Sprite("keyboardbg.png");
+            AddChild(background);
+
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -56,6 +60,10 @@ namespace GXPEngine
                     _buttonValue++;
                 }
             }
+
+            _mouse = new Mouse();
+            AddChild(_mouse);
+
         }
         private void ButtonSelectTest()
         {
@@ -103,35 +111,6 @@ namespace GXPEngine
                                     break;
                                 }
                         }
-
-
-                        //if (buttonNumber < 38 && _stringpos < 3)
-                        //{
-                        //    //Save letter
-                        //    _name[_stringpos] = button.GetButtonValue();
-                        //    _stringpos++;
-                        //}
-                        //else if (buttonNumber == 38)
-                        //{
-                        //    //Delete 1 Letter
-                        //    _stringpos--;
-
-                        //    if (_stringpos >= 2) { _stringpos = 2; }
-                        //    if (_stringpos <= 0) { _stringpos = 0; }
-
-                        //    _name[_stringpos] = null;
-                        //}
-                        //else if (buttonNumber == 39)
-                        //{
-                        //    if (_stringpos == 3)
-                        //    {
-                        //        //Submit name
-                        //        HighScores highscores = new HighScores();
-                        //        highscores.AddScore(_finalName, _level.thisgame.playerScore);
-
-                        //        _level.thisgame.setGameState(GameStates.endscreen);
-                        //    }
-                        //}
                     }
                 }
                 //Otherwise button is not selected
@@ -147,7 +126,6 @@ namespace GXPEngine
         {
             string message = "Name: " + _finalName;
             PointF pos1 = new PointF(0, 0);
-            _game.SetChildIndex(_drawer, -1);
             _drawer.DrawText(message, pos1);
         }
     }

@@ -20,6 +20,9 @@ public class HeraGUN : Game
 
     public static bool playerHasWeapon = false;
     public int playerScore = 0;
+    public int playerLives = 3;
+    public int playerCoins = 0;
+
     public bool levelWon = false;
     private bool shaked = false;
 
@@ -29,7 +32,8 @@ public class HeraGUN : Game
     public HeraGUN() : base(1024, 768, false)
     {
         backgroundSound.Play(false, 1);
-        setGameState(GameStates.menu);
+        soundChannel.Volume = 0.001f;
+        setGameState(GameStates.part1);
     }
     void Update()
     {
@@ -42,6 +46,7 @@ public class HeraGUN : Game
 
         if (soundChannel.IsPlaying == false)
         {
+            soundChannel.Volume = 0.001f;
             Sound backgroundloop = new Sound("backgroundloop.mp3", true, true);
             backgroundloop.Play(false, 1);
             _loopStarted = true;
@@ -69,6 +74,8 @@ public class HeraGUN : Game
                 {
                     playerScore = 0;
                     playerHasWeapon = false;
+                    playerCoins = 0;
+                    playerLives = 3;
                     _part1 = new Level(this, "part1.txt", 1);
                     AddChild(_part1);
                     break;

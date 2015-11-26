@@ -342,7 +342,7 @@ namespace GXPEngine
                 {
                     if (levelData[i, j] != 0)
                     {
-                        SolidObject thisobject = new SolidObject();
+                        SolidObject thisobject = new SolidObject(this);
                         _midgroundLayer.AddChild(thisobject);
                         thisobject.SetXY(j * TILESIZE, i * TILESIZE);
                         thisobject.SetFrame(levelData[i, j] - 1);

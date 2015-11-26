@@ -83,6 +83,10 @@ namespace GXPEngine
         //gethit
         public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)
         {
+            SoundChannel soundChannel = new SoundChannel(2);
+            Sound hit = new Sound("hurt.wav");
+            hit.Play(false, 2);
+
             if (_state == EnemyState.death) return;
 
             if (_health <= 0f)
@@ -96,6 +100,7 @@ namespace GXPEngine
                 _health -= pBulletDamage;
                 _hitTimer = pBulletDamage;
                 _state = EnemyState.hit;
+                _level.player.addPoints(10);
             }
         }
         //uses states to switch between wich could should be used.

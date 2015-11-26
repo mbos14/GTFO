@@ -29,6 +29,10 @@ namespace GXPEngine
                 {
                     _level.player.bulletCounter = 3f;
                 }
+
+                SoundChannel soundChannel = new SoundChannel(2);
+                Sound reload = new Sound("reloadgun.mp3");
+                reload.Play(false, 2);
                 this.Destroy();
             }
         }

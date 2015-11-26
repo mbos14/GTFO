@@ -28,15 +28,22 @@ namespace GXPEngine
         }
         private void getEnding(bool pLevelWon)
         {
+            SoundChannel soundChannel = new SoundChannel(2);
             if (pLevelWon)
             {
                 Sprite background = new Sprite("youwon.png");
                 AddChild(background);
+
+                Sound youWonSound = new Sound("youwin.mp3");
+                youWonSound.Play(false, 2);
             }
             else
             {
                 Sprite background = new Sprite("gameover.png");
                 AddChild(background);
+
+                Sound gameOverSound = new Sound("gameover.wav");
+                gameOverSound.Play(false, 2);
             }
         }
         private void pressButtonAnim()
@@ -46,12 +53,12 @@ namespace GXPEngine
             if (_frameCounter >= 1)
             {
                 _frameCounter = 0;
-                visible = visible ? false : true;
+                pressButton.visible = pressButton.visible ? false : true;
             }
         }
         private void getButton()
         {
-            if (Input.GetKeyDown((int)PlayerButtons.shoot))
+            if (Input.GetAnyKeyDown())
             {
                 _game.setGameState(GameStates.nameinput);
             }

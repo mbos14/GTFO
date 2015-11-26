@@ -13,8 +13,8 @@ namespace GXPEngine
 
         const int LEFTBORDER = 400;
         const int RIGHTBORDER = 624;
-        const int TOPBORDER = 200;
-        const int BOTTOMBORDER = 568;
+        const int TOPBORDER = 300;
+        const int BOTTOMBORDER = 468;
         public Camera(Player pObjectToFollow, Level pMap)
         {
             _objectToFollow = pObjectToFollow;

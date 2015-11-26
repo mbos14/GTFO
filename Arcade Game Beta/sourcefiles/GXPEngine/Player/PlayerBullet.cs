@@ -107,6 +107,7 @@ namespace GXPEngine
                         bullet.bulletTurnedAround = true;
                         bullet.TurnBullet(_direction);
                         bullet.distanceTraveled = 0;
+                        _level.player.addPoints(100);
                     }
                     Destroy();
                 }
