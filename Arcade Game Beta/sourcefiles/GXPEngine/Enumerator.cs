@@ -8,7 +8,6 @@
     public enum EnemyDirection { left, right, down, up };
     public enum EnemyPoints {floater = 100, spider = 25, bug = 50};
     public enum EnemyHealth { floater = 150, spider = 50, bug = 75};
-    public enum EnemyAnimationFrame { up, down}
 
     //ENEMYFRAMES
     //SPIDER

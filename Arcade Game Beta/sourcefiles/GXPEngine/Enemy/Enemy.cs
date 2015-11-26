@@ -26,7 +26,6 @@ namespace GXPEngine
         protected float _health;
         //Animation
         private float _frame = 0.0f;
-        private EnemyAnimationFrame _enemyAnimationFrame;
         //TIMERS
         protected float _hitTimer = 0f;
         protected float _idleTimer = 0f;
@@ -41,7 +40,6 @@ namespace GXPEngine
             _health = (float)_healthmax;
             _enemyDirection = pEnemyDirection;
             Mirror(pMirrow, false);
-            _enemyAnimationFrame = EnemyAnimationFrame.up;
         }
         //ANIMATION
         //animation for death and hit state
