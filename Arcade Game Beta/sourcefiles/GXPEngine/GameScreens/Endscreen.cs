@@ -53,7 +53,7 @@ namespace GXPEngine
             if (_frameCounter >= 1)
             {
                 _frameCounter = 0;
-                visible = visible ? false : true;
+                _insertcoin.visible = _insertcoin.visible ? false : true;
             }
         }
         private void drawScreen()

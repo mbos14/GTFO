@@ -46,7 +46,7 @@ namespace GXPEngine
             if (_frameCounter >= 1)
             {
                 _frameCounter = 0;
-                visible = visible ? false : true;
+                _text.visible = _text.visible ? false : true;
             }
         }
         protected override Collider createCollider()
