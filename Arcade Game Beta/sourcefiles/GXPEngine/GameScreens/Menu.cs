@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using GXPEngine.Core;
+﻿using GXPEngine.Core;
 
 namespace GXPEngine
 {
@@ -11,14 +6,17 @@ namespace GXPEngine
     {
         private HeraGUN _game;
         private bool _coinInserted = false;
+        private AnimationSprite _text;
+        private float _frameCounter = 0;
         public Menu(HeraGUN pGame)
         {
             _game = pGame;
-            drawBackGround();
+            draw();
         }
-        protected override Collider createCollider()
+        void Update()
         {
-            return null;
+            checkButtons();
+            animateText();
         }
         private void checkButtons()
         {
@@ -31,21 +29,29 @@ namespace GXPEngine
                 _coinInserted = true;
             }
         }
-        void Update()
+        private void draw()
         {
-            checkButtons();
-        }
-        private void drawText()
-        {
-            //Title
-            //Insert coin
-            //Press any button to start the game
-        }
-        private void drawBackGround()
-        {
-            Canvas menuBG = new Canvas("menubackground.png");
+            Sprite menuBG = new Sprite("menubackground.png");
             AddChild(menuBG);
-        }
 
+            _text = new AnimationSprite("text.png", 0, 4);
+            AddChild(_text);
+            _text.SetXY(game.width / 2, game.height - _text.width);
+            _text.SetFrame(2);
+        }
+        private void animateText()
+        {
+            _frameCounter += 0.02f;
+
+            if (_frameCounter >= 1)
+            {
+                _frameCounter = 0;
+                visible = visible ? false : true;
+            }
+        }
+        protected override Collider createCollider()
+        {
+            return null;
+        }
     }
 }

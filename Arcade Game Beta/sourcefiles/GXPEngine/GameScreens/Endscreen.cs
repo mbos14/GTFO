@@ -11,15 +11,17 @@ namespace GXPEngine
     {
         private enum LevelTest { Won, Lost }
         private LevelTest CurrentWonTest;
+
         private HeraGUN _game;
         private Sprite _credits;
         private AnimationSprite _insertcoin;
+
         private float _frameCounter = 0.0f;
-        private Drawer _drawer = new Drawer(300, 768);
-        public Endscreen(HeraGUN pGame)
+
+        public Endscreen(HeraGUN pGame, bool pLevelWon)
         {
             _game = pGame;
-            checkLevel();
+            checkLevel(pLevelWon);
             drawScreen();
         }
         void Update()
@@ -33,33 +35,25 @@ namespace GXPEngine
         {
             return null;
         }
-        private void checkLevel()
+        private void checkLevel(bool pLevelWon)
         {
-            if (_game.levelWon)
+            if (pLevelWon)
             {
                 CurrentWonTest = LevelTest.Won;
             }
-            else if (!_game.levelWon)
+            else
             {
                 CurrentWonTest = LevelTest.Lost;
             }
         }
         private void insertCoinAnim()
         {
-            _frameCounter += 0.05f;
+            _frameCounter += 0.02f;
 
             if (_frameCounter >= 1)
             {
                 _frameCounter = 0;
-                if (!_insertcoin.visible)
-                {
-                    _insertcoin.visible = true;
-                }
-                else
-                {
-                    _insertcoin.visible = false;
-                }
-
+                visible = visible ? false : true;
             }
         }
         private void drawScreen()
@@ -97,16 +91,17 @@ namespace GXPEngine
         {
             //Highscores
             HighScores high = new HighScores();
-            AddChild(high);
+            Canvas _canvas = new Canvas(300, 768);
+            AddChild(_canvas);
 
-            AddChild(_drawer);
+            Font font = new Font("Minecraft", 25, FontStyle.Regular);
+            Brush brush = new SolidBrush(Color.LimeGreen);
 
             string[] highscores = high.ReturnHighScore(0);
-
             for (int i = 0; i < highscores.Length; i++)
             {
                 PointF pos = new PointF(0, 500 - i * 50);
-                _drawer.DrawText(highscores[i], pos);
+                _canvas.graphics.DrawString(highscores[i], font, brush, pos);
             }
         }
         private void endCredits()

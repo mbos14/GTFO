@@ -36,19 +36,21 @@ namespace GXPEngine
         private void writeHighScore()
         {
             StreamWriter streamWriter = new StreamWriter("highscoredata.txt");
-
-            streamWriter.WriteLine(_highScores[0] + "," + _highScoreNames[0]);
-            streamWriter.WriteLine(_highScores[1] + "," + _highScoreNames[1]);
-            streamWriter.WriteLine(_highScores[2] + "," + _highScoreNames[2]);
-            streamWriter.WriteLine(_highScores[3] + "," + _highScoreNames[3]);
-            streamWriter.WriteLine(_highScores[4] + "," + _highScoreNames[4]);
-            streamWriter.WriteLine(_highScores[5] + "," + _highScoreNames[5]);
-            streamWriter.WriteLine(_highScores[6] + "," + _highScoreNames[6]);
-            streamWriter.WriteLine(_highScores[7] + "," + _highScoreNames[7]);
-            streamWriter.WriteLine(_highScores[8] + "," + _highScoreNames[8]);
-            streamWriter.WriteLine(_highScores[9] + "," + _highScoreNames[9]);
-
+            for (int i = 0; i < 9; i++)
+            {
+                streamWriter.WriteLine(_highScores[i] + "," + _highScoreNames[i]);
+            }
             streamWriter.Close();
+            //streamWriter.WriteLine(_highScores[0] + "," + _highScoreNames[0]);
+            //streamWriter.WriteLine(_highScores[1] + "," + _highScoreNames[1]);
+            //streamWriter.WriteLine(_highScores[2] + "," + _highScoreNames[2]);
+            //streamWriter.WriteLine(_highScores[3] + "," + _highScoreNames[3]);
+            //streamWriter.WriteLine(_highScores[4] + "," + _highScoreNames[4]);
+            //streamWriter.WriteLine(_highScores[5] + "," + _highScoreNames[5]);
+            //streamWriter.WriteLine(_highScores[6] + "," + _highScoreNames[6]);
+            //streamWriter.WriteLine(_highScores[7] + "," + _highScoreNames[7]);
+            //streamWriter.WriteLine(_highScores[8] + "," + _highScoreNames[8]);
+            //streamWriter.WriteLine(_highScores[9] + "," + _highScoreNames[9]);
         }
         public void AddScore(string pName, int pScore)
         {
@@ -68,8 +70,7 @@ namespace GXPEngine
             for (int i = 0; i < _highScoreNames.Length; i++)
             {
                 string number = (10 - i) + ": ";
-                string space = " ";
-                highscorelist[i] = number + _highScoreNames[i] + space + _highScores[i];
+                highscorelist[i] = number + _highScoreNames[i] + " " + _highScores[i];
                 Console.WriteLine(highscorelist[i]);
             }
             return highscorelist;

@@ -67,25 +67,29 @@ public class HeraGUN : Game
                 }
             case GameStates.part1:
                 {
+                    playerScore = 0;
+                    playerHasWeapon = false;
                     _part1 = new Level(this, "part1.txt", 1);
                     AddChild(_part1);
                     break;
                 }
             case GameStates.part2:
                 {
+                    playerHasWeapon = true;
                     _part2 = new Level(this, "part2.txt", 2);
                     AddChild(_part2);
                     break;
                 }
             case GameStates.part3:
                 {
+                    playerHasWeapon = true;
                     _part3 = new Level(this, "part3.txt", 3);
                     AddChild(_part3);
                     break;
                 }
             case GameStates.wonlostscreen:
                 {
-                    _wlscreen = new WonLostScreen(this);
+                    _wlscreen = new WonLostScreen(this, levelWon);
                     AddChild(_wlscreen);
                     break;
                 }
@@ -97,7 +101,7 @@ public class HeraGUN : Game
                 }
             case GameStates.endscreen:
                 {
-                    _endscreen = new Endscreen(this);
+                    _endscreen = new Endscreen(this, levelWon);
                     AddChild(_endscreen);
                     break;
                 }
@@ -146,7 +150,6 @@ public class HeraGUN : Game
 
         }
     }
-
     public void shakeScreen()
     {
         if (!shaked)

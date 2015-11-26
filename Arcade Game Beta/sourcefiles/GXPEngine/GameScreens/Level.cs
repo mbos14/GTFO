@@ -14,21 +14,20 @@ namespace GXPEngine
         public List<SolidObject> solidList = new List<SolidObject>();
         public List<DamageBlock> damageList = new List<DamageBlock>();
         public List<Enemy> enemyList = new List<Enemy>();
-
         public List<EnemyBullet> enemyBulletList = new List<EnemyBullet>();
+        public List<PickUpReload> reloadList = new List<PickUpReload>();
 
         //Data
         public Player player;
         public HeraGUN thisgame;
         private string _fileName;
-        public Drawer drawer = new Drawer(1024, 100);
         public int levelPart;
 
         private bool _levelDrawed = false;
 
         //Variables for tile- and levelsize
-        const int TILESY = 50; //Amount of tiles vertical
-        const int TILESX = 100; //Amount of tiles horizontal
+        const int TILESY = 98; //Amount of tiles vertical
+        const int TILESX = 133; //Amount of tiles horizontal
         const int TILESIZE = 64;
 
         const int BETWEENLAYERS = 4;
@@ -44,7 +43,6 @@ namespace GXPEngine
             levelPart = pLevelPart;
             _fileName = pFileName;
             thisgame = pGame;
-            thisgame.playerScore = 0;
 
             addPivots();
             drawAll();
@@ -81,8 +79,8 @@ namespace GXPEngine
         {
             player = new Player(this);
             _midgroundLayer.AddChild(player);
-            player.spawnX = 100;
-            player.spawnY = 1250;
+            player.spawnX = 448;
+            player.spawnY = 448;
             player.SetXY(player.spawnX, player.spawnY);
         }
         //Layers
@@ -98,14 +96,14 @@ namespace GXPEngine
             reader1.Close();
             //--------------------------------------SPLIT AND CONVERT------------------------------------------
             string[] lines = fileData.Split('\n');
-            for (int j = 13; j < 63; j++)
+            for (int j = startNr; j < endNr; j++)
             {
                 string[] columns = lines[j].Split(',');
 
                 for (int i = 0; i < TILESX; i++)
                 {
                     string column = columns[i];
-                    levelData[j - 13, i] = int.Parse(column);
+                    levelData[j - startNr, i] = int.Parse(column);
                 }
             }
 
@@ -199,6 +197,7 @@ namespace GXPEngine
                                 PickUpReload thisobject = new PickUpReload(this);
                                 _midgroundLayer.AddChild(thisobject);
                                 thisobject.SetXY(j * TILESIZE, i * TILESIZE);
+                                reloadList.Add(thisobject);
                                 break;
                             }
                         case 2: //Life
@@ -283,7 +282,7 @@ namespace GXPEngine
                                     InvisBlock thisobject = new InvisBlock(this);
                                     _midgroundLayer.AddChild(thisobject);
                                     thisobject.SetXY(j * TILESIZE, i * TILESIZE);
-                                    thisobject.SetFrame(193);
+                                    thisobject.SetFrame(1270);
                                 }
                                 break;
                             }
@@ -291,7 +290,7 @@ namespace GXPEngine
                             {
                                 if (!_levelDrawed)
                                 {
-                                    Checkpoints thispoint = new Checkpoints("checkpoint.png", false, this);
+                                    Checkpoints thispoint = new Checkpoints(false, this);
                                     _midgroundLayer.AddChild(thispoint);
                                     thispoint.SetXY(j * TILESIZE, i * TILESIZE);
                                 }
@@ -301,7 +300,7 @@ namespace GXPEngine
                             {
                                 if (!_levelDrawed)
                                 {
-                                    Checkpoints thispoint = new Checkpoints("checkpint.png", true, this);
+                                    Checkpoints thispoint = new Checkpoints(true, this);
                                     _midgroundLayer.AddChild(thispoint);
                                     thispoint.SetXY(j * TILESIZE, i * TILESIZE);
                                 }
@@ -315,7 +314,7 @@ namespace GXPEngine
         }
         private void drawSolidLayer()
         {
-            int startNr = TILEDINFO + BETWEENLAYERS * 3+ TILESY * 3;
+            int startNr = TILEDINFO + BETWEENLAYERS * 3 + TILESY * 3;
             int endNr = startNr + TILESY;
 
             int[,] levelData = new int[TILESY, TILESX];
@@ -440,27 +439,11 @@ namespace GXPEngine
                     return true;
                 }
             }
-            //Damage blocks
-            foreach (Sprite other in damageList)
+
+            if (pSprite is Player || pSprite is PlayerBullet)
             {
-                if (pSprite.HitTest(other))
-                {
-                    if (pSprite is Player)
-                    {
-                        Player thisplayer = (Player)pSprite;
-                        thisplayer.playerDIE();
-                        DrawPreDefinedLayer();
-                    }
-                    else if (pSprite is PlayerBullet)
-                    {
-                        pSprite.Destroy();
-                    }
-                }
-            }
-            //Enemies
-            foreach (Enemy other in enemyList)
-            {
-                if (other._state != EnemyState.death)
+                //Damage blocks
+                foreach (Sprite other in damageList)
                 {
                     if (pSprite.HitTest(other))
                     {
@@ -468,16 +451,39 @@ namespace GXPEngine
                         {
                             Player thisplayer = (Player)pSprite;
                             thisplayer.playerDIE();
+                            DrawPreDefinedLayer();
                         }
                         else if (pSprite is PlayerBullet)
                         {
-                            PlayerBullet bullet = (PlayerBullet)pSprite;
-                            other.HitByBullet(bullet.damage / 4, player.aimDirection);
                             pSprite.Destroy();
                         }
                     }
                 }
+
+                //Enemies
+                foreach (Enemy other in enemyList)
+                {
+                    if (other._state != EnemyState.death)
+                    {
+                        if (pSprite.HitTest(other))
+                        {
+                            if (pSprite is Player)
+                            {
+                                Player thisplayer = (Player)pSprite;
+                                thisplayer.playerDIE();
+                            }
+                            else if (pSprite is PlayerBullet)
+                            {
+                                PlayerBullet bullet = (PlayerBullet)pSprite;
+                                other.HitByBullet(bullet.damage / 4, player.aimDirection);
+                                pSprite.Destroy();
+                            }
+                        }
+                    }
+                }
+
             }
+
             return false;
         }
     }

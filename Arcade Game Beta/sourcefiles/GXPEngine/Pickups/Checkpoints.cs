@@ -12,7 +12,7 @@ namespace GXPEngine
         private float _frame = 0.0f;
         private bool _checked = false;
 
-        public Checkpoints(string pFileName, bool pThisIsCheckPoint, Level pLevel) : base(pFileName, 10, 10)
+        public Checkpoints(bool pThisIsCheckPoint, Level pLevel) : base("checkpoint.png", 6, 0)
         {
             _level = pLevel;
             _thisIsCP = pThisIsCheckPoint;

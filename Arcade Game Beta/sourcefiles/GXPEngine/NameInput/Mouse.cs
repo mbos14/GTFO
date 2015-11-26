@@ -12,13 +12,11 @@ namespace GXPEngine
             SetOrigin(width / 2, height + 5);
             SetXY(80, 360);
         }
-
         void Update()
         {
             MoveMouse();
             StayOnButtons();
         }
-
         private void MoveMouse()
         {
             int _mouseSpeed = 96;

@@ -10,25 +10,25 @@ namespace GXPEngine
     class NameInput : GameObject
     {
         public List<KeyboardButtons> buttonList = new List<KeyboardButtons>();
-        private const int _buttonSize = 96;
+        private const int BUTTONSIZE = 96;
         private int _buttonStartPointX = 32;
         private int _buttonStartPointY = 352;
         private int _frameIndicator = 0;
         private string[] _name = new string[3];
-        private int buttonValue = 0;
-        int stringposition = 0;
-        Mouse mouse;
+        private int _buttonValue = 0;
+        private int _stringpos = 0;
+        private Mouse _mouse;
         private Level _level;
         private HeraGUN _game;
         private Drawer _drawer = new Drawer(1024, 100);
-        string finalName;
+        private string _finalName = "___";
         public NameInput(Level pLevel)
         {
             _level = pLevel;
             _game = _level.thisgame;
             ButtonCreator();
-            mouse = new Mouse();
-            AddChild(mouse);
+            _mouse = new Mouse();
+            AddChild(_mouse);
             AddChild(_drawer);
         }
         void Update()
@@ -47,13 +47,13 @@ namespace GXPEngine
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    KeyboardButtons keyboardButton = new KeyboardButtons(_frameIndicator, buttonValue);
+                    KeyboardButtons keyboardButton = new KeyboardButtons(_frameIndicator, _buttonValue);
                     buttonList.Add(keyboardButton);
                     AddChild(keyboardButton);
-                    keyboardButton.SetXY(_buttonStartPointX + j * _buttonSize, _buttonStartPointY + i * _buttonSize);
+                    keyboardButton.SetXY(_buttonStartPointX + j * BUTTONSIZE, _buttonStartPointY + i * BUTTONSIZE);
                     keyboardButton.SetFrame(_frameIndicator);
                     _frameIndicator += 2;
-                    buttonValue++;
+                    _buttonValue++;
                 }
             }
         }
@@ -62,41 +62,76 @@ namespace GXPEngine
             foreach (KeyboardButtons button in buttonList)
             {
                 //If the tip of the mouse is on the letter
-                if (button.HitTestPoint(mouse.x, mouse.y))
+                if (button.HitTestPoint(_mouse.x, _mouse.y))
                 {
                     //Button is selected
                     button.selected = true;
                     if (Input.GetKeyDown((int)PlayerButtons.shoot))
                     {
                         int buttonNumber = button.GetButtonNumber();
-
-                        if (buttonNumber < 38 && stringposition < 3)
+                        switch (buttonNumber)
                         {
-                            //Save letter
-                            _name[stringposition] = button.GetButtonValue();
-                            stringposition++;
-                        }
-                        else if (buttonNumber == 38)
-                        {
-                            //Delete 1 Letter
-                            stringposition--;
+                            case 38:
+                                {
+                                    //Delete 1 Letter
+                                    _stringpos--;
+                                    if (_stringpos >= 2) { _stringpos = 2; }
+                                    if (_stringpos <= 0) { _stringpos = 0; }
+                                    _name[_stringpos] = "_";
+                                    break;
+                                }
+                            case 39:
+                                {
+                                    if (_stringpos == 3)
+                                    {
+                                        //Submit name
+                                        HighScores highscores = new HighScores();
+                                        highscores.AddScore(_finalName, _level.thisgame.playerScore);
 
-                            if (stringposition >= 2) { stringposition = 2; }
-                            if (stringposition <= 0) { stringposition = 0; }
-
-                            _name[stringposition] = null;
+                                        _level.thisgame.setGameState(GameStates.endscreen);
+                                    }
+                                    break;
+                                }
+                            default:
+                                {
+                                    if (_stringpos < 3)
+                                    {
+                                        //Save letter
+                                        _name[_stringpos] = button.GetButtonValue();
+                                        _stringpos++;
+                                    }
+                                    break;
+                                }
                         }
-                        else if (buttonNumber == 39)
-                        {
-                            if (stringposition == 3)
-                            {
-                                //Submit name
-                                HighScores highscores = new HighScores();
-                                highscores.AddScore(finalName, _level.thisgame.playerScore);
 
-                                _level.thisgame.setGameState(GameStates.endscreen);
-                            }
-                        }
+
+                        //if (buttonNumber < 38 && _stringpos < 3)
+                        //{
+                        //    //Save letter
+                        //    _name[_stringpos] = button.GetButtonValue();
+                        //    _stringpos++;
+                        //}
+                        //else if (buttonNumber == 38)
+                        //{
+                        //    //Delete 1 Letter
+                        //    _stringpos--;
+
+                        //    if (_stringpos >= 2) { _stringpos = 2; }
+                        //    if (_stringpos <= 0) { _stringpos = 0; }
+
+                        //    _name[_stringpos] = null;
+                        //}
+                        //else if (buttonNumber == 39)
+                        //{
+                        //    if (_stringpos == 3)
+                        //    {
+                        //        //Submit name
+                        //        HighScores highscores = new HighScores();
+                        //        highscores.AddScore(_finalName, _level.thisgame.playerScore);
+
+                        //        _level.thisgame.setGameState(GameStates.endscreen);
+                        //    }
+                        //}
                     }
                 }
                 //Otherwise button is not selected
@@ -106,11 +141,11 @@ namespace GXPEngine
         private void MakeName()
         {
             //Save final name
-            finalName = "" + _name[0] + _name[1] + _name[2];
+            _finalName = "" + _name[0] + _name[1] + _name[2];
         }
         private void updateName()
         {
-            string message = "Name: " + finalName;
+            string message = "Name: " + _finalName;
             PointF pos1 = new PointF(0, 0);
             _game.SetChildIndex(_drawer, -1);
             _drawer.DrawText(message, pos1);
