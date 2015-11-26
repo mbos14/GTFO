@@ -9,104 +9,76 @@ namespace GXPEngine
     {
         protected Level _level;
         public int frameCounter = 0;
-
         //stores the animation state
         public EnemyState _state;
-
-        //animation hit state
-        public bool isHit;
-
         //stores direction
         protected EnemyDirection _enemyDirection;
         public PlayerDirection directionHit;
-
         //stores first and last frame
         protected float _firstFrame;
         protected float _lastFrame;
-
         //movement
         protected float _velocityX = 1.0f;
-
         //stores points and max health
         protected EnemyPoints _points;
         protected EnemyHealth _healthmax;
-
         //stores current health
         protected float _health;
         //Animation
         private float _frame = 0.0f;
         //TIMERS
-        private float _hitTimer = 0f;
-        private float _idleTimer = 0f;
+        protected float _hitTimer = 0f;
+        protected float _idleTimer = 0f;
+        private float _deathHitAnimationTimer = 0f;
 
-        public Enemy(string pFileName, int pColumns, int pRows, Level pLevel) : base(pFileName, pColumns, pRows)
+        public Enemy(string pFileName, int pColumns, int pRows, Level pLevel, EnemyPoints pPoints, EnemyHealth pHealth) : base(pFileName, pColumns, pRows)
         {
             _level = pLevel;
-            isHit = false;
             _state = EnemyState.idle;
+            _points = pPoints;
+            _healthmax = pHealth;
+            _health = (float)_healthmax;
         }
-
-        //general enemy movements
-        protected virtual void Move()
-        {                
-                    x += _velocityX;               
-        }
-        //make the enemy turn around
-        public virtual void TurnAround()
+        //ANIMATION
+        //animation for death and hit state
+        protected void DeathHitAnimation()
         {
-            x -= _velocityX;
-            _velocityX *= -1;
-            scaleX *= -1;
-        }
-
-        protected void StateSwitch()
-        {
-            switch (_state)
+            _deathHitAnimationTimer += 0.2f;
+            if (_deathHitAnimationTimer == 1f)
             {
-                case EnemyState.idle:
-                    _idleTimer += 0.1f;
-                    if (_idleTimer >= 2f)
-                    {
-                        _idleTimer = 0f;
-                        _state = EnemyState.walk;
-                    }
-                    break;
-                case EnemyState.walk:
-                    {
-                        Move();
-                        break;
-                    }
-                case EnemyState.hit:
-                    _hitTimer -= 1f;
-                    if (_hitTimer <= 0f)
-                    {
-                        _hitTimer = 0f;
-                        _state = EnemyState.idle;
-                    }
-                    break;
-                case EnemyState.death:                    
-                    break;
+                _frame += 1;
+                if (_frame < _firstFrame)
+                {
+                    _frame = _firstFrame;
+                }
+                else if (_frame > _lastFrame)
+                {
+                    _frame = _lastFrame;
+                }
+                _deathHitAnimationTimer = 0f;
+                SetFrame((int)_frame);
             }
         }
-
-        protected void animation()
-        {
-            _frame += 0.1f;
-            
-            if (_frame > _lastFrame || _frame < _firstFrame)
-            {
-                _frame = _firstFrame;
-            }        
-            SetFrame((int)_frame);
-        }
-
+        //set the animation range
         protected void setAnimationRange(float pFirstFrame, float pLastFrame)
         {
             _firstFrame = pFirstFrame;
-            _lastFrame = pLastFrame;            
+            _lastFrame = pLastFrame;
+        }
+        //animation for walking and idle state
+        protected void WalkingIdleAnimation()
+        {
+            _frame += 0.1f;
+            //checks if not bigger then last frame and not smaller then first frame
+            if (_frame > _lastFrame || _frame < _firstFrame)
+            {
+                _frame = _firstFrame;
+            }
+            SetFrame((int)_frame);
         }
 
-        //GET HIT
+        //LOGIC
+        //gethit
         public void HitByBullet(float pBulletDamage, PlayerDirection pDirection)
         {
             if (_state == EnemyState.death) return;
@@ -120,15 +92,55 @@ namespace GXPEngine
             {
                 directionHit = pDirection;
                 _health -= pBulletDamage;
-                isHit = true;
                 _hitTimer = pBulletDamage;
                 _state = EnemyState.hit;
-            }           
+            }
         }
+        //uses states to switch between wich could should be used.
+        protected virtual void StateSwitch()
+        {
+            switch (_state)
+            {
+                case EnemyState.idle:
+                    WalkingIdleAnimation();
+                    _idleTimer += 0.1f;
+                    if (_idleTimer >= 2f)
+                    {
+                        _idleTimer = 0f;
+                        _state = EnemyState.walk;
+                    }
+                    break;
+                case EnemyState.walk:
+                    {
+                        Move();
+                        WalkingIdleAnimation();
+                        break;
+                    }
+                case EnemyState.hit:
+                    recoil();
+                    DeathHitAnimation();
+                    _hitTimer -= 1f;
+                    if (_hitTimer <= 0f)
+                    {
+                        _hitTimer = 0f;
+                        _state = EnemyState.idle;
+                    }
+                    break;
+                case EnemyState.death:
+                    DeathHitAnimation();
+                    break;
+            }
+        }
+
+        //MOVEMENT
+        //general enemy movements
+        protected virtual void Move()
+        {
+            x += _velocityX;
+        }       
+        //if hit get pushed back in the opisite direction
         public virtual void recoil()
         {
-            if (_state == EnemyState.death || !(_state == EnemyState.hit)) return;
-
             frameCounter++;
 
             if (frameCounter < 25)
@@ -161,8 +173,14 @@ namespace GXPEngine
             if (frameCounter >= 25)
             {
                 frameCounter = 0;
-                isHit = false;
             }
+        }
+        //make the enemy turn around
+        public virtual void TurnAround()
+        {
+            x -= _velocityX;
+            _velocityX *= -1;
+            scaleX *= -1;
         }
     }
 }
