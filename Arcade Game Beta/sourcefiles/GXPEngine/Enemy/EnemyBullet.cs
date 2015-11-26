@@ -46,10 +46,24 @@ namespace GXPEngine
         }
         public void TurnBullet(PlayerDirection pDirection)
         {
-            if (pDirection == PlayerDirection.left) { direction = EnemyDirection.right; }
-            if (pDirection == PlayerDirection.right) { direction = EnemyDirection.left; }
-            if (pDirection == PlayerDirection.up) { direction = EnemyDirection.up; }
-            if (pDirection == PlayerDirection.down) { direction = EnemyDirection.down; }
+            if (pDirection == PlayerDirection.left)
+            {
+                direction = EnemyDirection.right;
+                Mirror(false, false);
+            }
+            if (pDirection == PlayerDirection.right)
+            {
+                direction = EnemyDirection.left;
+                Mirror(true, false);
+            }
+            if (pDirection == PlayerDirection.up)
+            {
+                direction = EnemyDirection.up;
+            }
+            if (pDirection == PlayerDirection.down)
+            {
+                direction = EnemyDirection.down;
+            }
         }
         private void checkCollisions()
         {
@@ -60,13 +74,16 @@ namespace GXPEngine
 
             if (bulletTurnedAround)
             {
-                foreach (Sprite other in _level.enemyList)
+                foreach (Enemy other in _level.enemyList)
                 {
                     if (HitTest(other))
                     {
-                        other.Destroy();
-                        _level.player.addPoints(20);
-                        Destroy();
+                        if (!(other._state == EnemyState.death))
+                        {
+                            other._state = EnemyState.death;
+                            _level.player.addPoints(20);
+                            Destroy();
+                        }
                     }
                 }
             }

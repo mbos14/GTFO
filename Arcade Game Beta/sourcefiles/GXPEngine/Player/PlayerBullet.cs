@@ -7,8 +7,6 @@ namespace GXPEngine
 {
     public class PlayerBullet : Sprite
     {
-        private Sprite _overlaySprite = new Sprite("playerbulletcolor.png");
-
         private PlayerDirection _direction;
         private float _distanceTraveled = 0.0f;
         private float _maxTravel = 400.0f;
@@ -22,7 +20,6 @@ namespace GXPEngine
             _direction = pDirection;
 
             SetOrigin(width / 2, height / 2);
-            drawOverlaySprite();
             moveDirection();
         }
         void Update()
@@ -89,17 +86,11 @@ namespace GXPEngine
             float colorValue;
 
             //Set shrinkvalue
-            if (_distanceTraveled >= 0) { colorValue = (_maxTravel - _distanceTraveled) / 100.0f; }
-            else { colorValue = (_maxTravel + _distanceTraveled) / 100.0f; }
+            if (_distanceTraveled >= 0) { colorValue = (_maxTravel - _distanceTraveled); }
+            else { colorValue = (_maxTravel + _distanceTraveled); }
+            Console.WriteLine(colorValue);
+            alpha = colorValue / 4 / 100;
 
-            _overlaySprite.alpha = colorValue * 100;
-
-        }
-        private void drawOverlaySprite()
-        {
-            AddChild(_overlaySprite);
-            _overlaySprite.SetOrigin(width / 2, height / 2);
-            _overlaySprite.alpha = 0;
         }
         private void getCollisions()
         {

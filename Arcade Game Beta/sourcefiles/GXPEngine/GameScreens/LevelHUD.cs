@@ -10,7 +10,7 @@ namespace GXPEngine
     public class LevelHUD : AnimationSprite
     {
         private Level _level;
-        private MyGame _game;
+        private HeraGUN _game;
         Drawer drawer;
 
         public LevelHUD(Level pLevel) : base("hud.png", 1, 4)

@@ -69,8 +69,11 @@ namespace GXPEngine
                         _state = EnemyState.walk;
                     }
                     break;
-                case EnemyState.walk:                                        
-                    break;
+                case EnemyState.walk:
+                    {
+                        Move();
+                        break;
+                    }
                 case EnemyState.hit:
                     if (_frame >= _lastFrame)
                     {
@@ -96,10 +99,7 @@ namespace GXPEngine
             {
                 _frame = _firstFrame;
             }
-            Console.WriteLine(_frame);
             _frame += 0.2f;
-            //if (_frame >= 5.0f) { _frame = 2.0f; }
-            //if (_frame <= 2.0f) { _frame = 2.0f; }
             SetFrame((int)_frame + 1);
         }
 

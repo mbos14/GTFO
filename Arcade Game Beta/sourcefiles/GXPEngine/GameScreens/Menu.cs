@@ -9,9 +9,9 @@ namespace GXPEngine
 {
     public class Menu : GameObject
     {
-        private MyGame _game;
+        private HeraGUN _game;
         private bool _coinInserted = false;
-        public Menu(MyGame pGame)
+        public Menu(HeraGUN pGame)
         {
             _game = pGame;
             drawBackGround();

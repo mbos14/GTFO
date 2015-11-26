@@ -12,7 +12,6 @@
         void Update()
         {
             //related to movement
-            Move();
             recoil();
             //related to animation
             animation();
@@ -24,6 +23,9 @@
         
         private void playerDistance()
         {
+            if (_state == EnemyState.death) return;
+            if (_state == EnemyState.hit) return;
+
             if (DistanceTo(_level.player) > 500)
             {
                 _state= EnemyState.idle;
@@ -54,7 +56,7 @@
         }
         public override void recoil()
         {
-            if (!isHit) return;
+            if (!(_state == EnemyState.hit)) return;
             if (_state == EnemyState.death) return;
 
             frameCounter++;
@@ -75,10 +77,11 @@
                         }
                 }
             }
-            else
+
+            if (frameCounter >= 25)
             {
-                isHit = false;
                 frameCounter = 0;
+                isHit = false;
             }
         }
     }
